@@ -17,7 +17,6 @@ namespace TimeTable
             
             InitializeComponent();
             PopulateFooterBar();
-            InitLeftMenu();
 
             if (splashScreen != null)
             {
@@ -39,13 +38,6 @@ namespace TimeTable
         {
             FooterBarControl.UserTextBox.Text = Environment.UserName;
             FooterBarControl.WorkstationTextBox.Text = Environment.MachineName;
-        }
-
-        private void InitLeftMenu()
-        {
-            Button1.Tag = "N";
-            Button2.Tag = "N";
-            Button3.Tag = "N";
         }
 
         private List<string> CreatePicturesList()
@@ -131,17 +123,6 @@ namespace TimeTable
             Close();
         }
 
-        private void Border_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            InitLeftMenu();
-
-            Border button = sender as Border;
-
-            if (button != null)
-            {
-                button.Tag = "Y";
-            }
-        }
     }
 
 }
