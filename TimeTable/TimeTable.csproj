@@ -116,7 +116,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\ipsa0.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
