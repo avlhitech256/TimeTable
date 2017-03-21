@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Common.DomainContext;
 
 namespace TimeTable
 {
@@ -10,6 +11,14 @@ namespace TimeTable
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Members
+
+        private readonly DomainContext domainContex;
+
+        #endregion
+
+        #region Constructors
+
         public MainWindow()
         {
             List<string> picturesList = CreatePicturesList();
@@ -17,6 +26,7 @@ namespace TimeTable
             
             InitializeComponent();
             PopulateFooterBar();
+            domainContex = DomainContext.Instance();
 
             if (splashScreen != null)
             {
@@ -33,6 +43,10 @@ namespace TimeTable
             }
 
         }
+
+        #endregion
+
+        #region Methods
 
         private void PopulateFooterBar()
         {
@@ -118,6 +132,7 @@ namespace TimeTable
             return splashScreen;
         }
 
+        #endregion
     }
 
 }
