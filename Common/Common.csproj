@@ -45,10 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainContext\DomainContext.cs" />
+    <Compile Include="DomainContext\IDomainContext.cs" />
     <Compile Include="Entry\ControlState.cs" />
     <Compile Include="Entry\EntryControl.xaml.cs">
       <DependentUpon>EntryControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messenger\IMessenger.cs" />
+    <Compile Include="Messenger\Impl\CommandName.cs" />
+    <Compile Include="Messenger\Impl\Messenger.cs" />
+    <Compile Include="Messenger\Impl\MessengerCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
