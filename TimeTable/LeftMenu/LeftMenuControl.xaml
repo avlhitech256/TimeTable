@@ -23,7 +23,7 @@
         </Style>
     </Control.Resources>
     <StackPanel x:Name="LeftMenu" DockPanel.Dock="Left" Width="150" Background="Gray">
-        <Border x:Name="Button1" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
+        <Border x:Name="HighSchoolButton" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
             <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
                 Some text here
             </Label>

@@ -1,4 +1,6 @@
-﻿using Common.Messenger;
+﻿using System.Windows;
+using Common.Entry;
+using Common.Messenger;
 
 namespace Common.DomainContext
 {
@@ -20,6 +22,7 @@ namespace Common.DomainContext
         }
 
         public IMessenger Messenger { get; }
+
     }
 
 }

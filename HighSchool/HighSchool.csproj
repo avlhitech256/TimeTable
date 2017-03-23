@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{356921DE-116D-48DB-9613-5D0395420897}</ProjectGuid>
+    <ProjectGuid>{5D2CABCC-7165-4519-ADEB-4FC61A835351}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <RootNamespace>HighSchool</RootNamespace>
+    <AssemblyName>HighSchool</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,15 +44,40 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainContext\DomainContext.cs" />
-    <Compile Include="DomainContext\IDomainContext.cs" />
-    <Compile Include="Entry\ControlState.cs" />
-    <Compile Include="Entry\EntryControl.cs" />
-    <Compile Include="Messenger\IMessenger.cs" />
-    <Compile Include="Messenger\Impl\CommandName.cs" />
-    <Compile Include="Messenger\Impl\Messenger.cs" />
-    <Compile Include="Messenger\Impl\MessengerCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\HighSchoolSearchButtonControl.xaml.cs">
+      <DependentUpon>HighSchoolSearchButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HighSchoolSearchControl.xaml.cs">
+      <DependentUpon>HighSchoolSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HighSchoolSearchCriteriaControl.xaml.cs">
+      <DependentUpon>HighSchoolSearchCriteriaControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modal\" />
+    <Folder Include="ViewModal\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\HighSchoolSearchButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolSearchCriteriaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

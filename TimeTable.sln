@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTable", "TimeTable\Time
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{356921DE-116D-48DB-9613-5D0395420897}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HighSchool", "HighSchool\HighSchool.csproj", "{5D2CABCC-7165-4519-ADEB-4FC61A835351}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{356921DE-116D-48DB-9613-5D0395420897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{356921DE-116D-48DB-9613-5D0395420897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356921DE-116D-48DB-9613-5D0395420897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2CABCC-7165-4519-ADEB-4FC61A835351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2CABCC-7165-4519-ADEB-4FC61A835351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2CABCC-7165-4519-ADEB-4FC61A835351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2CABCC-7165-4519-ADEB-4FC61A835351}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

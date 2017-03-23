@@ -1,24 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Common.Entry
 {
-    /// <summary>
-    /// Логика взаимодействия для EntryControl.xaml
-    /// </summary>
-    public partial class EntryControl : UserControl
+    public class EntryControl : UserControl
     {
         #region Members
 
@@ -27,6 +13,7 @@ namespace Common.Entry
         private bool enabledToEdit;
         private bool enabledToSearch;
         private ControlState controlState;
+        private static EntryControl entryControl;
 
         #endregion
 
@@ -42,8 +29,6 @@ namespace Common.Entry
             EnabledToCreate = false;
             EnabledToEdit = false;
             EnabledToSearch = false;
-
-            InitializeComponent();
         }
 
         #endregion
@@ -148,10 +133,16 @@ namespace Common.Entry
 
         public ControlState ControlState { get; private set; }
 
+        public DomainContext.DomainContext DomainContext { get; set; }
+
         #endregion
 
         #region Methods
 
+        public static EntryControl Instance()
+        {
+            return entryControl ?? (entryControl = new EntryControl());
+        }
         public virtual bool New()
         {
             bool result = true;

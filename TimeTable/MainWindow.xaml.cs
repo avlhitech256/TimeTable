@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using Common.DomainContext;
+using Common.Entry;
+using Common.Messenger;
+using Common.Messenger.Impl;
+using HighSchool.View;
 
 namespace TimeTable
 {
@@ -11,12 +14,6 @@ namespace TimeTable
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Members
-
-        private readonly DomainContext domainContex;
-
-        #endregion
-
         #region Constructors
 
         public MainWindow()
@@ -26,7 +23,8 @@ namespace TimeTable
             
             InitializeComponent();
             PopulateFooterBar();
-            domainContex = DomainContext.Instance();
+            SubscribeMessenger();
+
 
             if (splashScreen != null)
             {
@@ -47,6 +45,24 @@ namespace TimeTable
         #endregion
 
         #region Methods
+
+        private void SubscribeMessenger()
+        {
+            IMessenger messenger = DomainContext.Instance().Messenger;
+            messenger.Register<EntryControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
+        }
+
+        private void SetEntryControl(EntryControl entryControl)
+        {
+            if (entryControl is HighSchoolSearchControl)
+            {
+                EntryControl.Content = (HighSchoolSearchControl) entryControl;
+            }
+            else
+            {
+                EntryControl.Content = entryControl;
+            }
+        }
 
         private void PopulateFooterBar()
         {

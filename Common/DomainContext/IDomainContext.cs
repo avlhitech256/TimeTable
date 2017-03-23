@@ -1,4 +1,5 @@
-﻿using Common.Messenger;
+﻿using Common.Entry;
+using Common.Messenger;
 
 namespace Common.DomainContext
 {

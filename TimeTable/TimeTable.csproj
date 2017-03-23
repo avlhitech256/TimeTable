@@ -121,6 +121,10 @@
       <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HighSchool\HighSchool.csproj">
+      <Project>{5d2cabcc-7165-4519-adeb-4fc61a835351}</Project>
+      <Name>HighSchool</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\ipsa0.gif">

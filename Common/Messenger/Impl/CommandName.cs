@@ -8,9 +8,6 @@ namespace Common.Messenger.Impl
 {
     public enum CommandName
     {
-        SetBarcode,
-        SetWorkplace,
-        RegisterAssebledProduct,
-        RefreshQueueProduct
+        SetEntryControl
     }
 }

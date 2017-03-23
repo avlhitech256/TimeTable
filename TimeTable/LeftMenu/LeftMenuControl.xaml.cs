@@ -1,4 +1,9 @@
 ﻿using System.Windows.Controls;
+using Common.DomainContext;
+using Common.Entry;
+using Common.Messenger;
+using Common.Messenger.Impl;
+using HighSchool.View;
 
 namespace TimeTable.LeftMenu
 {
@@ -15,7 +20,7 @@ namespace TimeTable.LeftMenu
 
         private void InitLeftMenu()
         {
-            Button1.Tag = "N";
+            HighSchoolButton.Tag = "N";
             Button2.Tag = "N";
             Button3.Tag = "N";
         }
@@ -29,6 +34,21 @@ namespace TimeTable.LeftMenu
             if (button != null)
             {
                 button.Tag = "Y";
+                IMessenger messenger = DomainContext.Instance().Messenger;
+
+                if (messenger != null)
+                {
+                    if (button.Equals(HighSchoolButton))
+                    {
+                        messenger.Send(CommandName.SetEntryControl, (EntryControl) HighSchoolSearchControl.Instance());
+                    }
+                    else
+                    {
+                        messenger.Send(CommandName.SetEntryControl, EntryControl.Instance());
+                    }
+
+                }
+
             }
 
         }
