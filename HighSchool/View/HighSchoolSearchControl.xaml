@@ -24,5 +24,6 @@
                HorizontalContentAlignment="Center">
         </Label>
         <local:HighSchoolSearchCriteriaControl Grid.Row="1"></local:HighSchoolSearchCriteriaControl>
+        <local:HighSchoolSearchDataGridControl Grid.Row="2"></local:HighSchoolSearchDataGridControl>
     </Grid>
 </entry:EntryControl>

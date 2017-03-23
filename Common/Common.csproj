@@ -44,6 +44,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Convert\Convert.cs" />
+    <Compile Include="Data\Enum\StringEnum.cs" />
+    <Compile Include="Data\Notifier\Notifier.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
     <Compile Include="Entry\ControlState.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="Messenger\Impl\CommandName.cs" />
     <Compile Include="Messenger\Impl\Messenger.cs" />
     <Compile Include="Messenger\Impl\MessengerCommand.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

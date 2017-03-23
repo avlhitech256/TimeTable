@@ -54,13 +54,16 @@
     <Compile Include="View\HighSchoolSearchCriteriaControl.xaml.cs">
       <DependentUpon>HighSchoolSearchCriteriaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HighSchoolSearchDataGridControl.xaml.cs">
+      <DependentUpon>HighSchoolSearchDataGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HighSchoolSearchFieldsControl.xaml.cs">
       <DependentUpon>HighSchoolSearchFieldsControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Modal\" />
-    <Folder Include="ViewModal\" />
+    <Folder Include="Model\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\HighSchoolSearchButtonControl.xaml">
@@ -72,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HighSchoolSearchCriteriaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolSearchDataGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
