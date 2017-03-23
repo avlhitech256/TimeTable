@@ -24,8 +24,9 @@
     </Control.Resources>
     <StackPanel x:Name="LeftMenu" DockPanel.Dock="Left" Width="150" Background="Gray">
         <Border x:Name="HighSchoolButton" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
-            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
-                Some text here
+            <Label HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   Content="Учебные заведения">
             </Label>
         </Border>
         <Border x:Name="Button2" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">

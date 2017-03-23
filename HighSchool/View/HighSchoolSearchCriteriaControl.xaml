@@ -11,6 +11,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <local:HighSchoolSearchButtonControl Grid.Column="1"  Width="110"></local:HighSchoolSearchButtonControl>    
+        <local:HighSchoolSearchFieldsControl Grid.Column="0" Margin="5"/>
+        <local:HighSchoolSearchButtonControl Grid.Column="1" Width="150"/>
     </Grid>
 </UserControl>

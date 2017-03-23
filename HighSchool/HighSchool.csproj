@@ -54,6 +54,9 @@
     <Compile Include="View\HighSchoolSearchCriteriaControl.xaml.cs">
       <DependentUpon>HighSchoolSearchCriteriaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\HighSchoolSearchFieldsControl.xaml.cs">
+      <DependentUpon>HighSchoolSearchFieldsControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modal\" />
@@ -69,6 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HighSchoolSearchCriteriaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolSearchFieldsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
