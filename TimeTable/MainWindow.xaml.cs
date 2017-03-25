@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using Common.DomainContext;
 using Common.Entry;
 using Common.Messenger;
@@ -14,6 +15,12 @@ namespace TimeTable
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Members
+
+        private DomainContext context;
+
+        #endregion
+
         #region Constructors
 
         public MainWindow()
@@ -22,6 +29,8 @@ namespace TimeTable
             SplashScreen splashScreen = CreateSplashScreen(picturesList);
             
             InitializeComponent();
+            context = new DomainContext();
+            DataContext = context;
             PopulateFooterBar();
             SubscribeMessenger();
 
@@ -48,11 +57,10 @@ namespace TimeTable
 
         private void SubscribeMessenger()
         {
-            IMessenger messenger = DomainContext.Instance().Messenger;
-            messenger.Register<EntryControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
+            context.Messenger.Register<UserControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
         }
 
-        private void SetEntryControl(EntryControl entryControl)
+        private void SetEntryControl(UserControl entryControl)
         {
             if (entryControl is HighSchoolSearchControl)
             {

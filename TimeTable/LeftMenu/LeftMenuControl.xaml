@@ -24,22 +24,66 @@
     </Control.Resources>
     <Grid  Background="Gray">
     <StackPanel Margin="0,10,0,10" x:Name="LeftMenu" Width="150" >
-        <Border x:Name="HighSchoolButton" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
+        <Border x:Name="HighSchoolButton" 
+                Background="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Background}" 
+                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Cursor}" 
+                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.RenderTransformOrigin}" 
+                MouseUp="Border_MouseUp"
+                MouseEnter="Border_OnMouseEnter"
+                MouseLeave="Border_OnMouseLeave">
             <Label HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" 
                    Content="Учебные заведения">
             </Label>
         </Border>
-        <Border x:Name="Button2" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
-            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                Another text here
+        <Border x:Name="FacultyButton"
+                Background="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Background}" 
+                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Cursor}" 
+                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.RenderTransformOrigin}" 
+                MouseUp="Border_MouseUp"
+                MouseEnter="Border_OnMouseEnter"
+                MouseLeave="Border_OnMouseLeave">
+            <Label HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center"
+                   Content="Факультеты">
             </Label>
         </Border>
-        <Border x:Name="Button3" Style="{DynamicResource LeftMenuButton}" MouseUp="Border_MouseUp">
-            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
-                And some text here
+        <Border x:Name="ChairButton"
+                Background="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Background}" 
+                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Cursor}" 
+                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.RenderTransformOrigin}" 
+                MouseUp="Border_MouseUp"
+                MouseEnter="Border_OnMouseEnter"
+                MouseLeave="Border_OnMouseLeave">
+            <Label HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center"
+                   Content="Кафедры">
             </Label>
         </Border>
-    </StackPanel>
+        <Border x:Name="SpecialtyButton"
+                Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Background}" 
+                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Cursor}" 
+                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.RenderTransformOrigin}" 
+                MouseUp="Border_MouseUp"
+                MouseEnter="Border_OnMouseEnter"
+                MouseLeave="Border_OnMouseLeave">
+                <Label HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center"
+                   Content="Специальности">
+                </Label>
+            </Border>
+            <Border x:Name="SpecializationButton"
+                Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Background}" 
+                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Cursor}" 
+                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.RenderTransformOrigin}" 
+                MouseUp="Border_MouseUp"
+                MouseEnter="Border_OnMouseEnter"
+                MouseLeave="Border_OnMouseLeave">
+                <Label HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center"
+                   Content="Специализации">
+                </Label>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

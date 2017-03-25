@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Common.DomainContext;
 using Common.Entry;
 using Common.Messenger;
@@ -26,7 +28,6 @@ namespace TimeTable.LeftMenu
         public LeftMenuControl()
         {
             InitializeComponent();
-            InitLeftMenu();
             entry = EntryControl.Instance();
         }
 
@@ -55,40 +56,38 @@ namespace TimeTable.LeftMenu
 
         #region Methods
 
-        private void InitLeftMenu()
+        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            HighSchoolButton.Tag = "N";
-            Button2.Tag = "N";
-            Button3.Tag = "N";
-        }
-
-        private void Border_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            InitLeftMenu();
-
             Border button = sender as Border;
 
             if (button != null)
             {
-                button.Tag = "Y";
-                //IMessenger messenger = DomainContext.Instance().Messenger;
+                DomainContext context = DataContext as DomainContext;
 
-                //if (messenger != null)
-                //{
+                if (context != null)
+                {
                     if (button.Equals(HighSchoolButton))
                     {
-                        //messenger.Send(CommandName.SetEntryControl, (EntryControl) HighSchoolSearchControl.Instance());
-                        //Entry = HighSchoolSearchControl.Instance();
-                        ((MainWindow)((DockPanel)this.Parent).Parent).EntryControl.Content = HighSchoolSearchControl.Instance();
-                }
-                    else
+                        context.MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Selected = true;
+                    }
+                    else if (button.Equals(FacultyButton))
                     {
-                    //messenger.Send(CommandName.SetEntryControl, EntryControl.Instance());
-                    //Entry = EntryControl.Instance();
-                    ((MainWindow)((DockPanel)this.Parent).Parent).EntryControl.Content = EntryControl.Instance();
-                }
+                        context.MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Selected = true;
+                    }
+                    else if (button.Equals(ChairButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Selected = true;
+                    }
+                    else if (button.Equals(SpecialtyButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Selected = true;
+                    }
+                    else if (button.Equals(SpecializationButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Selected = true;
+                    }
 
-                //}
+                }
 
             }
 
@@ -107,6 +106,82 @@ namespace TimeTable.LeftMenu
         }
 
         #endregion
+
+        private void Border_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            Border button = sender as Border;
+
+            if (button != null)
+            {
+                DomainContext context = DataContext as DomainContext;
+
+                if (context != null)
+                {
+
+                    if (button.Equals(HighSchoolButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.IsMouseOver = true;
+                    }
+                    else if (button.Equals(FacultyButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.IsMouseOver = true;
+                    }
+                    else if (button.Equals(ChairButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.ChairMenuItemStyle.IsMouseOver = true;
+                    }
+                    else if (button.Equals(SpecialtyButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.IsMouseOver = true;
+                    }
+                    else if (button.Equals(SpecializationButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.IsMouseOver = true;
+                    }
+
+                }
+
+            }
+
+        }
+
+        private void Border_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            Border button = sender as Border;
+
+            if (button != null)
+            {
+                DomainContext context = DataContext as DomainContext;
+
+                if (context != null)
+                {
+
+                    if (button.Equals(HighSchoolButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.IsMouseOver = false;
+                    }
+                    else if (button.Equals(FacultyButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.IsMouseOver = false;
+                    }
+                    else if (button.Equals(ChairButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.ChairMenuItemStyle.IsMouseOver = false;
+                    }
+                    else if (button.Equals(SpecialtyButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.IsMouseOver = false;
+                    }
+                    else if (button.Equals(SpecializationButton))
+                    {
+                        context.MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.IsMouseOver = false;
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 

@@ -1,27 +1,18 @@
-﻿using System.Windows;
-using Common.Entry;
-using Common.Messenger;
+﻿using Common.Messenger;
+using Common.ViewModel;
 
 namespace Common.DomainContext
 {
     public class DomainContext : IDomainContext
     {
-        #region Members
-
-        private static DomainContext context;
-
-        #endregion
-        private DomainContext()
+        public DomainContext()
         {
             Messenger = new Messenger.Messenger();
-        }
-
-        public static DomainContext Instance()
-        {
-            return context ?? (context = new DomainContext());
+            MainViewModel = new MainViewModel();
         }
 
         public IMessenger Messenger { get; }
+        public MainViewModel MainViewModel { get; }
 
     }
 
