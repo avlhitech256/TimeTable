@@ -1,5 +1,4 @@
-﻿using System.Windows.Media;
-using Common.Data.Notifier;
+﻿using Common.Data.Notifier;
 
 namespace Common.ViewModel
 {
@@ -39,25 +38,6 @@ namespace Common.ViewModel
 
             }
 
-        }
-
-        #endregion
-
-        #region Methods
-
-        private Brush CreateBrush(string color)
-        {
-            Brush brush = null;
-
-            object convertFromString = ColorConverter.ConvertFromString(color);
-
-            if (convertFromString != null)
-            {
-                Color colorForBrush = (Color)convertFromString;
-                brush = new SolidColorBrush(colorForBrush);
-            }
-
-            return brush;
         }
 
         #endregion
