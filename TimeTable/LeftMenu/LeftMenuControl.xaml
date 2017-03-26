@@ -6,28 +6,12 @@
              xmlns:local="clr-namespace:TimeTable.LeftMenu"
              mc:Ignorable="d" 
              >
-    <Control.Resources>
-        <Style x:Key="LeftMenuButton" TargetType="Border">
-            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <!-- <Setter Property="Background"  Value="Gray"/>-->
-            <Style.Triggers>
-                <Trigger Property="Tag" Value="Y">
-                    <Setter Property="Background" Value="#FF4747B8" />
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FF646464">
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Control.Resources>
     <Grid  Background="Gray">
     <StackPanel Margin="0,10,0,10" x:Name="LeftMenu" Width="150" >
         <Border x:Name="HighSchoolButton" 
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5"
                 Background="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Background}" 
-                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Cursor}" 
-                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.RenderTransformOrigin}" 
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
@@ -38,8 +22,8 @@
         </Border>
         <Border x:Name="FacultyButton"
                 Background="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Background}" 
-                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Cursor}" 
-                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.RenderTransformOrigin}" 
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
@@ -50,8 +34,8 @@
         </Border>
         <Border x:Name="ChairButton"
                 Background="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Background}" 
-                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Cursor}" 
-                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.RenderTransformOrigin}" 
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
@@ -62,8 +46,8 @@
         </Border>
         <Border x:Name="SpecialtyButton"
                 Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Background}" 
-                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Cursor}" 
-                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.RenderTransformOrigin}" 
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
@@ -74,8 +58,8 @@
             </Border>
             <Border x:Name="SpecializationButton"
                 Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Background}" 
-                Cursor="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Cursor}" 
-                RenderTransformOrigin="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.RenderTransformOrigin}" 
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">

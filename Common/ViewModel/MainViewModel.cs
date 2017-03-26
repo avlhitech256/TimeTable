@@ -15,10 +15,7 @@ namespace Common.ViewModel
 
         public MainViewModel()
         {
-            menuItemsStyle = new MenuItemsStyle(CreateBrush("#FF808080"), 
-                                                CreateBrush("#FF646464"), 
-                                                CreateBrush("#FF4747B8"), 
-                                                CreateBrush("#FF6767D8"));
+            menuItemsStyle = new MenuItemsStyle("#FF808080", "#FF646464", "#FF4747B8", "#FF6767D8");
         }
 
         #endregion

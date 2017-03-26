@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using Common.Data.Notifier;
+﻿using Common.Data.Notifier;
 
 namespace Common.ViewModel
 {
@@ -9,14 +6,12 @@ namespace Common.ViewModel
     {
         #region Members
 
-        private Brush notSelectedAndMouseIsNotOverBrush;
-        private Brush notSelectedAndMouseIsOverBrush;
-        private Brush selectedAndMouseIsNotOverBrush;
-        private Brush selectedAndMouseIsOverBrush;
+        private string backgroundColorString;
+        private string notSelectedAndMouseIsNotOverColorString;
+        private string notSelectedAndMouseIsOverColorString;
+        private string selectedAndMouseIsNotOverColorString;
+        private string selectedAndMouseIsOverColorString;
 
-        private Point renderTransformOrigin;
-        private Brush background;
-        private Cursor cursor;
         private bool selected;
         private bool isMouseOver;
 
@@ -28,20 +23,18 @@ namespace Common.ViewModel
         {
         }
 
-        public MenuItemStyle(Brush notSelectedAndMouseIsNotOverBrush,
-                             Brush notSelectedAndMouseIsOverBrush,
-                             Brush selectedAndMouseIsNotOverBrush,
-                             Brush selectedAndMouseIsOverBrush)
+        public MenuItemStyle(string notSelectedAndMouseIsNotOverColorString,
+                             string notSelectedAndMouseIsOverColorString,
+                             string selectedAndMouseIsNotOverColorString,
+                             string selectedAndMouseIsOverColorString)
         {
-            this.notSelectedAndMouseIsNotOverBrush = notSelectedAndMouseIsNotOverBrush;
-            this.notSelectedAndMouseIsOverBrush = notSelectedAndMouseIsOverBrush;
-            this.selectedAndMouseIsNotOverBrush = selectedAndMouseIsNotOverBrush;
-            this.selectedAndMouseIsOverBrush = selectedAndMouseIsOverBrush;
-            SetDefaultBrush();
+            this.notSelectedAndMouseIsNotOverColorString = notSelectedAndMouseIsNotOverColorString;
+            this.notSelectedAndMouseIsOverColorString = notSelectedAndMouseIsOverColorString;
+            this.selectedAndMouseIsNotOverColorString = selectedAndMouseIsNotOverColorString;
+            this.selectedAndMouseIsOverColorString = selectedAndMouseIsOverColorString;
+            SetDefaultBackgroundColors();
 
-            renderTransformOrigin = new Point(0.5, 0.5);
-            background = notSelectedAndMouseIsNotOverBrush;
-            cursor = Cursors.Hand;
+            backgroundColorString = notSelectedAndMouseIsNotOverColorString;
             selected = false;
             isMouseOver = false;
         }
@@ -50,56 +43,36 @@ namespace Common.ViewModel
 
         #region Properties
 
-        public Brush NotSelectedAndMouseIsNotOverBrush
+        public string NotSelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsNotOverBrush;
+                return notSelectedAndMouseIsNotOverColorString;
             }
 
             set
             {
-                if (notSelectedAndMouseIsNotOverBrush == null || notSelectedAndMouseIsNotOverBrush.Equals(value))
+                if (notSelectedAndMouseIsNotOverColorString != value)
                 {
-                    notSelectedAndMouseIsNotOverBrush = value;
+                    notSelectedAndMouseIsNotOverColorString = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
             }
         }
 
-        public Brush NotSelectedAndMouseIsOverBrush
+        public string NotSelectedAndMouseIsOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsOverBrush;
+                return notSelectedAndMouseIsOverColorString;
             }
 
             set
             {
-                if (notSelectedAndMouseIsOverBrush == null || notSelectedAndMouseIsOverBrush.Equals(value))
+                if (notSelectedAndMouseIsOverColorString != value)
                 {
-                    notSelectedAndMouseIsOverBrush = value;
-                    OnPropertyChanged();
-                    ChangeBackgroundBrush();
-                }
-
-            }
-
-        }
-
-        public Brush SelectedAndMouseIsNotOverBrush
-        {
-            get
-            {
-                return selectedAndMouseIsNotOverBrush;
-            }
-
-            set
-            {
-                if (selectedAndMouseIsNotOverBrush == null || selectedAndMouseIsNotOverBrush.Equals(value))
-                {
-                    selectedAndMouseIsNotOverBrush = value;
+                    notSelectedAndMouseIsOverColorString = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
@@ -108,18 +81,38 @@ namespace Common.ViewModel
 
         }
 
-        public Brush SelectedAndMouseIsOverBrush
+        public string SelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return selectedAndMouseIsOverBrush;
+                return selectedAndMouseIsNotOverColorString;
             }
 
             set
             {
-                if (selectedAndMouseIsOverBrush == null || selectedAndMouseIsOverBrush.Equals(value))
+                if (selectedAndMouseIsNotOverColorString != value)
                 {
-                    selectedAndMouseIsOverBrush = value;
+                    selectedAndMouseIsNotOverColorString = value;
+                    OnPropertyChanged();
+                    ChangeBackgroundBrush();
+                }
+
+            }
+
+        }
+
+        public string SelectedAndMouseIsOverBackgroundColor
+        {
+            get
+            {
+                return selectedAndMouseIsOverColorString;
+            }
+
+            set
+            {
+                if (selectedAndMouseIsOverColorString != value)
+                {
+                    selectedAndMouseIsOverColorString = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
@@ -168,56 +161,18 @@ namespace Common.ViewModel
 
         }
 
-        public Point RenderTransformOrigin
+        public string Background
         {
             get
             {
-                return renderTransformOrigin;
+                return backgroundColorString;
             }
 
             set
             {
-                if (renderTransformOrigin == null || !renderTransformOrigin.Equals(value))
+                if (backgroundColorString != value)
                 {
-                    renderTransformOrigin = value;
-                    OnPropertyChanged();
-                }
-
-            }
-
-        }
-
-        public Brush Background
-        {
-            get
-            {
-                return background;
-            }
-
-            set
-            {
-                if (background == null || !background.Equals(value))
-                {
-                    background = value;
-                    OnPropertyChanged();
-                }
-
-            }
-
-        }
-
-        public Cursor Cursor
-        {
-            get
-            {
-                return cursor;
-            }
-
-            set
-            {
-                if (cursor == null || !cursor.Equals(value))
-                {
-                    cursor = value;
+                    backgroundColorString = value;
                     OnPropertyChanged();
                 }
 
@@ -229,59 +184,46 @@ namespace Common.ViewModel
 
         #region Methods
 
-        private void SetDefaultBrush()
+        private void SetDefaultBackgroundColors()
         {
-
-            if (NotSelectedAndMouseIsNotOverBrush == null)
+            if (NotSelectedAndMouseIsNotOverBackgroundColor == null)
             {
-                NotSelectedAndMouseIsNotOverBrush = CreateBrush("#FF808080");
+                NotSelectedAndMouseIsNotOverBackgroundColor = "#FF808080";
             }
 
-            if (NotSelectedAndMouseIsOverBrush == null)
+            if (NotSelectedAndMouseIsOverBackgroundColor == null)
             {
-                NotSelectedAndMouseIsOverBrush = CreateBrush("#FF646464");
+                NotSelectedAndMouseIsOverBackgroundColor = "#FF646464";
             }
 
-            if (SelectedAndMouseIsNotOverBrush == null)
+            if (SelectedAndMouseIsNotOverBackgroundColor == null)
             {
-                SelectedAndMouseIsNotOverBrush = CreateBrush("#FF4747B8");
+                SelectedAndMouseIsNotOverBackgroundColor = "#FF4747B8";
             }
 
-            if (SelectedAndMouseIsOverBrush == null)
+            if (SelectedAndMouseIsOverBackgroundColor == null)
             {
-                SelectedAndMouseIsOverBrush = CreateBrush("#FF5757C8");
+                SelectedAndMouseIsOverBackgroundColor = "#FF6767D8";
             }
 
-        }
-
-        private Brush CreateBrush(string color)
-        {
-            Brush brush = null;
-
-            object convertFromString = ColorConverter.ConvertFromString(color);
-
-            if (convertFromString != null)
-            {
-                Color colorForBrush = (Color) convertFromString;
-                brush = new SolidColorBrush(colorForBrush);
-            }
-
-            return brush;
         }
 
         private void ChangeBackgroundBrush()
         {
             Background = Selected
-                ? (IsMouseOver ? selectedAndMouseIsOverBrush : selectedAndMouseIsNotOverBrush)
-                : (IsMouseOver ? notSelectedAndMouseIsOverBrush : notSelectedAndMouseIsNotOverBrush);
+                ? (IsMouseOver ? SelectedAndMouseIsOverBackgroundColor : SelectedAndMouseIsNotOverBackgroundColor)
+                : (IsMouseOver ? NotSelectedAndMouseIsOverBackgroundColor : NotSelectedAndMouseIsNotOverBackgroundColor);
         }
 
         public bool Equals(MenuItemStyle other)
         {
-            bool result = Selected.Equals(other.Selected) &&
-                          RenderTransformOrigin.Equals(other.RenderTransformOrigin) &&
-                          Background.Equals(other.Background) &&
-                          Cursor.Equals(other.Cursor);
+            bool result = Selected == other.Selected &&
+                          IsMouseOver == other.IsMouseOver &&
+                          Background == other.Background &&
+                          NotSelectedAndMouseIsNotOverBackgroundColor == other.NotSelectedAndMouseIsNotOverBackgroundColor &&
+                          NotSelectedAndMouseIsOverBackgroundColor == other.NotSelectedAndMouseIsOverBackgroundColor &&
+                          SelectedAndMouseIsNotOverBackgroundColor == other.SelectedAndMouseIsNotOverBackgroundColor &&
+                          SelectedAndMouseIsOverBackgroundColor == other.SelectedAndMouseIsOverBackgroundColor;
 
             return result;
         }

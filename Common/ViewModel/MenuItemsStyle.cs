@@ -14,10 +14,10 @@ namespace Common.ViewModel
     {
         #region Members
 
-        private Brush notSelectedAndMouseIsNotOverBrush;
-        private Brush notSelectedAndMouseIsOverBrush;
-        private Brush selectedAndMouseIsNotOverBrush;
-        private Brush selectedAndMouseIsOverBrush;
+        private string notSelectedAndMouseIsNotOverBackgroundColor;
+        private string notSelectedAndMouseIsOverBackgroundColor;
+        private string selectedAndMouseIsNotOverBackgroundColor;
+        private string selectedAndMouseIsOverBackgroundColor;
 
         private List<MenuItemStyle> menuItems; 
         private MenuItemStyle highSchoolMenuItemStyle;
@@ -34,36 +34,36 @@ namespace Common.ViewModel
         {
         } 
 
-        public MenuItemsStyle(Brush notSelectedAndMouseIsNotOverBrush,
-                              Brush notSelectedAndMouseIsOverBrush,
-                              Brush selectedAndMouseIsNotOverBrush,
-                              Brush selectedAndMouseIsOverBrush)
+        public MenuItemsStyle(string notSelectedAndMouseIsNotOverColorString,
+                             string notSelectedAndMouseIsOverColorString,
+                             string selectedAndMouseIsNotOverColorString,
+                             string selectedAndMouseIsOverColorString)
         {
-            this.notSelectedAndMouseIsNotOverBrush = notSelectedAndMouseIsNotOverBrush;
-            this.notSelectedAndMouseIsOverBrush = notSelectedAndMouseIsOverBrush;
-            this.selectedAndMouseIsNotOverBrush = selectedAndMouseIsNotOverBrush;
-            this.selectedAndMouseIsOverBrush = selectedAndMouseIsOverBrush;
+            this.notSelectedAndMouseIsNotOverBackgroundColor = notSelectedAndMouseIsNotOverColorString;
+            this.notSelectedAndMouseIsOverBackgroundColor = notSelectedAndMouseIsOverColorString;
+            this.selectedAndMouseIsNotOverBackgroundColor = selectedAndMouseIsNotOverColorString;
+            this.selectedAndMouseIsOverBackgroundColor = selectedAndMouseIsOverColorString;
 
-            highSchoolMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverBrush,
-                                                        notSelectedAndMouseIsOverBrush, 
-                                                        selectedAndMouseIsNotOverBrush, 
-                                                        selectedAndMouseIsOverBrush);
-            facultyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverBrush,
-                                                     notSelectedAndMouseIsOverBrush,
-                                                     selectedAndMouseIsNotOverBrush,
-                                                     selectedAndMouseIsOverBrush);
-            chairMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverBrush,
-                                                   notSelectedAndMouseIsOverBrush,
-                                                   selectedAndMouseIsNotOverBrush,
-                                                   selectedAndMouseIsOverBrush);
-            specialtyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverBrush,
-                                                       notSelectedAndMouseIsOverBrush,
-                                                       selectedAndMouseIsNotOverBrush,
-                                                       selectedAndMouseIsOverBrush);
-            specializationMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverBrush,
-                                                            notSelectedAndMouseIsOverBrush,
-                                                            selectedAndMouseIsNotOverBrush,
-                                                            selectedAndMouseIsOverBrush);
+            highSchoolMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+                                                        notSelectedAndMouseIsOverColorString,
+                                                        selectedAndMouseIsNotOverColorString,
+                                                        selectedAndMouseIsOverColorString);
+            facultyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+                                                     notSelectedAndMouseIsOverColorString,
+                                                     selectedAndMouseIsNotOverColorString,
+                                                     selectedAndMouseIsOverColorString);
+            chairMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+                                                   notSelectedAndMouseIsOverColorString,
+                                                   selectedAndMouseIsNotOverColorString,
+                                                   selectedAndMouseIsOverColorString);
+            specialtyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+                                                       notSelectedAndMouseIsOverColorString,
+                                                       selectedAndMouseIsNotOverColorString,
+                                                       selectedAndMouseIsOverColorString);
+            specializationMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+                                                           notSelectedAndMouseIsOverColorString,
+                                                           selectedAndMouseIsNotOverColorString,
+                                                           selectedAndMouseIsOverColorString);
 
             menuItems = new List<MenuItemStyle>();
 
@@ -78,69 +78,45 @@ namespace Common.ViewModel
 
         #region Properties
 
-        public Brush NotSelectedAndMouseIsNotOverBrush
+        public string NotSelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsNotOverBrush;
+                return notSelectedAndMouseIsNotOverBackgroundColor;
             }
 
             set
             {
-                if (notSelectedAndMouseIsNotOverBrush == null || notSelectedAndMouseIsNotOverBrush.Equals(value))
+                if (notSelectedAndMouseIsNotOverBackgroundColor == null || notSelectedAndMouseIsNotOverBackgroundColor.Equals(value))
                 {
-                    notSelectedAndMouseIsNotOverBrush = value;
+                    notSelectedAndMouseIsNotOverBackgroundColor = value;
                     OnPropertyChanged();
                     menuItems.ForEach(
                         item =>
                         {
-                            item.NotSelectedAndMouseIsNotOverBrush = NotSelectedAndMouseIsNotOverBrush;
+                            item.NotSelectedAndMouseIsNotOverBackgroundColor = NotSelectedAndMouseIsNotOverBackgroundColor;
                         });
                 }
             }
         }
 
-        public Brush NotSelectedAndMouseIsOverBrush
+        public string NotSelectedAndMouseIsOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsOverBrush;
+                return notSelectedAndMouseIsOverBackgroundColor;
             }
 
             set
             {
-                if (notSelectedAndMouseIsOverBrush == null || notSelectedAndMouseIsOverBrush.Equals(value))
+                if (notSelectedAndMouseIsOverBackgroundColor != value)
                 {
-                    notSelectedAndMouseIsOverBrush = value;
+                    notSelectedAndMouseIsOverBackgroundColor = value;
                     OnPropertyChanged();
                     menuItems.ForEach(
                         item =>
                         {
-                            item.NotSelectedAndMouseIsOverBrush = NotSelectedAndMouseIsOverBrush;
-                        });
-                }
-
-            }
-
-        }
-
-        public Brush SelectedAndMouseIsNotOverBrush
-        {
-            get
-            {
-                return selectedAndMouseIsNotOverBrush;
-            }
-
-            set
-            {
-                if (selectedAndMouseIsNotOverBrush == null || selectedAndMouseIsNotOverBrush.Equals(value))
-                {
-                    selectedAndMouseIsNotOverBrush = value;
-                    OnPropertyChanged();
-                    menuItems.ForEach(
-                        item =>
-                        {
-                            item.SelectedAndMouseIsNotOverBrush = SelectedAndMouseIsNotOverBrush;
+                            item.NotSelectedAndMouseIsOverBackgroundColor = NotSelectedAndMouseIsOverBackgroundColor;
                         });
                 }
 
@@ -148,23 +124,47 @@ namespace Common.ViewModel
 
         }
 
-        public Brush SelectedAndMouseIsOverBrush
+        public string SelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return selectedAndMouseIsOverBrush;
+                return selectedAndMouseIsNotOverBackgroundColor;
             }
 
             set
             {
-                if (selectedAndMouseIsOverBrush == null || selectedAndMouseIsOverBrush.Equals(value))
+                if (selectedAndMouseIsNotOverBackgroundColor == null || selectedAndMouseIsNotOverBackgroundColor.Equals(value))
                 {
-                    selectedAndMouseIsOverBrush = value;
+                    selectedAndMouseIsNotOverBackgroundColor = value;
                     OnPropertyChanged();
                     menuItems.ForEach(
                         item =>
                         {
-                            item.SelectedAndMouseIsOverBrush = SelectedAndMouseIsOverBrush;
+                            item.SelectedAndMouseIsNotOverBackgroundColor = SelectedAndMouseIsNotOverBackgroundColor;
+                        });
+                }
+
+            }
+
+        }
+
+        public string SelectedAndMouseIsOverBackgroundColor
+        {
+            get
+            {
+                return selectedAndMouseIsOverBackgroundColor;
+            }
+
+            set
+            {
+                if (selectedAndMouseIsOverBackgroundColor == null || selectedAndMouseIsOverBackgroundColor.Equals(value))
+                {
+                    selectedAndMouseIsOverBackgroundColor = value;
+                    OnPropertyChanged();
+                    menuItems.ForEach(
+                        item =>
+                        {
+                            item.SelectedAndMouseIsOverBackgroundColor = SelectedAndMouseIsOverBackgroundColor;
                         });
                 }
 
