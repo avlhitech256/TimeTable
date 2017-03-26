@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using Common.Data.Enum;
 using Common.DomainContext;
 using Common.Entry;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using HighSchool.View;
@@ -32,6 +34,7 @@ namespace TimeTable
             context = new DomainContext();
             DataContext = context;
             PopulateFooterBar();
+            SubscribeLeftMenu();
             SubscribeMessenger();
 
 
@@ -55,12 +58,43 @@ namespace TimeTable
 
         #region Methods
 
-        private void SubscribeMessenger()
+        private void SubscribeLeftMenu()
         {
-            context.Messenger.Register<UserControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
+            context.MainViewModel.MenuItemsStyle.MenuChanged += OnChangedLeftMenu;
         }
 
-        private void SetEntryControl(UserControl entryControl)
+        private void OnChangedLeftMenu(object sender, MenuChangedEventArgs args)
+        {
+            switch (args.MenuItemName)
+            {
+                case MenuItemName.HighSchool:
+                    EntryControl.Content = new HighSchoolSearchControl();
+                    break;
+                case MenuItemName.Faculty:
+                    EntryControl.Content = null;
+                    break;
+                case MenuItemName.Chair:
+                    EntryControl.Content = null;
+                    break;
+                case MenuItemName.Specialty:
+                    EntryControl.Content = null;
+                    break;
+                case MenuItemName.Specialization:
+                    EntryControl.Content = null;
+                    break;
+                default:
+                    EntryControl.Content = null;
+                    break;
+            }
+
+        }
+
+        private void SubscribeMessenger()
+        {
+            context.Messenger.Register<EntryControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
+        }
+
+        private void SetEntryControl(EntryControl entryControl)
         {
             if (entryControl is HighSchoolSearchControl)
             {

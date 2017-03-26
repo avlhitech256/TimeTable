@@ -1,4 +1,5 @@
-﻿using Common.Data.Notifier;
+﻿using Common.Data.Enum;
+using Common.Data.Notifier;
 
 namespace Common.ViewModel
 {
@@ -6,6 +7,7 @@ namespace Common.ViewModel
     {
         #region Members
 
+        private MenuItemName name;
         private string backgroundColorString;
         private string notSelectedAndMouseIsNotOverColorString;
         private string notSelectedAndMouseIsOverColorString;
@@ -19,15 +21,17 @@ namespace Common.ViewModel
 
         #region Constructors
 
-        public MenuItemStyle() : this(null, null, null, null)
+        public MenuItemStyle() : this(MenuItemName.HighSchool, null, null, null, null)
         {
         }
 
-        public MenuItemStyle(string notSelectedAndMouseIsNotOverColorString,
+        public MenuItemStyle(MenuItemName name,
+                             string notSelectedAndMouseIsNotOverColorString,
                              string notSelectedAndMouseIsOverColorString,
                              string selectedAndMouseIsNotOverColorString,
                              string selectedAndMouseIsOverColorString)
         {
+            this.name = name;
             this.notSelectedAndMouseIsNotOverColorString = notSelectedAndMouseIsNotOverColorString;
             this.notSelectedAndMouseIsOverColorString = notSelectedAndMouseIsOverColorString;
             this.selectedAndMouseIsNotOverColorString = selectedAndMouseIsNotOverColorString;
@@ -42,6 +46,25 @@ namespace Common.ViewModel
         #endregion
 
         #region Properties
+
+        public MenuItemName Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                if (name != value)
+                {
+                    name = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
 
         public string NotSelectedAndMouseIsNotOverBackgroundColor
         {

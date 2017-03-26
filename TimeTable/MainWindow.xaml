@@ -13,7 +13,7 @@
         <topMenu:TopMenuControl x:Name="TopMenuControl" DockPanel.Dock="Top" Height="Auto"/>
         <footerStatusBar:FooterStatusBarControl x:Name="FooterBarControl" Height="Auto" DockPanel.Dock="Bottom" HorizontalAlignment="Right"/>
         <leftMenu:LeftMenuControl x:Name="LeftMenuControl" DockPanel.Dock="Left"/>
-        <UserControl x:Name="EntryControl" Content="{Binding LeftMenuControl.Entry}"></UserControl>
+        <UserControl x:Name="EntryControl"></UserControl>
         <!-- <entry:EntryControl x:Name="EntityControl"/> -->
     </DockPanel>
 </Window>

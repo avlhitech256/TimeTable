@@ -6,7 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 
 namespace Common.ViewModel
 {
@@ -39,31 +41,36 @@ namespace Common.ViewModel
                              string selectedAndMouseIsNotOverColorString,
                              string selectedAndMouseIsOverColorString)
         {
-            this.notSelectedAndMouseIsNotOverBackgroundColor = notSelectedAndMouseIsNotOverColorString;
-            this.notSelectedAndMouseIsOverBackgroundColor = notSelectedAndMouseIsOverColorString;
-            this.selectedAndMouseIsNotOverBackgroundColor = selectedAndMouseIsNotOverColorString;
-            this.selectedAndMouseIsOverBackgroundColor = selectedAndMouseIsOverColorString;
+            notSelectedAndMouseIsNotOverBackgroundColor = notSelectedAndMouseIsNotOverColorString;
+            notSelectedAndMouseIsOverBackgroundColor = notSelectedAndMouseIsOverColorString;
+            selectedAndMouseIsNotOverBackgroundColor = selectedAndMouseIsNotOverColorString;
+            selectedAndMouseIsOverBackgroundColor = selectedAndMouseIsOverColorString;
 
-            highSchoolMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+            highSchoolMenuItemStyle = new MenuItemStyle(MenuItemName.HighSchool,
+                                                        notSelectedAndMouseIsNotOverColorString,
                                                         notSelectedAndMouseIsOverColorString,
                                                         selectedAndMouseIsNotOverColorString,
                                                         selectedAndMouseIsOverColorString);
-            facultyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+            facultyMenuItemStyle = new MenuItemStyle(MenuItemName.Faculty,
+                                                     notSelectedAndMouseIsNotOverColorString,
                                                      notSelectedAndMouseIsOverColorString,
                                                      selectedAndMouseIsNotOverColorString,
                                                      selectedAndMouseIsOverColorString);
-            chairMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+            chairMenuItemStyle = new MenuItemStyle(MenuItemName.Chair,
+                                                   notSelectedAndMouseIsNotOverColorString,
                                                    notSelectedAndMouseIsOverColorString,
                                                    selectedAndMouseIsNotOverColorString,
                                                    selectedAndMouseIsOverColorString);
-            specialtyMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
+            specialtyMenuItemStyle = new MenuItemStyle(MenuItemName.Specialty,
+                                                       notSelectedAndMouseIsNotOverColorString,
                                                        notSelectedAndMouseIsOverColorString,
                                                        selectedAndMouseIsNotOverColorString,
                                                        selectedAndMouseIsOverColorString);
-            specializationMenuItemStyle = new MenuItemStyle(notSelectedAndMouseIsNotOverColorString,
-                                                           notSelectedAndMouseIsOverColorString,
-                                                           selectedAndMouseIsNotOverColorString,
-                                                           selectedAndMouseIsOverColorString);
+            specializationMenuItemStyle = new MenuItemStyle(MenuItemName.Specialization,
+                                                            notSelectedAndMouseIsNotOverColorString,
+                                                            notSelectedAndMouseIsOverColorString,
+                                                            selectedAndMouseIsNotOverColorString,
+                                                            selectedAndMouseIsOverColorString);
 
             menuItems = new List<MenuItemStyle>();
 
@@ -306,6 +313,7 @@ namespace Common.ViewModel
                 if (menuItem != null && menuItem.Selected)
                 {
                     menuItems.Where(item => item != menuItem).ToList().ForEach(item => item.Selected = false);
+                    OnMenuChanged(menuItem.Name);
                 }
 
             }
@@ -314,6 +322,18 @@ namespace Common.ViewModel
 
         #endregion
 
+        #region Events
+
+        public delegate void MenuChangedEventHandler(object sender, MenuChangedEventArgs args);
+
+        public event MenuChangedEventHandler MenuChanged;
+
+        private void OnMenuChanged(MenuItemName menuName)
+        {
+            MenuChanged?.Invoke(this, new MenuChangedEventArgs(menuName));
+        }
+
+        #endregion
     }
 
 }

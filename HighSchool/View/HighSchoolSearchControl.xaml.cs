@@ -8,19 +8,11 @@ namespace HighSchool.View
     /// </summary>
     public partial class HighSchoolSearchControl : EntryControl
     {
-        #region Members
-
-        private static HighSchoolSearchControl control;
-
-        #endregion
-        private HighSchoolSearchControl()
+        public HighSchoolSearchControl()
         {
             InitializeComponent();
         }
 
-        public static HighSchoolSearchControl Instance()
-        {
-            return control ?? (control = new HighSchoolSearchControl());
-        }
     }
+
 }

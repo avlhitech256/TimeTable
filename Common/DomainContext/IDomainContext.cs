@@ -1,5 +1,4 @@
 ﻿using Common.Annotations;
-using Common.Entry;
 using Common.Messenger;
 using Common.ViewModel;
 
@@ -12,5 +11,7 @@ namespace Common.DomainContext
 
         [CanBeNull]
         MainViewModel MainViewModel { get; }
+
     }
+
 }
