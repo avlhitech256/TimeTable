@@ -1,8 +1,8 @@
 ﻿using Common.Data.Notifier;
 
-namespace Common.ViewModel
+namespace TimeTable.ViewModel.LeftMenu
 {
-    public class MainViewModel : Notifier
+    public class LeftMenuViewModel : Notifier
     {
         #region Members
 
@@ -12,7 +12,7 @@ namespace Common.ViewModel
 
         #region Constructors
 
-        public MainViewModel()
+        public LeftMenuViewModel()
         {
             menuItemsStyle = new MenuItemsStyle("#FF808080", "#FF646464", "#FF4747B8", "#FF6767D8");
         }

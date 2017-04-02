@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Event;
 
-namespace Common.ViewModel
+namespace TimeTable.ViewModel.LeftMenu
 {
     public class MenuItemsStyle : Notifier
     {
@@ -274,6 +269,10 @@ namespace Common.ViewModel
 
         }
 
+        #endregion
+        
+        #region Methods
+
         private MenuItemStyle ReplaceMenuItem(MenuItemStyle oldMenuItem, MenuItemStyle newMenuItem)
         {
             DeleteMenuItem(oldMenuItem);
@@ -316,6 +315,56 @@ namespace Common.ViewModel
                     OnMenuChanged(menuItem.Name);
                 }
 
+            }
+
+        }
+
+        public void SetMouseOverMenuItems(LeftMenuMouseOverEventArgs args)
+        {
+            MenuItemName menuItemName = args.MenuItemName;
+
+            switch (menuItemName)
+            {
+                case MenuItemName.HighSchool:
+                    HighSchoolMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
+                case MenuItemName.Faculty:
+                    FacultyMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
+                case MenuItemName.Chair:
+                    ChairMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
+                case MenuItemName.Specialty:
+                    SpecialtyMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
+                case MenuItemName.Specialization:
+                    SpecializationMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
+            }
+
+        }
+
+        public void SetMouseUpMenuItems(MenuChangedEventArgs args)
+        {
+            MenuItemName menuItemName = args.MenuItemName;
+
+            switch (menuItemName)
+            {
+                case MenuItemName.HighSchool:
+                    HighSchoolMenuItemStyle.Selected = true;
+                    break;
+                case MenuItemName.Faculty:
+                    FacultyMenuItemStyle.Selected = true;
+                    break;
+                case MenuItemName.Chair:
+                    ChairMenuItemStyle.Selected = true;
+                    break;
+                case MenuItemName.Specialty:
+                    SpecialtyMenuItemStyle.Selected = true;
+                    break;
+                case MenuItemName.Specialization:
+                    SpecializationMenuItemStyle.Selected = true;
+                    break;
             }
 
         }

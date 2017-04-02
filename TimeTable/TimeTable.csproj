@@ -56,10 +56,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="TopMenu\TopMenuControl.xaml.cs">
+    <Compile Include="ViewModel\FooterStatusBar\FooterStatusBarViewModel.cs" />
+    <Compile Include="ViewModel\LeftMenu\LeftMenuViewModel.cs" />
+    <Compile Include="ViewModel\LeftMenu\MenuItemsStyle.cs" />
+    <Compile Include="ViewModel\LeftMenu\MenuItemStyle.cs" />
+    <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewFactory.cs" />
+    <Compile Include="View\TopMenu\TopMenuControl.xaml.cs">
       <DependentUpon>TopMenuControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="LeftMenu\LeftMenuControl.xaml">
+    <Page Include="View\LeftMenu\LeftMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -71,24 +77,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LeftMenu\LeftMenuControl.xaml.cs">
+    <Compile Include="View\LeftMenu\LeftMenuControl.xaml.cs">
       <DependentUpon>LeftMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="FooterStatusBar\FooterStatusBarControl.xaml">
+    <Page Include="View\FooterStatusBar\FooterStatusBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TopMenu\TopMenuControl.xaml">
+    <Page Include="View\TopMenu\TopMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FooterStatusBar\FooterStatusBarControl.xaml.cs">
+    <Compile Include="View\FooterStatusBar\FooterStatusBarControl.xaml.cs">
       <DependentUpon>FooterStatusBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -121,6 +127,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8d72df4e-d904-4353-bbc5-141f3a563c4e}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\HighSchool\HighSchool.csproj">
       <Project>{5d2cabcc-7165-4519-adeb-4fc61a835351}</Project>

@@ -16,6 +16,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -26,9 +28,11 @@
         <Label Content="Наименование:" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
         <Label Content="Дата создания с:" Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
         <Label Content="по:" Grid.Row="7" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
+        <Label Content="Только активные:" Grid.Row="9" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
         <TextBox Name="HighSchoolSearchCode" Grid.Row="1" Grid.Column="1" Margin="3"/>
         <TextBox Name="HighSchoolSearchName" Grid.Row="3" Grid.Column="1" Margin="3"/>
         <DatePicker Name="HighSchoolSearchDateFrom" Grid.Row="5" Grid.Column="1" Margin="3"/>
         <DatePicker Name="HighSchoolSearchDateTo" Grid.Row="7" Grid.Column="1" Margin="3"/>
+        <CheckBox Name="HighSchoolSearchActive" Grid.Row="9" Grid.Column="1" Margin="3" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

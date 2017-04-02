@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using Common.Data.Enum;
-using Common.DomainContext;
-using Common.Entry;
 using Common.Event;
-using Common.Messenger;
 using Common.Messenger.Impl;
-using HighSchool.View;
+using Domain.DomainContext;
+using TimeTable.View.LeftMenu;
+using TimeTable.ViewModel.MainWindow;
 
 namespace TimeTable
 {
@@ -19,7 +17,8 @@ namespace TimeTable
     {
         #region Members
 
-        private DomainContext context;
+        private readonly IDomainContext context;
+        private MenuItemName currentLeftMenuItemName;
 
         #endregion
 
@@ -29,14 +28,11 @@ namespace TimeTable
         {
             List<string> picturesList = CreatePicturesList();
             SplashScreen splashScreen = CreateSplashScreen(picturesList);
-            
+
             InitializeComponent();
             context = new DomainContext();
-            DataContext = context;
-            PopulateFooterBar();
-            SubscribeLeftMenu();
-            SubscribeMessenger();
-
+            DataContext = new MainWindowViewModel(context);
+            SetDomainContext();
 
             if (splashScreen != null)
             {
@@ -58,58 +54,9 @@ namespace TimeTable
 
         #region Methods
 
-        private void SubscribeLeftMenu()
+        private void SetDomainContext()
         {
-            context.MainViewModel.MenuItemsStyle.MenuChanged += OnChangedLeftMenu;
-        }
-
-        private void OnChangedLeftMenu(object sender, MenuChangedEventArgs args)
-        {
-            switch (args.MenuItemName)
-            {
-                case MenuItemName.HighSchool:
-                    EntryControl.Content = new HighSchoolSearchControl();
-                    break;
-                case MenuItemName.Faculty:
-                    EntryControl.Content = null;
-                    break;
-                case MenuItemName.Chair:
-                    EntryControl.Content = null;
-                    break;
-                case MenuItemName.Specialty:
-                    EntryControl.Content = null;
-                    break;
-                case MenuItemName.Specialization:
-                    EntryControl.Content = null;
-                    break;
-                default:
-                    EntryControl.Content = null;
-                    break;
-            }
-
-        }
-
-        private void SubscribeMessenger()
-        {
-            context.Messenger.Register<EntryControl>(CommandName.SetEntryControl, SetEntryControl, (x) => true);
-        }
-
-        private void SetEntryControl(EntryControl entryControl)
-        {
-            if (entryControl is HighSchoolSearchControl)
-            {
-                EntryControl.Content = (HighSchoolSearchControl) entryControl;
-            }
-            else
-            {
-                EntryControl.Content = entryControl;
-            }
-        }
-
-        private void PopulateFooterBar()
-        {
-            FooterBarControl.UserTextBox.Text = Environment.UserName;
-            FooterBarControl.WorkstationTextBox.Text = Environment.MachineName;
+            LeftMenuControl.DomainContext = context;
         }
 
         private List<string> CreatePicturesList()

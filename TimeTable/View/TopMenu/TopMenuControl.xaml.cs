@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TimeTable.TopMenu
+namespace TimeTable.View.TopMenu
 {
     /// <summary>
     /// Логика взаимодействия для TopMenuControl.xaml

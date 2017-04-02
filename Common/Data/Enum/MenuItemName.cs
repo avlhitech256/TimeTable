@@ -6,6 +6,7 @@
         Faculty,
         Chair,
         Specialty,
-        Specialization
+        Specialization,
+        None
     }
 }

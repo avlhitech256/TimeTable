@@ -1,4 +1,4 @@
-﻿<entry:EntryControl x:Class="HighSchool.View.HighSchoolSearchControl"
+﻿<UserControl x:Class="HighSchool.View.HighSchoolSearchControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -26,4 +26,4 @@
         <local:HighSchoolSearchCriteriaControl Grid.Row="1"></local:HighSchoolSearchCriteriaControl>
         <local:HighSchoolSearchDataGridControl Grid.Row="2"></local:HighSchoolSearchDataGridControl>
     </Grid>
-</entry:EntryControl>
+</UserControl>

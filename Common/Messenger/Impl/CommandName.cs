@@ -8,6 +8,9 @@ namespace Common.Messenger.Impl
 {
     public enum CommandName
     {
-        SetEntryControl
+        SetLeftMenuMouseOverItem,
+        SetLeftMenuMouseUpItem,
+        SetEntryControl,
+        SetViewModel
     }
 }

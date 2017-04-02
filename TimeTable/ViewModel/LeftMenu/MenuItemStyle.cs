@@ -1,7 +1,7 @@
 ﻿using Common.Data.Enum;
 using Common.Data.Notifier;
 
-namespace Common.ViewModel
+namespace TimeTable.ViewModel.LeftMenu
 {
     public class MenuItemStyle : Notifier
     {

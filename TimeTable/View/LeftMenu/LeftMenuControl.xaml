@@ -1,51 +1,51 @@
-﻿<UserControl x:Class="TimeTable.LeftMenu.LeftMenuControl"
+﻿<UserControl x:Class="TimeTable.View.LeftMenu.LeftMenuControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TimeTable.LeftMenu"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:leftMenu="clr-namespace:TimeTable.ViewModel.LeftMenu"
              mc:Ignorable="d" 
              >
-    <Grid  Background="Gray">
-    <StackPanel Margin="0,10,0,10" x:Name="LeftMenu" Width="150" >
-        <Border x:Name="HighSchoolButton" 
+    <Grid x:Name="LeftMenuMainGrid" Background="Gray">
+        <StackPanel Margin="0,10,0,10" x:Name="LeftMenu" Width="150" >
+            <Border x:Name="HighSchoolButton" 
                 Cursor="Hand"
                 RenderTransformOrigin="0.5,0.5"
-                Background="{Binding Path=MainViewModel.MenuItemsStyle.HighSchoolMenuItemStyle.Background}" 
+                Background="{Binding Path=MenuItemsStyle.HighSchoolMenuItemStyle.Background}" 
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
-            <Label HorizontalContentAlignment="Center" 
+                <Label HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" 
                    Content="Учебные заведения">
-            </Label>
-        </Border>
-        <Border x:Name="FacultyButton"
-                Background="{Binding Path=MainViewModel.MenuItemsStyle.FacultyMenuItemStyle.Background}" 
+                </Label>
+            </Border>
+            <Border x:Name="FacultyButton"
+                Background="{Binding Path=MenuItemsStyle.FacultyMenuItemStyle.Background}" 
                 Cursor="Hand"
                 RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
-            <Label HorizontalContentAlignment="Center" 
+                <Label HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center"
                    Content="Факультеты">
-            </Label>
-        </Border>
-        <Border x:Name="ChairButton"
-                Background="{Binding Path=MainViewModel.MenuItemsStyle.ChairMenuItemStyle.Background}" 
+                </Label>
+            </Border>
+            <Border x:Name="ChairButton"
+                Background="{Binding Path=MenuItemsStyle.ChairMenuItemStyle.Background}" 
                 Cursor="Hand"
                 RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
                 MouseEnter="Border_OnMouseEnter"
                 MouseLeave="Border_OnMouseLeave">
-            <Label HorizontalContentAlignment="Center" 
+                <Label HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center"
                    Content="Кафедры">
-            </Label>
-        </Border>
-        <Border x:Name="SpecialtyButton"
-                Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecialtyMenuItemStyle.Background}" 
+                </Label>
+            </Border>
+            <Border x:Name="SpecialtyButton"
+                Background="{Binding Path=MenuItemsStyle.SpecialtyMenuItemStyle.Background}" 
                 Cursor="Hand"
                 RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"
@@ -57,7 +57,7 @@
                 </Label>
             </Border>
             <Border x:Name="SpecializationButton"
-                Background="{Binding Path=MainViewModel.MenuItemsStyle.SpecializationMenuItemStyle.Background}" 
+                Background="{Binding Path=MenuItemsStyle.SpecializationMenuItemStyle.Background}" 
                 Cursor="Hand"
                 RenderTransformOrigin="0.5,0.5"
                 MouseUp="Border_MouseUp"

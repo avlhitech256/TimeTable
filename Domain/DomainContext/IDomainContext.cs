@@ -1,8 +1,7 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
-using Common.ViewModel;
 
-namespace Common.DomainContext
+namespace Domain.DomainContext
 {
     public interface IDomainContext
     {
@@ -10,7 +9,7 @@ namespace Common.DomainContext
         IMessenger Messenger { get; }
 
         [CanBeNull]
-        MainViewModel MainViewModel { get; }
+        ViewModelRouter.ViewModelRouter ViewModelRouter { get; }
 
     }
 
