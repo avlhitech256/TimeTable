@@ -1,31 +1,45 @@
 ﻿using System;
-using Common.Data.Criteria;
-using Common.Data.Notifier;
-using Domain.DomainContext;
+//using Common.Data.Notifier;
 
-namespace HighSchool.ViewModel
+namespace DataService.Entity.HighSchool
 {
-    public class HighSchoolViewModel : Notifier
+    public class HighSchoolEntity //: Notifier, IHighSchoolEntity
     {
         #region Members
 
-        private DataService.Model.HighSchool highSchool;
-        private IDomainContext context;
+        private readonly Model.HighSchool highSchool;
 
         #endregion
 
         #region Constructors
-        public HighSchoolViewModel(IDomainContext context)
+
+        public HighSchoolEntity(Model.HighSchool highSchool)
         {
-            this.context = context;
-            SearchCriteria = new SearchCriteria();
+            this.highSchool = highSchool;
         }
 
         #endregion
 
         #region Properties
 
-        public SearchCriteria SearchCriteria { get; }
+        public long Id
+        {
+            get
+            {
+                return highSchool.Id;
+            }
+
+            set
+            {
+                if (highSchool.Id != value)
+                {
+                    highSchool.Id = value;
+                    //OnPropertyChanged();
+                }
+
+            }
+
+        }
 
         public string Code
         {
@@ -39,7 +53,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.Code != value)
                 {
                     highSchool.Code = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
             }
 
@@ -57,7 +71,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.Name != value)
                 {
                     highSchool.Name = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
 
             }
@@ -75,7 +89,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.Active != value)
                 {
                     highSchool.Active = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
 
             }
@@ -94,7 +108,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.Cteated != value)
                 {
                     highSchool.Cteated = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
             }
         }
@@ -111,7 +125,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.LastModify != value)
                 {
                     highSchool.LastModify = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
             }
         }
@@ -128,7 +142,7 @@ namespace HighSchool.ViewModel
                 if (highSchool.UserModify != value)
                 {
                     highSchool.UserModify = value;
-                    OnPropertyChanged();
+                    //OnPropertyChanged();
                 }
 
             }
@@ -138,19 +152,6 @@ namespace HighSchool.ViewModel
         #endregion
 
         #region Methods
-
-        private void SetHighSchool(DataService.Model.HighSchool highSchoolItem)
-        {
-            highSchool = highSchoolItem;
-            OnPropertyChanged(nameof(Code));
-            OnPropertyChanged(nameof(Name));
-            OnPropertyChanged(nameof(Active));
-            OnPropertyChanged(nameof(Cteated));
-            OnPropertyChanged(nameof(LastModify));
-            OnPropertyChanged(nameof(UserModify));
-        }
-
         #endregion
-
     }
 }

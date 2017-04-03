@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Data.Enum;
-using Domain.ViewModelRouter;
 using HighSchool.View;
 
 namespace TimeTable.ViewModel.MainWindow
@@ -18,10 +17,11 @@ namespace TimeTable.ViewModel.MainWindow
 
         public ViewFactory(ViewModelRouter viewModelRouter)
         {
-            mapFactories = 
+            mapFactories =
                 new Dictionary<MenuItemName, Func<MenuItemName, object>>
                 {
-                    { MenuItemName.HighSchool, (menuItemName) => new HighSchoolSearchControl(viewModelRouter.GetViewModel(menuItemName))}
+                    { MenuItemName.HighSchool,
+                      (menuItemName) => new HighSchoolSearchControl(viewModelRouter.GetViewModel(menuItemName))}
                 };
         }
 

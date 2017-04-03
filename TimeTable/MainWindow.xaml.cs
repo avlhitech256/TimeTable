@@ -18,7 +18,6 @@ namespace TimeTable
         #region Members
 
         private readonly IDomainContext context;
-        private MenuItemName currentLeftMenuItemName;
 
         #endregion
 

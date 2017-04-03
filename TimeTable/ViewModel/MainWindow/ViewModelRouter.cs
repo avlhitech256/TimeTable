@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common.Data.Enum;
+using Domain.DomainContext;
 
-namespace Domain.ViewModelRouter
+namespace TimeTable.ViewModel.MainWindow
 {
     public class ViewModelRouter
     {
         #region Members
 
         private readonly Dictionary<MenuItemName, object> viewModelMap;
+        private readonly IDomainContext context;
 
         #endregion
 
         #region Constructors
 
-        public ViewModelRouter()
+        public ViewModelRouter(IDomainContext context)
         {
             viewModelMap = new Dictionary<MenuItemName, object>();
+            this.context = context;
+
         }
 
         #endregion
@@ -33,7 +36,7 @@ namespace Domain.ViewModelRouter
             }
             else
             {
-                ViewModelFactory factory = new ViewModelFactory();
+                ViewModelFactory factory = new ViewModelFactory(context);
                 viewModel = factory.Create(menuItemName);
                 viewModelMap.Add(menuItemName, viewModel);
             }

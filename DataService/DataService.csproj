@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5D2CABCC-7165-4519-ADEB-4FC61A835351}</ProjectGuid>
+    <ProjectGuid>{190E41B3-74A8-49F6-92D4-B82A866716BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HighSchool</RootNamespace>
-    <AssemblyName>HighSchool</AssemblyName>
+    <RootNamespace>DataService</RootNamespace>
+    <AssemblyName>DataService</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,80 +38,91 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\HighSchoolModel.cs" />
-    <Compile Include="Model\IHighSchoolModel.cs" />
+    <Compile Include="DataService\DataService.cs" />
+    <Compile Include="DataService\IDataService.cs" />
+    <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
+    <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
+    <Compile Include="Model\Chair.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ChairToSpecialization.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DBContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DBContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DBContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Faculty.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HighSchool.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Specialization.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Specialty.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\HighSchoolViewModel.cs" />
-    <Compile Include="View\HighSchoolSearchButtonControl.xaml.cs">
-      <DependentUpon>HighSchoolSearchButtonControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HighSchoolSearchControl.xaml.cs">
-      <DependentUpon>HighSchoolSearchControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HighSchoolSearchCriteriaControl.xaml.cs">
-      <DependentUpon>HighSchoolSearchCriteriaControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HighSchoolSearchDataGridControl.xaml.cs">
-      <DependentUpon>HighSchoolSearchDataGridControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HighSchoolSearchFieldsControl.xaml.cs">
-      <DependentUpon>HighSchoolSearchFieldsControl.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <EntityDeploy Include="Model\DBContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Model\DBContext.edmx.diagram">
+      <DependentUpon>DBContext.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\HighSchoolSearchButtonControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HighSchoolSearchControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HighSchoolSearchCriteriaControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HighSchoolSearchDataGridControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\HighSchoolSearchFieldsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="Model\DBContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DBContext.Context.cs</LastGenOutput>
+      <DependentUpon>DBContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\DBContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBContext.edmx</DependentUpon>
+      <LastGenOutput>DBContext.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataService\DataService.csproj">
-      <Project>{190e41b3-74a8-49f6-92d4-b82a866716be}</Project>
-      <Name>DataService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{8d72df4e-d904-4353-bbc5-141f3a563c4e}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

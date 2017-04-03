@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Data.Enum;
-using HighSchool.View;
+using Domain.DomainContext;
 using HighSchool.ViewModel;
 
-namespace Domain.ViewModelRouter
+namespace TimeTable.ViewModel.MainWindow
 {
     public class ViewModelFactory
     {
         #region Members
 
-        private readonly Dictionary<MenuItemName, Func<object>> mapCreators;
+        private readonly Dictionary<MenuItemName, Func<IDomainContext, object>> mapCreators;
+        private IDomainContext context;
 
         #endregion
-        
+
         #region Constructors
 
-        public ViewModelFactory()
+        public ViewModelFactory(IDomainContext context)
         {
             mapCreators = 
-                new Dictionary<MenuItemName, Func<object>>
+                new Dictionary<MenuItemName, Func<IDomainContext, object>>
                 {
-                    { MenuItemName.HighSchool, () => new HighSchoolViewModel()},
+                    { MenuItemName.HighSchool, (x) => new HighSchoolViewModel(x)},
                 };
+            this.context = context;
         }
 
         #endregion
@@ -35,8 +37,8 @@ namespace Domain.ViewModelRouter
 
             if (mapCreators.ContainsKey(menuItemName))
             {
-                Func<object> creator = mapCreators[menuItemName];
-                result = creator();
+                Func<IDomainContext, object> creator = mapCreators[menuItemName];
+                result = creator(context);
             }
 
             return result;

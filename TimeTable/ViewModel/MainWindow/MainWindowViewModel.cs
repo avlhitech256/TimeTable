@@ -3,7 +3,6 @@ using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using Domain.DomainContext;
-using Domain.ViewModelRouter;
 
 namespace TimeTable.ViewModel.MainWindow
 {
@@ -22,6 +21,7 @@ namespace TimeTable.ViewModel.MainWindow
         public MainWindowViewModel(IDomainContext domainContext)
         {
             context = domainContext;
+            ViewModelRouter = new ViewModelRouter(context);
             SubscribeMessenger();
         }
 
@@ -31,7 +31,7 @@ namespace TimeTable.ViewModel.MainWindow
         #region Properties
 
         private IMessenger Messenger => context?.Messenger;
-        private ViewModelRouter ViewModelRouter => context?.ViewModelRouter;
+        private ViewModelRouter ViewModelRouter { get; }
 
         public object View
         {

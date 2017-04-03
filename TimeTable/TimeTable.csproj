@@ -62,6 +62,8 @@
     <Compile Include="ViewModel\LeftMenu\MenuItemStyle.cs" />
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MainWindow\ViewFactory.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewModelFactory.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewModelRouter.cs" />
     <Compile Include="View\TopMenu\TopMenuControl.xaml.cs">
       <DependentUpon>TopMenuControl.xaml</DependentUpon>
     </Compile>

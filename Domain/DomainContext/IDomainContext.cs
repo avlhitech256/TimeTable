@@ -1,5 +1,8 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
+using DataService.Model;
+
+//using DataService.Model;
 
 namespace Domain.DomainContext
 {
@@ -9,7 +12,7 @@ namespace Domain.DomainContext
         IMessenger Messenger { get; }
 
         [CanBeNull]
-        ViewModelRouter.ViewModelRouter ViewModelRouter { get; }
+        TimeTableEntities DBContext { get; }
 
     }
 
