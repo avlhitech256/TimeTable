@@ -56,7 +56,10 @@
     <Compile Include="Model\HighSchoolModel.cs" />
     <Compile Include="Model\IHighSchoolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Command\SearchCommand.cs" />
+    <Compile Include="ViewModel\HighSchoolSearchCriteria.cs" />
     <Compile Include="ViewModel\HighSchoolViewModel.cs" />
+    <Compile Include="ViewModel\IHighSchoolViewModel.cs" />
     <Compile Include="View\HighSchoolSearchButtonControl.xaml.cs">
       <DependentUpon>HighSchoolSearchButtonControl.xaml</DependentUpon>
     </Compile>

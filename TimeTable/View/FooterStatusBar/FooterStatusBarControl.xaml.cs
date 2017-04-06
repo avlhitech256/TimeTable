@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Domain.DomainContext;
 using TimeTable.ViewModel.FooterStatusBar;
 
 namespace TimeTable.View.FooterStatusBar
@@ -11,6 +12,7 @@ namespace TimeTable.View.FooterStatusBar
         #region Members
 
         private FooterStatusBarViewModel viewModel;
+        private IDomainContext context;
 
         #endregion
 
@@ -20,6 +22,28 @@ namespace TimeTable.View.FooterStatusBar
         {
             InitializeComponent();
             InitializeDataContext();
+        }
+
+        #endregion
+
+        #region Properties
+
+        public IDomainContext DomainContext
+        {
+            get
+            {
+                return context;
+            }
+
+            set
+            {
+                if (context == null || context != value)
+                {
+                    context = value;
+                    viewModel.DomainContext = value;
+                }
+            }
+
         }
 
         #endregion

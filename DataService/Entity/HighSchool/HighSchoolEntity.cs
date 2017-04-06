@@ -1,27 +1,52 @@
 ﻿using System;
-//using Common.Data.Notifier;
+using System.ComponentModel;
+using Common.Data.Notifier;
+using DataService.Model;
 
 namespace DataService.Entity.HighSchool
 {
-    public class HighSchoolEntity //: Notifier, IHighSchoolEntity
+    public class HighSchoolEntity : Notifier, IHighSchoolEntity
     {
         #region Members
 
-        private readonly Model.HighSchool highSchool;
+        private Model.HighSchool highSchool;
+        private long position;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolEntity(Model.HighSchool highSchool)
+        public HighSchoolEntity(Model.HighSchool highSchool) : this(highSchool, 0) {}
+
+        public HighSchoolEntity(Model.HighSchool highSchool, long position)
         {
             this.highSchool = highSchool;
+            this.position = position;
         }
 
         #endregion
 
         #region Properties
 
+        public long Position
+        {
+            get
+            {
+                return position;
+            }
+
+            set
+            {
+                if (position != value)
+                {
+                    position = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+        
         public long Id
         {
             get
@@ -34,7 +59,7 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.Id != value)
                 {
                     highSchool.Id = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
 
             }
@@ -53,8 +78,9 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.Code != value)
                 {
                     highSchool.Code = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
+
             }
 
         }
@@ -71,10 +97,11 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.Name != value)
                 {
                     highSchool.Name = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
 
             }
+
         }
 
         public bool Active
@@ -89,7 +116,7 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.Active != value)
                 {
                     highSchool.Active = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
 
             }
@@ -108,9 +135,11 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.Cteated != value)
                 {
                     highSchool.Cteated = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
+
             }
+
         }
 
         public DateTimeOffset LastModify
@@ -125,9 +154,11 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.LastModify != value)
                 {
                     highSchool.LastModify = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
+
             }
+
         }
 
         public string UserModify
@@ -142,16 +173,73 @@ namespace DataService.Entity.HighSchool
                 if (highSchool.UserModify != value)
                 {
                     highSchool.UserModify = value;
-                    //OnPropertyChanged();
+                    OnPropertyChanged();
                 }
 
             }
+
+        }
+
+        public long Rector
+        {
+            get
+            {
+                return highSchool.Rector;
+            }
+
+            set
+            {
+                if (highSchool.Rector != value)
+                {
+                    highSchool.Rector = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+
+        public Employee Employee
+        {
+            get
+            {
+                return highSchool.Employee;
+            }
+
+            set
+            {
+                if (highSchool.Employee != value)
+                {
+                    highSchool.Employee = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+
+        public Model.HighSchool HighSchool
+        {
+            get
+            {
+                return highSchool;
+            }
+
+            set
+            {
+                if (highSchool != value)
+                {
+                    highSchool = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
         }
 
 
         #endregion
 
-        #region Methods
-        #endregion
     }
+
 }

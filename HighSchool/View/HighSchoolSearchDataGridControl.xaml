@@ -12,9 +12,18 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="TitleResult" Content="Результаты поиска" Grid.Row="0" Margin="1" HorizontalAlignment="Stretch" Background="#FF1700A8" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Center"></Label>
-        <DataGrid Name="ResultSearchDataGrid" Margin="2,27,0,3" Grid.RowSpan="2">
+        <DataGrid Name="ResultSearchDataGrid" 
+                  AutoGenerateColumns="False"
+                  VerticalAlignment="Stretch"
+                  Height="Auto"
+                  Margin="2,27,0,3" 
+                  Grid.RowSpan="2"
+                  ItemsSource="{Binding HighSchools}"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Width="30">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="30"
+                                    Binding="{Binding Path=Position}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="№ п/п" 
@@ -27,7 +36,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=Code}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Код" 
@@ -40,7 +51,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=Name}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Наименование" 
@@ -52,7 +65,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=Employee.Name}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Ректор" 
@@ -64,7 +79,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridCheckBoxColumn IsReadOnly="True" Width="Auto">
+                <DataGridCheckBoxColumn IsReadOnly="True" 
+                                        Width="Auto"
+                                        Binding="{Binding Path=Active}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Актив." 
@@ -76,7 +93,9 @@
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=Cteated}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Дата создания" 
@@ -88,7 +107,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=LastModify}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Дата последнего изменения" 
@@ -100,7 +121,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" Width="Auto">
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=UserModify}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Пользователь, сделавший последние изменения" 

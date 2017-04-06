@@ -1,9 +1,17 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using DataService.Entity.HighSchool;
+using HighSchool.ViewModel;
 
 namespace HighSchool.Model
 {
-    public interface IHighSchoolModel
+    public interface IHighSchoolModel : INotifyPropertyChanged
     {
-        ObservableCollection<DataService.Model.HighSchool> HighSchools { get; set; }
+        HighSchoolSearchCriteria SearchCriteria { get; }
+        DataService.Model.HighSchool SelectedHighSchool { get; }
+        ObservableCollection<IHighSchoolEntity> HighSchools { get; }
+        ObservableCollection<DataService.Model.Employee> Employees { get; }
+
+        void ApplySearchCriteria();
     }
 }

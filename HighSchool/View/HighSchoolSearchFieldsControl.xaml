@@ -4,11 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HighSchool.View"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -24,15 +27,143 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Код:" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
-        <Label Content="Наименование:" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
-        <Label Content="Дата создания с:" Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
-        <Label Content="по:" Grid.Row="7" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
-        <Label Content="Только активные:" Grid.Row="9" Grid.Column="0"  HorizontalAlignment="Right" Margin="10,0,5,0"/>
-        <TextBox Name="HighSchoolSearchCode" Grid.Row="1" Grid.Column="1" Margin="3"/>
-        <TextBox Name="HighSchoolSearchName" Grid.Row="3" Grid.Column="1" Margin="3"/>
-        <DatePicker Name="HighSchoolSearchDateFrom" Grid.Row="5" Grid.Column="1" Margin="3"/>
-        <DatePicker Name="HighSchoolSearchDateTo" Grid.Row="7" Grid.Column="1" Margin="3"/>
-        <CheckBox Name="HighSchoolSearchActive" Grid.Row="9" Grid.Column="1" Margin="3" VerticalAlignment="Center"/>
+        <Label Content="Код:" 
+               ToolTip="Код учебного заведения"
+               Grid.Row="1" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Наименование:" 
+               ToolTip="Наименование учебного заведения"
+               Grid.Row="3" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Ректор:" 
+               ToolTip="Ф.И.О. ректора"
+               Grid.Row="5" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата создания с:" 
+               ToolTip="Период создания записи учебного заведения"
+               Grid.Row="7" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата модификации с:" 
+               ToolTip="Период модификации записи учебного заведения"
+               Grid.Row="9" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Пользователь:" 
+               ToolTip="Пользователь, который последним внес изменения"
+               Grid.Row="11" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <TextBox Name="HighSchoolSearchCode" 
+                 Text="{Binding Path=SearchCriteria.Code, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Код учебного заведения"
+                 Grid.Row="1" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <TextBox Name="HighSchoolSearchName" 
+                 Text="{Binding Path=SearchCriteria.Name, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Наименование учебного заведения"
+                 Grid.Row="3" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <ComboBox x:Name="RectorComboBox"
+                  SelectedValue="{Binding Path=SearchCriteria.RectorId}"
+                  ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  Text="{Binding Path=SearchCriteria.RectorName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                  Grid.Row="5"
+                  Grid.Column="1" Margin="3"/>
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="по:" 
+                   ToolTip="Дата конца периода создания записи учебного заведения"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="HighSchoolSearchDateCreateFrom" 
+                        SelectedDate="{Binding Path=SearchCriteria.CteatedFrom, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата начала периода создания записи учебного заведения"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"/>
+            <DatePicker Name="HighSchoolSearchDateCreateTo" 
+                        SelectedDate="{Binding Path=SearchCriteria.CteatedTo, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата конца периода создания записи учебного заведения"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"/>
+        </Grid>
+        <Grid Grid.Row="9" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="по:" 
+                   ToolTip="Дата конца периода модификации записи учебного заведения"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="HighSchoolSearchDateModifyFrom" 
+                        SelectedDate="{Binding Path=SearchCriteria.LastModifyFrom, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата начала периода модификации записи учебного заведения"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"/>
+            <DatePicker Name="HighSchoolSearchDateModifyTo" 
+                        SelectedDate="{Binding Path=SearchCriteria.LastModifyTo, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата конца периода модификации записи учебного заведения"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"/>
+        </Grid>
+        <Grid Grid.Row="11" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="HighSchoolSearchUser" 
+                 Text="{Binding Path=SearchCriteria.UserModify, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Пользователь, который последним внес изменения"
+                 Grid.Row="0" 
+                 Grid.Column="0" 
+                 Margin="3"/>
+            <Label Content="Только активные:" 
+                   ToolTip="Включить в отбор только активные записи"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <CheckBox Name="HighSchoolSearchActive" 
+                  IsChecked="{Binding Path=SearchCriteria.Active}"
+                  ToolTip="Включить в отбор только активные записи"
+                  Grid.Row="0" 
+                  Grid.Column="2" 
+                  Margin="3" 
+                  VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -17,7 +17,13 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="SearchButton" Grid.Row="1" ToolTip="Поиск учебного заведения" Content="Поиск" Margin="15,5"></Button>
+        <Button x:Name="SearchButton" 
+                Command="{Binding Path=SearchButtonCommand}"
+                Grid.Row="1" 
+                ToolTip="Поиск учебного заведения" 
+                Content="Поиск" 
+                Margin="15,5">
+        </Button>
         <Button x:Name="AddButton" Grid.Row="3" ToolTip="Создать новое учебное заведение" Content="Создать" Margin="15,5"></Button>
         <Button x:Name="ViewButton" Grid.Row="5" ToolTip="Просмотр записи учебного заведения" Content="Просмотр" Margin="15,5"></Button>
         <Button x:Name="EditButton" Grid.Row="6" ToolTip="Редактирование записи учебного заведения" Content="Редактировать" Margin="15,5"></Button>

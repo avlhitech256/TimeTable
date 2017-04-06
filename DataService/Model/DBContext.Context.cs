@@ -30,9 +30,11 @@ namespace DataService.Model
         public virtual DbSet<Chair> Chairs { get; set; }
         public virtual DbSet<ChairToSpecialization> ChairToSpecializations { get; set; }
         public virtual DbSet<Faculty> Faculties { get; set; }
-        public virtual DbSet<HighSchool> HighSchools { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<Specialty> Specialties { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<HighSchool> HighSchools { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

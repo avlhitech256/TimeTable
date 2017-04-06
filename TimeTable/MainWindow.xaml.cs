@@ -15,12 +15,6 @@ namespace TimeTable
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Members
-
-        private readonly IDomainContext context;
-
-        #endregion
-
         #region Constructors
 
         public MainWindow()
@@ -29,8 +23,8 @@ namespace TimeTable
             SplashScreen splashScreen = CreateSplashScreen(picturesList);
 
             InitializeComponent();
-            context = new DomainContext();
-            DataContext = new MainWindowViewModel(context);
+            DomainContext = new DomainContext();
+            DataContext = new MainWindowViewModel(DomainContext);
             SetDomainContext();
 
             if (splashScreen != null)
@@ -51,11 +45,18 @@ namespace TimeTable
 
         #endregion
 
+        #region Properties
+
+        IDomainContext DomainContext { get; }
+
+        #endregion
+
         #region Methods
 
         private void SetDomainContext()
         {
-            LeftMenuControl.DomainContext = context;
+            LeftMenuControl.DomainContext = DomainContext;
+            FooterBarControl.DomainContext = DomainContext;
         }
 
         private List<string> CreatePicturesList()

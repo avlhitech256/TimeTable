@@ -13,10 +13,10 @@ namespace Common.Data.Criteria
         private string code;
         private string name;
         private bool active;
-        private DateTimeOffset cteatedFrom;
-        private DateTimeOffset cteatedTo;
-        private DateTimeOffset lastModifyFrom;
-        private DateTimeOffset lastModifyTo;
+        private DateTime? cteatedFrom;
+        private DateTime? cteatedTo;
+        private DateTime? lastModifyFrom;
+        private DateTime? lastModifyTo;
         private string userModify;
 
         #endregion
@@ -28,10 +28,10 @@ namespace Common.Data.Criteria
             Code = string.Empty;
             Name = string.Empty;
             Active = true;
-            CteatedFrom = DateTimeOffset.Now.Date.AddYears(-1);
-            CteatedTo = DateTimeOffset.Now.Date;
-            LastModifyFrom = DateTimeOffset.Now.Date.AddYears(-1);
-            LastModifyTo = DateTimeOffset.Now.Date.AddYears(-1);
+            CteatedFrom = null;
+            CteatedTo = null;
+            LastModifyFrom = null;
+            LastModifyTo = null;
             UserModify = string.Empty;
         }
 
@@ -52,6 +52,7 @@ namespace Common.Data.Criteria
                 {
                     code = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
             }
 
@@ -70,6 +71,7 @@ namespace Common.Data.Criteria
                 {
                     name = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
 
             }
@@ -88,13 +90,14 @@ namespace Common.Data.Criteria
                 {
                     active = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
 
             }
 
         }
 
-        public DateTimeOffset CteatedFrom
+        public DateTime? CteatedFrom
         {
             get
             {
@@ -107,11 +110,12 @@ namespace Common.Data.Criteria
                 {
                     cteatedFrom = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
             }
         }
 
-        public DateTimeOffset CteatedTo
+        public DateTime? CteatedTo
         {
             get
             {
@@ -124,11 +128,12 @@ namespace Common.Data.Criteria
                 {
                     cteatedTo = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
             }
         }
 
-        public DateTimeOffset LastModifyFrom
+        public DateTime? LastModifyFrom
         {
             get
             {
@@ -141,23 +146,25 @@ namespace Common.Data.Criteria
                 {
                     lastModifyFrom = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
             }
         }
 
-        public DateTimeOffset LastModifyTo
+        public DateTime? LastModifyTo
         {
             get
             {
-                return lastModifyFrom;
+                return lastModifyTo;
             }
 
             set
             {
-                if (lastModifyFrom != value)
+                if (lastModifyTo != value)
                 {
-                    lastModifyFrom = value;
+                    lastModifyTo = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
             }
         }
@@ -175,11 +182,23 @@ namespace Common.Data.Criteria
                 {
                     userModify = value;
                     OnPropertyChanged();
+                    OnSearchCriteriaChanged();
                 }
 
             }
         }
 
+        protected virtual void OnSearchCriteriaChanged()
+        {
+            SearchCriteriaChanged?.Invoke(this, new EventArgs());
+        }
+
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler SearchCriteriaChanged = delegate { };
 
         #endregion
 

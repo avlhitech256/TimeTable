@@ -4,40 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="30.857" d:DesignWidth="882.194">
+             d:DesignHeight="30" d:DesignWidth="882.194">
     <Grid Name="FooterStaturBarGrid" Height="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Right">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Пользователь:" 
+        <Label Content="Домен:" 
                Grid.Column="0" 
-               Margin="1" 
+               Margin="10,1,1,1" 
+               HorizontalAlignment="Right" 
+               HorizontalContentAlignment="
+               Center" VerticalContentAlignment="Center">
+        </Label>
+        <Label Content="Пользователь:" 
+               Grid.Column="2" 
+               Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="
                Center" VerticalContentAlignment="Center">
         </Label>
         <Label Content="Рабочая станция:" 
-               Grid.Column="2" 
-               Margin="1" 
+               Grid.Column="4" 
+               Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="Center" 
                VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Серсер:" Grid.Column="4" 
-               Margin="1" 
+        <Label Content="Серсер баз данных:" 
+               Grid.Column="6" 
+               Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                VerticalContentAlignment="Center" 
                HorizontalContentAlignment="Center">
         </Label>
+        <TextBox Name="DomainTextBox" 
+                 Text="{Binding Path=UserDomain, Mode=OneWay}"
+                 VerticalContentAlignment="Center" 
+                 Grid.Column="1" 
+                 Margin="1" 
+                 HorizontalAlignment="Left" 
+                 Height="Auto" 
+                 Width="150" 
+                 IsReadOnly="True">
+        </TextBox>
         <TextBox Name="UserTextBox" 
                  Text="{Binding Path=UserName, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="1" 
+                 Grid.Column="3" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -47,14 +67,15 @@
         <TextBox Name="WorkstationTextBox" 
                  Text="{Binding Path=MachineName, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="3" 
+                 Grid.Column="5" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
                  Width="150" 
                  IsReadOnly="True">
         </TextBox>
-        <TextBox Name="EnvironmentTextBox" Grid.Column="5" 
+        <TextBox Name="EnvironmentTextBox" 
+                 Grid.Column="7" 
                  Text="{Binding Path=ServerName, Mode=OneWay}"
                  Margin="1" 
                  VerticalContentAlignment="Center" 

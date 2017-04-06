@@ -1,6 +1,6 @@
 ﻿using Common.Data.Notifier;
 using Common.Messenger;
-using DataService.Model;
+using DataService.DataService;
 
 
 namespace Domain.DomainContext
@@ -12,7 +12,7 @@ namespace Domain.DomainContext
         public DomainContext()
         {
             Messenger = new Messenger();
-            DBContext = new TimeTableEntities();
+            DataService = new DataService.DataService.DataService();
         }
 
         #endregion
@@ -20,7 +20,7 @@ namespace Domain.DomainContext
         #region Properties
 
         public IMessenger Messenger { get; }
-        public TimeTableEntities DBContext { get; }
+        public IDataService DataService { get; }
 
         #endregion
 
