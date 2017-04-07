@@ -69,15 +69,17 @@ namespace HighSchool.Model
 
         private void InitializeSearchCriteria()
         {
-            SearchCriteria = new HighSchoolSearchCriteria();
-            SearchCriteria.Code = string.Empty;
-            SearchCriteria.Name = string.Empty;
-            SearchCriteria.Active = true;
-            SearchCriteria.CteatedTo = null;
-            SearchCriteria.CteatedFrom = null;
-            SearchCriteria.LastModifyTo = null;
-            SearchCriteria.LastModifyFrom = null;
-            SearchCriteria.UserModify = string.Empty;
+            SearchCriteria = new HighSchoolSearchCriteria
+            {
+                Code = string.Empty,
+                Name = string.Empty,
+                Active = true,
+                CteatedTo = null,
+                CteatedFrom = null,
+                LastModifyTo = null,
+                LastModifyFrom = null,
+                UserModify = string.Empty
+            };
         }
 
         private void InitializeHighSchools()
