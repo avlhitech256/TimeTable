@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using Common.Data.Criteria;
 using Common.Data.Notifier;
 using DataService.DataService;
-using DataService.Entity.HighSchool;
 using DataService.Model;
 using Domain.DomainContext;
+using Domain.Entity.HighSchool;
 using HighSchool.ViewModel;
 
 namespace HighSchool.Model

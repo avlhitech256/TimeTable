@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Common.Data.Notifier;
 
-namespace Common.Data.Criteria
+namespace Domain.Data.Criteria
 {
-    public class SearchCriteria : Notifier.Notifier
+    public class SearchCriteria : Notifier
     {
         #region Members
 

@@ -2,17 +2,17 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using Common.Data.Criteria;
 using Common.Data.Notifier;
-using Common.Messenger;
-using DataService.Entity.HighSchool;
+using Domain.Messenger;
 using Domain.DomainContext;
+using Domain.Entity.HighSchool;
+using Domain.Entry;
 using HighSchool.Model;
 using HighSchool.ViewModel.Command;
 
 namespace HighSchool.ViewModel
 {
-    public class HighSchoolViewModel : Notifier, IHighSchoolViewModel
+    public class HighSchoolViewModel : Notifier, IHighSchoolViewModel, IViewModel
     {
         #region Constructors
         public HighSchoolViewModel(IDomainContext context)
@@ -20,6 +20,7 @@ namespace HighSchool.ViewModel
             DomainContext = context;
             Model = new HighSchoolModel(context);
             Model.PropertyChanged += OnCangedSelectedHighSchool;
+            IsEditControl = false;
             InitializeButtons();
         }
 
@@ -148,7 +149,19 @@ namespace HighSchool.ViewModel
             }
         }
 
+        public ICommand BackButtonCommand { get; private set; }
+
+        public ICommand ForwardButtonCommand { get; private set; }
+
+        public ICommand NewButtonCommand { get; private set; }
+
+        public ICommand EditButtonCommand { get; private set; }
+
+        public ICommand SaveButtonCommand { get; private set; }
+
         public ICommand SearchButtonCommand { get; private set; }
+
+        public bool IsEditControl { get; set; }
 
         #endregion
 
@@ -156,6 +169,11 @@ namespace HighSchool.ViewModel
 
         private void InitializeButtons()
         {
+            BackButtonCommand = null;
+            ForwardButtonCommand = null;
+            NewButtonCommand = null;
+            EditButtonCommand = null;
+            SaveButtonCommand = null;
             SearchButtonCommand = new SearchCommand(this);
         }
 

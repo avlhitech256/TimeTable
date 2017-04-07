@@ -42,13 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Convert\Convert.cs" />
-    <Compile Include="Data\Criteria\SearchCriteria.cs" />
-    <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Enum\StringEnum.cs" />
     <Compile Include="Data\Notifier\Notifier.cs" />
-    <Compile Include="Entry\ControlState.cs" />
-    <Compile Include="Event\LeftMenuMouseOverEventArgs.cs" />
-    <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Messenger\IMessenger.cs" />
     <Compile Include="Messenger\Impl\CommandName.cs" />
     <Compile Include="Messenger\Impl\Messenger.cs" />

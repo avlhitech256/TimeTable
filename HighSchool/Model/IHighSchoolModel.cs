@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using DataService.Entity.HighSchool;
+using Domain.Entity.HighSchool;
 using HighSchool.ViewModel;
 
 namespace HighSchool.Model

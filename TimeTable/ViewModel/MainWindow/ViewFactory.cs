@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Data.Enum;
+using Domain.Data.Enum;
 using HighSchool.View;
 
 namespace TimeTable.ViewModel.MainWindow

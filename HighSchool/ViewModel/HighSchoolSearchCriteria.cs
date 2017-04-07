@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Data.Criteria;
+﻿using Domain.Data.Criteria;
 
 namespace HighSchool.ViewModel
 {

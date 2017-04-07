@@ -50,8 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Criteria\SearchCriteria.cs" />
+    <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
+    <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
+    <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
+    <Compile Include="Entry\ControlState.cs" />
+    <Compile Include="Entry\IViewModel.cs" />
+    <Compile Include="Event\LeftMenuMouseOverEventArgs.cs" />
+    <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

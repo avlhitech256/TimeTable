@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using Common.Messenger;
-using DataService.Entity.HighSchool;
+using Domain.Messenger;
 using Domain.DomainContext;
+using Domain.Entity.HighSchool;
 
 namespace HighSchool.ViewModel
 {

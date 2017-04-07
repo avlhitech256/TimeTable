@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using DataService.Model;
 
-namespace DataService.Entity.HighSchool
+namespace Domain.Entity.HighSchool
 {
-    public interface IHighSchoolEntity //: INotifyPropertyChanged
+    public interface IHighSchoolEntity : INotifyPropertyChanged
     {
         long Position { get; set; }
         long Id { get; set; }
@@ -16,6 +16,6 @@ namespace DataService.Entity.HighSchool
         string UserModify { get; set; }
         long Rector { get; set; }
         Employee Employee { get; set; }
-        Model.HighSchool HighSchool { get; set; }
+        DataService.Model.HighSchool HighSchool { get; set; }
     }
 }

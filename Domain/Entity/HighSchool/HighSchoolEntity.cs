@@ -1,24 +1,23 @@
 ﻿using System;
-using System.ComponentModel;
 using Common.Data.Notifier;
 using DataService.Model;
 
-namespace DataService.Entity.HighSchool
+namespace Domain.Entity.HighSchool
 {
     public class HighSchoolEntity : Notifier, IHighSchoolEntity
     {
         #region Members
 
-        private Model.HighSchool highSchool;
+        private DataService.Model.HighSchool highSchool;
         private long position;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolEntity(Model.HighSchool highSchool) : this(highSchool, 0) {}
+        public HighSchoolEntity(DataService.Model.HighSchool highSchool) : this(highSchool, 0) {}
 
-        public HighSchoolEntity(Model.HighSchool highSchool, long position)
+        public HighSchoolEntity(DataService.Model.HighSchool highSchool, long position)
         {
             this.highSchool = highSchool;
             this.position = position;
@@ -218,7 +217,7 @@ namespace DataService.Entity.HighSchool
 
         }
 
-        public Model.HighSchool HighSchool
+        public DataService.Model.HighSchool HighSchool
         {
             get
             {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Common.Data.Enum;
+using Domain.Data.Enum;
 using Domain.DomainContext;
 
 namespace TimeTable.ViewModel.MainWindow

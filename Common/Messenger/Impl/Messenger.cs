@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Common.Messenger.Impl;
+using Domain.Messenger;
+using Domain.Messenger.Impl;
 
-namespace Common.Messenger
+namespace Common.Messenger.Impl
 {
     public class Messenger : IMessenger
     {

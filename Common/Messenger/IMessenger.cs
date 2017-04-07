@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Messenger.Impl;
+using Domain.Messenger.Impl;
 
-namespace Common.Messenger
+namespace Domain.Messenger
 {
     public interface IMessenger
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Data.Enum;
+using Domain.Data.Enum;
 
-namespace TimeTable.ViewModel
+namespace Domain.Event
 {
     public class LeftMenuMouseOverEventArgs : EventArgs
     {

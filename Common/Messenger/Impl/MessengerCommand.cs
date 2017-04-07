@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Common.Messenger
+namespace Domain.Messenger
 {
     public class MessengerCommand<T> : ICommand where T : class
     {

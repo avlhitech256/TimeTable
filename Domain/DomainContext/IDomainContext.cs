@@ -1,8 +1,6 @@
-﻿using Common.Annotations;
-using Common.Messenger;
+﻿using Domain.Annotations;
+using Domain.Messenger;
 using DataService.DataService;
-
-//using DataService.Model;
 
 namespace Domain.DomainContext
 {

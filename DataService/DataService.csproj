@@ -53,8 +53,6 @@
   <ItemGroup>
     <Compile Include="DataService\DataService.cs" />
     <Compile Include="DataService\IDataService.cs" />
-    <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
-    <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
     <Compile Include="Model\Chair.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>

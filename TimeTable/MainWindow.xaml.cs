@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using Common.Data.Enum;
-using Common.Event;
-using Common.Messenger.Impl;
+using Domain.Data.Enum;
+using Domain.Messenger.Impl;
 using Domain.DomainContext;
 using TimeTable.View.LeftMenu;
 using TimeTable.ViewModel.MainWindow;

@@ -1,5 +1,5 @@
 ﻿using Common.Data.Notifier;
-using Common.Messenger;
+using Domain.Messenger;
 using DataService.DataService;
 
 
@@ -11,7 +11,7 @@ namespace Domain.DomainContext
 
         public DomainContext()
         {
-            Messenger = new Messenger();
+            Messenger = new Common.Messenger.Impl.Messenger();
             DataService = new DataService.DataService.DataService();
         }
 
