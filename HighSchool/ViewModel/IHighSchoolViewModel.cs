@@ -11,7 +11,7 @@ namespace HighSchool.ViewModel
         IDomainContext DomainContext { get; }
         IMessenger Messenger { get; }
         HighSchoolSearchCriteria SearchCriteria { get; }
-        DataService.Model.HighSchool SelectedHighSchool { get; }
+        IHighSchoolEntity SelectedHighSchool { get; }
         ObservableCollection<IHighSchoolEntity> HighSchools { get; }
         ObservableCollection<DataService.Model.Employee> Employees { get; }
         string Code { get; set; }

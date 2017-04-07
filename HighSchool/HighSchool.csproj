@@ -60,6 +60,15 @@
     <Compile Include="ViewModel\HighSchoolSearchCriteria.cs" />
     <Compile Include="ViewModel\HighSchoolViewModel.cs" />
     <Compile Include="ViewModel\IHighSchoolViewModel.cs" />
+    <Compile Include="View\HighSchoolEditButtonControl.xaml.cs">
+      <DependentUpon>HighSchoolEditButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HighSchoolEditControl.xaml.cs">
+      <DependentUpon>HighSchoolEditControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HighSchoolEditFieldsControl.xaml.cs">
+      <DependentUpon>HighSchoolEditFieldsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\HighSchoolSearchButtonControl.xaml.cs">
       <DependentUpon>HighSchoolSearchButtonControl.xaml</DependentUpon>
     </Compile>
@@ -81,6 +90,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\HighSchoolEditButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolEditControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HighSchoolEditFieldsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HighSchoolSearchButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
