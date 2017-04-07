@@ -31,7 +31,7 @@ namespace HighSchool.ViewModel
 
         public HighSchoolSearchCriteria SearchCriteria => Model.SearchCriteria;
 
-        public DataService.Model.HighSchool SelectedHighSchool => Model.SelectedHighSchool;
+        public IHighSchoolEntity SelectedHighSchool => Model.SelectedHighSchool;
 
         public ObservableCollection<IHighSchoolEntity> HighSchools => Model.HighSchools;
 

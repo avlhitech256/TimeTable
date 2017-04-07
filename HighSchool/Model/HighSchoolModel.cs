@@ -14,7 +14,7 @@ namespace HighSchool.Model
     {
         #region Members
 
-        private DataService.Model.HighSchool selectedHighSchool;
+        private IHighSchoolEntity selectedHighSchool;
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace HighSchool.Model
 
         public HighSchoolSearchCriteria SearchCriteria { get; private set; }
 
-        public DataService.Model.HighSchool SelectedHighSchool
+        public IHighSchoolEntity SelectedHighSchool
         {
             get
             {
@@ -87,7 +87,7 @@ namespace HighSchool.Model
 
             foreach (DataService.Model.HighSchool item in DBContext.HighSchools)
             {
-                HighSchools.Add(new HighSchoolEntity(item, position++));
+                HighSchools.Add(new HighSchoolEntity(item, position));
             }
 
         }
@@ -120,25 +120,24 @@ namespace HighSchool.Model
                             (!SearchCriteria.LastModifyTo.HasValue || x.LastModify < SearchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.UserModify) || 
                             x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
-                .Where(x => SearchCriteria.RectorId <= 0L || x.Rector == SearchCriteria.RectorId))
+                .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
             {
-                HighSchools.Add(new HighSchoolEntity(item, position++));
+                HighSchools.Add(new HighSchoolEntity(item, position));
             }
 
             OnPropertyChanged(nameof(HighSchools));
 
             if (HighSchools.Count == 1)
             {
-                SelectedHighSchool = HighSchools[0].HighSchool;
+                SelectedHighSchool = HighSchools[0];
             }
 
         }
 
-        private DataService.Model.HighSchool GetHighSchool(long id)
+        private IHighSchoolEntity GetHighSchool(long id)
         {
-            DataService.Model.HighSchool highSchool =
-                HighSchools.FirstOrDefault(x => x.Id == id)?.HighSchool;
-
+            IHighSchoolEntity highSchool =
+                HighSchools.FirstOrDefault(x => x.Id == id);
             return highSchool;
         }
 
