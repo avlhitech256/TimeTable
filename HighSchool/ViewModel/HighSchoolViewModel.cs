@@ -12,7 +12,7 @@ using HighSchool.ViewModel.Command;
 
 namespace HighSchool.ViewModel
 {
-    public class HighSchoolViewModel : Notifier, IHighSchoolViewModel, IViewModel
+    public class HighSchoolViewModel : Notifier, IHighSchoolViewModel
     {
         #region Constructors
         public HighSchoolViewModel(IDomainContext context)
@@ -172,7 +172,7 @@ namespace HighSchool.ViewModel
             BackButtonCommand = null;
             ForwardButtonCommand = null;
             NewButtonCommand = null;
-            EditButtonCommand = null;
+            EditButtonCommand = new EditCommand(this);
             SaveButtonCommand = null;
             SearchButtonCommand = new SearchCommand(this);
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 using Domain.Data.Enum;
+using Domain.Entry;
 using HighSchool.View;
 
 namespace TimeTable.ViewModel.MainWindow
@@ -9,7 +11,9 @@ namespace TimeTable.ViewModel.MainWindow
     {
         #region Members
 
-        private readonly Dictionary<MenuItemName, Func<MenuItemName, object>> mapFactories;
+        private readonly Dictionary<MenuItemName, Func<object>> mapSearchControlFactories;
+        private readonly Dictionary<MenuItemName, Func<object>> mapEditControlFactories;
+        private ViewModelRouter viewModelRouter;
 
         #endregion
 
@@ -17,12 +21,20 @@ namespace TimeTable.ViewModel.MainWindow
 
         public ViewFactory(ViewModelRouter viewModelRouter)
         {
-            mapFactories =
-                new Dictionary<MenuItemName, Func<MenuItemName, object>>
+            this.viewModelRouter = viewModelRouter;
+
+            mapSearchControlFactories =
+                new Dictionary<MenuItemName, Func<object>>
                 {
-                    { MenuItemName.HighSchool,
-                      (menuItemName) => new HighSchoolSearchControl(viewModelRouter.GetViewModel(menuItemName))}
+                    {MenuItemName.HighSchool, () => new HighSchoolSearchControl()}
                 };
+
+            mapEditControlFactories =
+                new Dictionary<MenuItemName, Func<object>>
+                {
+                    {MenuItemName.HighSchool, () => new HighSchoolEditControl()}
+                };
+
         }
 
         #endregion
@@ -32,11 +44,41 @@ namespace TimeTable.ViewModel.MainWindow
         public object GetView(MenuItemName menuItemName)
         {
             object view = null;
+            object viewModel = viewModelRouter.GetViewModel(menuItemName);
+            IViewModel viewModelWithInterface = viewModel as IViewModel;
+            Func<object> factory = null;
 
-            if (mapFactories != null && mapFactories.ContainsKey(menuItemName))
+            if (viewModelWithInterface != null)
             {
-                Func<MenuItemName, object> creator = mapFactories[menuItemName];
-                view = creator(menuItemName);
+                if (viewModelWithInterface.IsEditControl)
+                {
+                    if (mapEditControlFactories != null && mapEditControlFactories.ContainsKey(menuItemName))
+                    {
+                        factory = mapEditControlFactories[menuItemName];
+                    }
+
+                }
+                else
+                {
+                    if (mapSearchControlFactories != null && mapSearchControlFactories.ContainsKey(menuItemName))
+                    {
+                        factory = mapSearchControlFactories[menuItemName];
+                    }
+
+                }
+
+                if (factory != null)
+                {
+                    view = factory.Invoke();
+                    UserControl viewWithInterface = view as UserControl;
+
+                    if (viewWithInterface != null)
+                    {
+                        viewWithInterface.DataContext = viewModel;
+                    }
+
+                }
+
             }
 
             return view;
@@ -45,4 +87,5 @@ namespace TimeTable.ViewModel.MainWindow
         #endregion
 
     }
+
 }

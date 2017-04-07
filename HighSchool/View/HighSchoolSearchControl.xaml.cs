@@ -8,12 +8,18 @@ namespace HighSchool.View
     /// </summary>
     public partial class HighSchoolSearchControl : UserControl
     {
+        #region Members
+
+        private HighSchoolViewModel viewModel;
+
+        #endregion
+
         #region Constructors
 
-        public HighSchoolSearchControl(object viewModel)
+        public HighSchoolSearchControl()
         {
             InitializeComponent();
-            InitializeDataContext(viewModel);
+            viewModel = null;
         }
 
         #endregion

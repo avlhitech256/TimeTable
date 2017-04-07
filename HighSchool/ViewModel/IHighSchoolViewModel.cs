@@ -3,10 +3,11 @@ using System.Collections.ObjectModel;
 using Domain.Messenger;
 using Domain.DomainContext;
 using Domain.Entity.HighSchool;
+using Domain.Entry;
 
 namespace HighSchool.ViewModel
 {
-    public interface IHighSchoolViewModel
+    public interface IHighSchoolViewModel : IViewModel
     {
         IDomainContext DomainContext { get; }
         IMessenger Messenger { get; }
