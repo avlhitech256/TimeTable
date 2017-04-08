@@ -40,7 +40,7 @@ namespace HighSchool.Model
                 return selectedHighSchool;
             }
 
-            private set
+            set
             {
                 if (selectedHighSchool != value)
                 {

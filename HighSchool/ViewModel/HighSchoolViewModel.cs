@@ -40,7 +40,23 @@ namespace HighSchool.ViewModel
 
         public HighSchoolSearchCriteria SearchCriteria => Model.SearchCriteria;
 
-        public IHighSchoolEntity SelectedHighSchool => Model.SelectedHighSchool;
+        public IHighSchoolEntity SelectedHighSchool
+        {
+            get
+            {
+                return Model?.SelectedHighSchool;
+            }
+
+            set
+            {
+                if (Model != null)
+                {
+                    Model.SelectedHighSchool = value;
+                }
+
+            }
+
+        }
 
         public ObservableCollection<IHighSchoolEntity> HighSchools => Model.HighSchools;
 

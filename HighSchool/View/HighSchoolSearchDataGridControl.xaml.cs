@@ -7,9 +7,14 @@ namespace HighSchool.View
     /// </summary>
     public partial class HighSchoolSearchDataGridControl : UserControl
     {
+        #region Constructors
+
         public HighSchoolSearchDataGridControl()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
+
 }

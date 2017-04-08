@@ -8,7 +8,7 @@ namespace HighSchool.Model
     public interface IHighSchoolModel : INotifyPropertyChanged
     {
         HighSchoolSearchCriteria SearchCriteria { get; }
-        IHighSchoolEntity SelectedHighSchool { get; }
+        IHighSchoolEntity SelectedHighSchool { get; set; }
         ObservableCollection<IHighSchoolEntity> HighSchools { get; }
         ObservableCollection<DataService.Model.Employee> Employees { get; }
 
