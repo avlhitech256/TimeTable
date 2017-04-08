@@ -14,12 +14,20 @@ namespace HighSchool.ViewModel
 {
     public class HighSchoolViewModel : Notifier, IHighSchoolViewModel
     {
+        #region Members
+
+        private IHighSchoolEntity oldHighSchool;
+        
+        #endregion
+
         #region Constructors
         public HighSchoolViewModel(IDomainContext context)
         {
             DomainContext = context;
             Model = new HighSchoolModel(context);
-            Model.PropertyChanged += OnCangedSelectedHighSchool;
+            oldHighSchool = Model?.SelectedHighSchool;
+            SubscribeEvents();
+            ReadOnly = true;
             IsEditControl = false;
             InitializeButtons();
         }
@@ -46,16 +54,16 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool.Code;
+                return SelectedHighSchool?.Code;
             }
 
             set
             {
-                if (SelectedHighSchool.Code != value)
+                if (SelectedHighSchool != null)
                 {
                     SelectedHighSchool.Code = value;
-                    OnPropertyChanged();
                 }
+
             }
 
         }
@@ -64,90 +72,58 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool.Name;
+                return SelectedHighSchool?.Name;
             }
 
             set
             {
-                if (SelectedHighSchool.Name != value)
+                if (SelectedHighSchool != null)
                 {
                     SelectedHighSchool.Name = value;
-                    OnPropertyChanged();
                 }
 
             }
+
         }
 
         public bool Active
         {
             get
             {
-                return SelectedHighSchool.Active;
+                return SelectedHighSchool != null && SelectedHighSchool.Active;
             }
 
             set
             {
-                if (SelectedHighSchool.Active != value)
+                if (SelectedHighSchool != null)
                 {
                     SelectedHighSchool.Active = value;
-                    OnPropertyChanged();
                 }
 
             }
 
         }
-
-        public DateTimeOffset Cteated
+        public long RectorId
         {
             get
             {
-                return SelectedHighSchool.Cteated;
+                return SelectedHighSchool?.Rector ?? 0;
             }
 
             set
             {
-                if (SelectedHighSchool.Cteated != value)
+                if (SelectedHighSchool != null)
                 {
-                    SelectedHighSchool.Cteated = value;
-                    OnPropertyChanged();
+                    SelectedHighSchool.Rector = value;
                 }
             }
         }
 
-        public DateTimeOffset LastModify
-        {
-            get
-            {
-                return SelectedHighSchool.LastModify;
-            }
+        public DateTimeOffset Cteated => SelectedHighSchool?.Created ?? DateTimeOffset.MinValue;
 
-            set
-            {
-                if (SelectedHighSchool.LastModify != value)
-                {
-                    SelectedHighSchool.LastModify = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public DateTimeOffset LastModify => SelectedHighSchool?.LastModify ?? DateTimeOffset.MinValue;
 
-        public string UserModify
-        {
-            get
-            {
-                return SelectedHighSchool.UserModify;
-            }
-
-            set
-            {
-                if (SelectedHighSchool.UserModify != value)
-                {
-                    SelectedHighSchool.UserModify = value;
-                    OnPropertyChanged();
-                }
-
-            }
-        }
+        public string UserModify => SelectedHighSchool?.UserModify;
 
         public ICommand BackButtonCommand { get; private set; }
 
@@ -161,12 +137,28 @@ namespace HighSchool.ViewModel
 
         public ICommand SearchButtonCommand { get; private set; }
 
+        public bool ReadOnly { get; set; }
+
         public bool IsEditControl { get; set; }
 
         #endregion
 
         #region Methods
 
+        private void SubscribeEvents()
+        {
+            if (Model != null)
+            {
+                Model.PropertyChanged += OnChangedSelectedHighSchool;
+
+                if (SelectedHighSchool != null)
+                {
+                    SelectedHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
+                }
+
+            }
+
+        }
         private void InitializeButtons()
         {
             BackButtonCommand = null;
@@ -177,7 +169,7 @@ namespace HighSchool.ViewModel
             SearchButtonCommand = new SearchCommand(this);
         }
 
-        private void OnCangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
+        private void OnChangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Model.SelectedHighSchool))
             {
@@ -188,8 +180,26 @@ namespace HighSchool.ViewModel
                 OnPropertyChanged(nameof(Cteated));
                 OnPropertyChanged(nameof(LastModify));
                 OnPropertyChanged(nameof(UserModify));
+
+                if (oldHighSchool != null)
+                {
+                    oldHighSchool.PropertyChanged -= OnChangedHighSchoolProperties;
+                }
+
+                oldHighSchool = SelectedHighSchool;
+
+                if (SelectedHighSchool != null)
+                {
+                    SelectedHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
+                }
+
             }
 
+        }
+
+        private void OnChangedHighSchoolProperties(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(e.PropertyName);
         }
 
         public void ApplySearchCriteria()

@@ -65,7 +65,7 @@
                  IsReadOnly="True">
         </TextBox>
         <TextBox Name="WorkstationTextBox" 
-                 Text="{Binding Path=MachineName, Mode=OneWay}"
+                 Text="{Binding Path=Workstation, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
                  Grid.Column="5" 
                  Margin="1" 
@@ -76,7 +76,7 @@
         </TextBox>
         <TextBox Name="EnvironmentTextBox" 
                  Grid.Column="7" 
-                 Text="{Binding Path=ServerName, Mode=OneWay}"
+                 Text="{Binding Path=DataBaseServer, Mode=OneWay}"
                  Margin="1" 
                  VerticalContentAlignment="Center" 
                  HorizontalAlignment="Left" 

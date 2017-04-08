@@ -10,6 +10,7 @@ namespace Domain.Entry
         ICommand EditButtonCommand { get; }
         ICommand SaveButtonCommand { get; }
         ICommand SearchButtonCommand { get; }
+        bool ReadOnly { get; set; }
         bool IsEditControl { get; set; }
     }
 }

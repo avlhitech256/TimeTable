@@ -88,7 +88,7 @@ namespace HighSchool.Model
 
             foreach (DataService.Model.HighSchool item in DBContext.HighSchools)
             {
-                HighSchools.Add(new HighSchoolEntity(item, position));
+                HighSchools.Add(new HighSchoolEntity(DomainContext, item, position));
             }
 
         }
@@ -123,7 +123,7 @@ namespace HighSchool.Model
                             x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
                 .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
             {
-                HighSchools.Add(new HighSchoolEntity(item, position));
+                HighSchools.Add(new HighSchoolEntity(DomainContext, item, position));
             }
 
             OnPropertyChanged(nameof(HighSchools));

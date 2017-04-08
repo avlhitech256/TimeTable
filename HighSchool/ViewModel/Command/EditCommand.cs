@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Policy;
 using System.Windows.Input;
 using Domain.Data.Enum;
 using Domain.Event;
@@ -75,6 +74,7 @@ namespace HighSchool.ViewModel.Command
 
             if (messenger != null)
             {
+                ViewModel.ReadOnly = false;
                 ViewModel.IsEditControl = true;
                 messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
             }

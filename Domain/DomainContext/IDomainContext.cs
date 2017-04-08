@@ -1,6 +1,7 @@
 ﻿using Domain.Annotations;
 using Domain.Messenger;
 using DataService.DataService;
+using Domain.Entry;
 
 namespace Domain.DomainContext
 {
@@ -12,6 +13,20 @@ namespace Domain.DomainContext
         [CanBeNull]
         IDataService DataService { get; }
 
+        [CanBeNull]
+        IViewModel ViewModel { get; set; }
+
+        [CanBeNull]
+        string UserName { get; }
+
+        [CanBeNull]
+        string UserDomain { get; }
+
+        [CanBeNull]
+        string Workstation { get; }
+
+        [CanBeNull]
+        string DataBaseServer { get; }
     }
 
 }

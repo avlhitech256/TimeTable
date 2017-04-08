@@ -55,21 +55,20 @@
                HorizontalAlignment="Right" 
                Margin="10,0,5,0"/>
         <TextBox Name="HighSchoolEditCode" 
-                 Text="{Binding Path=SearchCriteria.Code, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Код учебного заведения"
                  Grid.Row="1" 
                  Grid.Column="1" 
                  Margin="3"/>
         <TextBox Name="HighSchoolEditName" 
-                 Text="{Binding Path=SearchCriteria.Name, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Наименование учебного заведения"
                  Grid.Row="3" 
                  Grid.Column="1" 
                  Margin="3"/>
         <ComboBox x:Name="HighSchoolEditRector"
-                  SelectedValue="{Binding Path=SearchCriteria.RectorId}"
+                  SelectedValue="{Binding Path=RectorId}"
                   ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
-                  Text="{Binding Path=SearchCriteria.RectorName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                   Grid.Row="5"
                   Grid.Column="1" Margin="3"/>
         <Grid Grid.Row="7" Grid.Column="1">
@@ -80,7 +79,7 @@
             </Grid.ColumnDefinitions>
             <CheckBox Name="HighSchoolEditActive" 
                   IsChecked="{Binding Path=SearchCriteria.Active}"
-                  ToolTip="Включить в отбор только активные записи"
+                  ToolTip="Активная запись"
                   Grid.Row="0" 
                   Grid.Column="0" 
                   Margin="3" 
@@ -92,7 +91,7 @@
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
             <TextBox Name="HighSchoolEditUser" 
-                     Text="{Binding Path=SearchCriteria.UserModify, UpdateSourceTrigger=PropertyChanged}"
+                     Text="{Binding Path=UserModify, Mode=OneWay}"
                      ToolTip="Пользователь, который осуществил последнею модификацию записи учебного заведения"
                      Grid.Row="0" 
                      Grid.Column="2" 
@@ -114,8 +113,7 @@
                    Margin="20,0,5,0"/>
             <DatePicker Name="HighSchoolEditCreated" 
                         SelectedDate="{Binding Path=SearchCriteria.CteatedFrom, 
-                                               UpdateSourceTrigger=PropertyChanged,
-                                               Mode=TwoWay}"
+                                               Mode=OneWay}"
                         ToolTip="Дата создания записи учебного заведения"
                         Grid.Row="0" 
                         Grid.Column="0" 
@@ -123,8 +121,7 @@
                         IsEnabled="False"/>
             <DatePicker Name="HighSchoolEditLastModify" 
                         SelectedDate="{Binding Path=SearchCriteria.CteatedTo, 
-                                               UpdateSourceTrigger=PropertyChanged,
-                                               Mode=TwoWay}"
+                                               Mode=OneWay}"
                         ToolTip="Дата последней модификации записи учебного заведения"
                         Grid.Row="0" 
                         Grid.Column="2" 

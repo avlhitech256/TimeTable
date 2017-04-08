@@ -18,9 +18,10 @@ namespace HighSchool.ViewModel
         string Code { get; set; }
         string Name { get; set; }
         bool Active { get; set; }
-        DateTimeOffset Cteated { get; set; }
-        DateTimeOffset LastModify { get; set; }
-        string UserModify { get; set; }
+        long RectorId { get; set; }
+        DateTimeOffset Cteated { get; }
+        DateTimeOffset LastModify { get; }
+        string UserModify { get; }
         void ApplySearchCriteria();
     }
 }

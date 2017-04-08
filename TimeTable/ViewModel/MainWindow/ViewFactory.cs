@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Domain.Data.Enum;
+using Domain.DomainContext;
 using Domain.Entry;
 using HighSchool.View;
 
@@ -13,14 +14,16 @@ namespace TimeTable.ViewModel.MainWindow
 
         private readonly Dictionary<MenuItemName, Func<object>> mapSearchControlFactories;
         private readonly Dictionary<MenuItemName, Func<object>> mapEditControlFactories;
-        private ViewModelRouter viewModelRouter;
+        private readonly IDomainContext domainContext;
+        private readonly ViewModelRouter viewModelRouter;
 
         #endregion
 
         #region Constructors
 
-        public ViewFactory(ViewModelRouter viewModelRouter)
+        public ViewFactory(IDomainContext domainContext, ViewModelRouter viewModelRouter)
         {
+            this.domainContext = domainContext;
             this.viewModelRouter = viewModelRouter;
 
             mapSearchControlFactories =
@@ -50,6 +53,8 @@ namespace TimeTable.ViewModel.MainWindow
 
             if (viewModelWithInterface != null)
             {
+                domainContext.ViewModel = viewModelWithInterface;
+
                 if (viewModelWithInterface.IsEditControl)
                 {
                     if (mapEditControlFactories != null && mapEditControlFactories.ContainsKey(menuItemName))

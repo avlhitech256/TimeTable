@@ -61,7 +61,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModel\FooterStatusBar\FooterStatusBarViewModel.cs" />
     <Compile Include="ViewModel\LeftMenu\LeftMenuViewModel.cs" />
     <Compile Include="ViewModel\LeftMenu\MenuItemsStyle.cs" />
     <Compile Include="ViewModel\LeftMenu\MenuItemStyle.cs" />

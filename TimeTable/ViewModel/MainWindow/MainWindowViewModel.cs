@@ -12,7 +12,6 @@ namespace TimeTable.ViewModel.MainWindow
         #region Members
 
         private object view;
-        private readonly IDomainContext context;
 
         #endregion
 
@@ -20,8 +19,8 @@ namespace TimeTable.ViewModel.MainWindow
 
         public MainWindowViewModel(IDomainContext domainContext)
         {
-            context = domainContext;
-            ViewModelRouter = new ViewModelRouter(context);
+            DomainContext = domainContext;
+            ViewModelRouter = new ViewModelRouter(DomainContext);
             SubscribeMessenger();
         }
 
@@ -30,7 +29,8 @@ namespace TimeTable.ViewModel.MainWindow
 
         #region Properties
 
-        private IMessenger Messenger => context?.Messenger;
+        private IDomainContext DomainContext { get; }
+        private IMessenger Messenger => DomainContext?.Messenger;
         private ViewModelRouter ViewModelRouter { get; }
 
         public object View
@@ -65,7 +65,7 @@ namespace TimeTable.ViewModel.MainWindow
 
         public void SetEntryControl(MenuChangedEventArgs args)
         {
-            ViewFactory viewFactory = new ViewFactory(ViewModelRouter);
+            var viewFactory = new ViewFactory(DomainContext, ViewModelRouter);
             View = viewFactory.GetView(args.MenuItemName);
         }
 
