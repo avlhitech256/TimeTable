@@ -14,7 +14,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="FacultyId" Type="bigint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -26,7 +26,7 @@
           <Property Name="ChairId" Type="bigint" Nullable="false" />
           <Property Name="SpecializationId" Type="bigint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -39,7 +39,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Position" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -52,7 +52,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="HighSchoolId" Type="bigint" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -65,7 +65,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Rector" Type="bigint" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -78,7 +78,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="SpecialtyId" Type="bigint" Nullable="false" />
           <Property Name="Active" Type="bigint" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -90,7 +90,7 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Active" Type="bit" Nullable="false" />
-          <Property Name="Cteated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -245,148 +245,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TimeTableModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Chair">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="FacultyId" Type="Int64" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Faculty" Relationship="Self.FK_Chair_Faculty" FromRole="Chair" ToRole="Faculty" />
-          <NavigationProperty Name="ChairToSpecializations" Relationship="Self.FK_ChairToSpecialization_Chair" FromRole="Chair" ToRole="ChairToSpecialization" />
-        </EntityType>
-        <EntityType Name="ChairToSpecialization">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="ChairId" Type="Int64" Nullable="false" />
-          <Property Name="SpecializationId" Type="Int64" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Chair" Relationship="Self.FK_ChairToSpecialization_Chair" FromRole="ChairToSpecialization" ToRole="Chair" />
-          <NavigationProperty Name="Specialization" Relationship="Self.FK_ChairToSpecialization_Specialization" FromRole="ChairToSpecialization" ToRole="Specialization" />
-        </EntityType>
-        <EntityType Name="Faculty">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="HighSchoolId" Type="Int64" Nullable="false" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Chairs" Relationship="Self.FK_Chair_Faculty" FromRole="Faculty" ToRole="Chair" />
-          <NavigationProperty Name="HighSchool" Relationship="TimeTableModel.FK_Faculty_HighSchool" FromRole="Faculty" ToRole="HighSchool" />
-        </EntityType>
-        <EntityType Name="Specialization">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="SpecialtyId" Type="Int64" Nullable="false" />
-          <Property Name="Active" Type="Int64" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ChairToSpecializations" Relationship="Self.FK_ChairToSpecialization_Specialization" FromRole="Specialization" ToRole="ChairToSpecialization" />
-          <NavigationProperty Name="Specialty" Relationship="Self.FK_Specialization_Specialty" FromRole="Specialization" ToRole="Specialty" />
-        </EntityType>
-        <EntityType Name="Specialty">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Specializations" Relationship="Self.FK_Specialization_Specialty" FromRole="Specialty" ToRole="Specialization" />
-        </EntityType>
-        <Association Name="FK_Chair_Faculty">
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="1" />
-          <End Role="Chair" Type="Self.Chair" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Faculty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Chair">
-              <PropertyRef Name="FacultyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChairToSpecialization_Chair">
-          <End Role="Chair" Type="Self.Chair" Multiplicity="1" />
-          <End Role="ChairToSpecialization" Type="Self.ChairToSpecialization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Chair">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChairToSpecialization">
-              <PropertyRef Name="ChairId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ChairToSpecialization_Specialization">
-          <End Role="Specialization" Type="Self.Specialization" Multiplicity="1" />
-          <End Role="ChairToSpecialization" Type="Self.ChairToSpecialization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specialization">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChairToSpecialization">
-              <PropertyRef Name="SpecializationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Specialization_Specialty">
-          <End Role="Specialty" Type="Self.Specialty" Multiplicity="1" />
-          <End Role="Specialization" Type="Self.Specialization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specialty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Specialization">
-              <PropertyRef Name="SpecialtyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="TimeTableEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Chairs" EntityType="Self.Chair" />
-          <EntitySet Name="ChairToSpecializations" EntityType="Self.ChairToSpecialization" />
-          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
-          <EntitySet Name="Specializations" EntityType="Self.Specialization" />
-          <EntitySet Name="Specialties" EntityType="Self.Specialty" />
-          <AssociationSet Name="FK_Chair_Faculty" Association="Self.FK_Chair_Faculty">
-            <End Role="Faculty" EntitySet="Faculties" />
-            <End Role="Chair" EntitySet="Chairs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChairToSpecialization_Chair" Association="Self.FK_ChairToSpecialization_Chair">
-            <End Role="Chair" EntitySet="Chairs" />
-            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChairToSpecialization_Specialization" Association="Self.FK_ChairToSpecialization_Specialization">
-            <End Role="Specialization" EntitySet="Specializations" />
-            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Specialization_Specialty" Association="Self.FK_Specialization_Specialty">
-            <End Role="Specialty" EntitySet="Specialties" />
-            <End Role="Specialization" EntitySet="Specializations" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -417,9 +276,26 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Chairs" EntityType="TimeTableModel.Chair" />
+          <EntitySet Name="ChairToSpecializations" EntityType="TimeTableModel.ChairToSpecialization" />
           <EntitySet Name="Employees" EntityType="TimeTableModel.Employee" />
-          <EntitySet Name="sysdiagrams" EntityType="TimeTableModel.sysdiagram" />
+          <EntitySet Name="Faculties" EntityType="TimeTableModel.Faculty" />
           <EntitySet Name="HighSchools" EntityType="TimeTableModel.HighSchool" />
+          <EntitySet Name="Specializations" EntityType="TimeTableModel.Specialization" />
+          <EntitySet Name="Specialties" EntityType="TimeTableModel.Specialty" />
+          <EntitySet Name="sysdiagrams" EntityType="TimeTableModel.sysdiagram" />
+          <AssociationSet Name="FK_Chair_Faculty" Association="TimeTableModel.FK_Chair_Faculty">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Chair" EntitySet="Chairs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChairToSpecialization_Chair" Association="TimeTableModel.FK_ChairToSpecialization_Chair">
+            <End Role="Chair" EntitySet="Chairs" />
+            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChairToSpecialization_Specialization" Association="TimeTableModel.FK_ChairToSpecialization_Specialization">
+            <End Role="Specialization" EntitySet="Specializations" />
+            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
+          </AssociationSet>
           <AssociationSet Name="FK_HighSchool_Employee" Association="TimeTableModel.FK_HighSchool_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="HighSchool" EntitySet="HighSchools" />
@@ -427,6 +303,10 @@
           <AssociationSet Name="FK_Faculty_HighSchool" Association="TimeTableModel.FK_Faculty_HighSchool">
             <End Role="HighSchool" EntitySet="HighSchools" />
             <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialization_Specialty" Association="TimeTableModel.FK_Specialization_Specialty">
+            <End Role="Specialty" EntitySet="Specialties" />
+            <End Role="Specialization" EntitySet="Specializations" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -440,6 +320,35 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Chair">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FacultyId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Faculty" Relationship="TimeTableModel.FK_Chair_Faculty" FromRole="Chair" ToRole="Faculty" />
+          <NavigationProperty Name="ChairToSpecializations" Relationship="TimeTableModel.FK_ChairToSpecialization_Chair" FromRole="Chair" ToRole="ChairToSpecialization" />
+        </EntityType>
+        <EntityType Name="ChairToSpecialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="ChairId" Type="Int64" Nullable="false" />
+          <Property Name="SpecializationId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chair" Relationship="TimeTableModel.FK_ChairToSpecialization_Chair" FromRole="ChairToSpecialization" ToRole="Chair" />
+          <NavigationProperty Name="Specialization" Relationship="TimeTableModel.FK_ChairToSpecialization_Specialization" FromRole="ChairToSpecialization" ToRole="Specialization" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -449,10 +358,68 @@
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
           <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HighSchools" Relationship="TimeTableModel.FK_HighSchool_Employee" FromRole="Employee" ToRole="HighSchool" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HighSchoolId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chairs" Relationship="TimeTableModel.FK_Chair_Faculty" FromRole="Faculty" ToRole="Chair" />
+          <NavigationProperty Name="HighSchool" Relationship="TimeTableModel.FK_Faculty_HighSchool" FromRole="Faculty" ToRole="HighSchool" />
+        </EntityType>
+        <EntityType Name="HighSchool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Rector" Type="Int64" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="TimeTableModel.FK_HighSchool_Employee" FromRole="HighSchool" ToRole="Employee" />
+          <NavigationProperty Name="Faculties" Relationship="TimeTableModel.FK_Faculty_HighSchool" FromRole="HighSchool" ToRole="Faculty" />
+        </EntityType>
+        <EntityType Name="Specialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialtyId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Int64" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChairToSpecializations" Relationship="TimeTableModel.FK_ChairToSpecialization_Specialization" FromRole="Specialization" ToRole="ChairToSpecialization" />
+          <NavigationProperty Name="Specialty" Relationship="TimeTableModel.FK_Specialization_Specialty" FromRole="Specialization" ToRole="Specialty" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Specializations" Relationship="TimeTableModel.FK_Specialization_Specialty" FromRole="Specialty" ToRole="Specialization" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -464,21 +431,42 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="HighSchool">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="Boolean" Nullable="false" />
-          <Property Name="Rector" Type="Int64" Nullable="false" />
-          <Property Name="Cteated" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Employee" Relationship="TimeTableModel.FK_HighSchool_Employee" FromRole="HighSchool" ToRole="Employee" />
-          <NavigationProperty Name="Faculties" Relationship="TimeTableModel.FK_Faculty_HighSchool" FromRole="HighSchool" ToRole="Faculty" />
-        </EntityType>
+        <Association Name="FK_Chair_Faculty">
+          <End Type="TimeTableModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="TimeTableModel.Chair" Role="Chair" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Chair">
+              <PropertyRef Name="FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChairToSpecialization_Chair">
+          <End Type="TimeTableModel.Chair" Role="Chair" Multiplicity="1" />
+          <End Type="TimeTableModel.ChairToSpecialization" Role="ChairToSpecialization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chair">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChairToSpecialization">
+              <PropertyRef Name="ChairId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChairToSpecialization_Specialization">
+          <End Type="TimeTableModel.Specialization" Role="Specialization" Multiplicity="1" />
+          <End Type="TimeTableModel.ChairToSpecialization" Role="ChairToSpecialization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChairToSpecialization">
+              <PropertyRef Name="SpecializationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HighSchool_Employee">
           <End Type="TimeTableModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="TimeTableModel.HighSchool" Role="HighSchool" Multiplicity="*" />
@@ -503,80 +491,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Specialization_Specialty">
+          <End Type="TimeTableModel.Specialty" Role="Specialty" Multiplicity="1" />
+          <End Type="TimeTableModel.Specialization" Role="Specialization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Specialization">
+              <PropertyRef Name="SpecialtyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище TimeTableModelContainer" CdmEntityContainer="TimeTableEntities">
-          <EntitySetMapping Name="Chairs">
-            <EntityTypeMapping TypeName="TimeTableModel.Chair">
-              <MappingFragment StoreEntitySet="Chair">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ChairToSpecializations">
-            <EntityTypeMapping TypeName="TimeTableModel.ChairToSpecialization">
-              <MappingFragment StoreEntitySet="ChairToSpecialization">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ChairId" ColumnName="ChairId" />
-                <ScalarProperty Name="SpecializationId" ColumnName="SpecializationId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Faculties">
-            <EntityTypeMapping TypeName="TimeTableModel.Faculty">
-              <MappingFragment StoreEntitySet="Faculty">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="HighSchoolId" ColumnName="HighSchoolId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Specializations">
-            <EntityTypeMapping TypeName="TimeTableModel.Specialization">
-              <MappingFragment StoreEntitySet="Specialization">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SpecialtyId" ColumnName="SpecialtyId" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Specialties">
-            <EntityTypeMapping TypeName="TimeTableModel.Specialty">
-              <MappingFragment StoreEntitySet="Specialty">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище TimeTableModel.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище TimeTableModel.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище TimeTableModel.sp_dropdiagram" />
@@ -601,14 +533,96 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище TimeTableModel.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище TimeTableModel.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Chairs">
+            <EntityTypeMapping TypeName="TimeTableModel.Chair">
+              <MappingFragment StoreEntitySet="Chair">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChairToSpecializations">
+            <EntityTypeMapping TypeName="TimeTableModel.ChairToSpecialization">
+              <MappingFragment StoreEntitySet="ChairToSpecialization">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SpecializationId" ColumnName="SpecializationId" />
+                <ScalarProperty Name="ChairId" ColumnName="ChairId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TimeTableModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="UserModify" ColumnName="UserModify" />
                 <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="TimeTableModel.Faculty">
+              <MappingFragment StoreEntitySet="Faculty">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="HighSchoolId" ColumnName="HighSchoolId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HighSchools">
+            <EntityTypeMapping TypeName="TimeTableModel.HighSchool">
+              <MappingFragment StoreEntitySet="HighSchool">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Rector" ColumnName="Rector" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specializations">
+            <EntityTypeMapping TypeName="TimeTableModel.Specialization">
+              <MappingFragment StoreEntitySet="Specialization">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SpecialtyId" ColumnName="SpecialtyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialties">
+            <EntityTypeMapping TypeName="TimeTableModel.Specialty">
+              <MappingFragment StoreEntitySet="Specialty">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -626,21 +640,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HighSchools">
-            <EntityTypeMapping TypeName="TimeTableModel.HighSchool">
-              <MappingFragment StoreEntitySet="HighSchool">
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="Cteated" ColumnName="Cteated" />
-                <ScalarProperty Name="Rector" ColumnName="Rector" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

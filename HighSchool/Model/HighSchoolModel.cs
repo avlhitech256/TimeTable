@@ -115,8 +115,8 @@ namespace HighSchool.Model
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.Name) || 
                             x.Name.ToUpperInvariant().Contains(SearchCriteria.Name.ToUpperInvariant())).ToList()
                 .Where(x => !SearchCriteria.Active || x.Active).ToList()
-                .Where(x => (!SearchCriteria.CteatedFrom.HasValue || x.Cteated >= SearchCriteria.CteatedFrom.Value) && 
-                            (!SearchCriteria.CteatedTo.HasValue || x.Cteated < SearchCriteria.CteatedTo.Value.AddDays(1))).ToList()
+                .Where(x => (!SearchCriteria.CteatedFrom.HasValue || x.Created >= SearchCriteria.CteatedFrom.Value) && 
+                            (!SearchCriteria.CteatedTo.HasValue || x.Created < SearchCriteria.CteatedTo.Value.AddDays(1))).ToList()
                 .Where(x => (!SearchCriteria.LastModifyFrom.HasValue || x.LastModify >= SearchCriteria.LastModifyFrom.Value) &&
                             (!SearchCriteria.LastModifyTo.HasValue || x.LastModify < SearchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.UserModify) || 

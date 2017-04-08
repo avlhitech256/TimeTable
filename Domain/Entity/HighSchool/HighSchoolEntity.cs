@@ -134,18 +134,18 @@ namespace Domain.Entity.HighSchool
 
         }
 
-        public DateTimeOffset Created
+        public DateTime Created
         {
             get
             {
-                return HighSchool.Cteated;
+                return HighSchool.Created.DateTime;
             }
 
             private set
             {
-                if (HighSchool.Cteated != value)
+                if (HighSchool.Created != value)
                 {
-                    HighSchool.Cteated = value;
+                    HighSchool.Created = value;
                     OnPropertyChanged();
                 }
 
@@ -153,11 +153,11 @@ namespace Domain.Entity.HighSchool
 
         }
 
-        public DateTimeOffset LastModify
+        public DateTime LastModify
         {
             get
             {
-                return HighSchool.LastModify;
+                return HighSchool.LastModify.DateTime;
             }
 
             private set
@@ -265,8 +265,10 @@ namespace Domain.Entity.HighSchool
                 HighSchool = newHighSchool;
                 UserModify = DomainContext?.UserName;
                 DateTimeOffset now = DateTimeOffset.Now;
-                Created = now;
-                LastModify = now;
+                HighSchool.Created = now;
+                OnPropertyChanged(nameof(Created));
+                HighSchool.LastModify = now;
+                OnPropertyChanged(nameof(LastModify));
             }
 
         }
@@ -274,7 +276,8 @@ namespace Domain.Entity.HighSchool
         private void SetInfoAboutModify()
         {
             UserModify = DomainContext?.UserName;
-            LastModify = DateTimeOffset.Now;
+            HighSchool.LastModify = DateTimeOffset.Now;
+            OnPropertyChanged(nameof(LastModify));
         }
 
         #endregion

@@ -25,7 +25,7 @@ namespace DataService.Model
         public string Name { get; set; }
         public bool Active { get; set; }
         public long Rector { get; set; }
-        public System.DateTimeOffset Cteated { get; set; }
+        public System.DateTimeOffset Created { get; set; }
         public System.DateTimeOffset LastModify { get; set; }
         public string UserModify { get; set; }
     

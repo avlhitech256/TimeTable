@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7aa7fe108274452ab558cbb2a5338edd" Name="Diagram1">
-        <EntityTypeShape EntityType="TimeTableModel.Chair" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTableModel.ChairToSpecialization" Width="1.5" PointX="7.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTableModel.Faculty" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTableModel.Specialization" Width="1.5" PointX="9.625" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TimeTableModel.Specialty" Width="1.5" PointX="11.75" PointY="0.5" IsExpanded="true" />
-        <AssociationConnector Association="TimeTableModel.FK_Chair_Faculty" ManuallyRouted="false" />
-        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Chair" ManuallyRouted="false" />
-        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Specialization" ManuallyRouted="false" />
-        <AssociationConnector Association="TimeTableModel.FK_Specialization_Specialty" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="TimeTableModel.Employee" Width="1.5" PointX="1.125" PointY="4" />
-        <EntityTypeShape EntityType="TimeTableModel.sysdiagram" Width="1.5" PointX="14.75" PointY="4.125" />
-        <EntityTypeShape EntityType="TimeTableModel.HighSchool" Width="1.5" PointX="1.125" PointY="0.5" />
+        <EntityTypeShape EntityType="TimeTableModel.Chair" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="TimeTableModel.ChairToSpecialization" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="TimeTableModel.Employee" Width="1.5" PointX="1.5" PointY="13.125" />
+        <EntityTypeShape EntityType="TimeTableModel.Faculty" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="TimeTableModel.HighSchool" Width="1.5" PointX="1.5" PointY="9" />
+        <EntityTypeShape EntityType="TimeTableModel.Specialization" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="TimeTableModel.Specialty" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="TimeTableModel.sysdiagram" Width="1.5" PointX="5.75" PointY="4.75" />
+        <AssociationConnector Association="TimeTableModel.FK_Chair_Faculty" />
+        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Chair" />
+        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Specialization" />
         <AssociationConnector Association="TimeTableModel.FK_HighSchool_Employee" />
         <AssociationConnector Association="TimeTableModel.FK_Faculty_HighSchool" />
-        </Diagram>
+        <AssociationConnector Association="TimeTableModel.FK_Specialization_Specialty" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

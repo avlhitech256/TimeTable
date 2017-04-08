@@ -135,9 +135,9 @@ namespace HighSchool.ViewModel
             }
         }
 
-        public DateTimeOffset Cteated => SelectedHighSchool?.Created ?? DateTimeOffset.MinValue;
+        public DateTime Created => SelectedHighSchool?.Created ?? DateTime.MinValue;
 
-        public DateTimeOffset LastModify => SelectedHighSchool?.LastModify ?? DateTimeOffset.MinValue;
+        public DateTime LastModify => SelectedHighSchool?.LastModify ?? DateTime.MinValue;
 
         public string UserModify => SelectedHighSchool?.UserModify;
 
@@ -193,7 +193,7 @@ namespace HighSchool.ViewModel
                 OnPropertyChanged(nameof(Code));
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Active));
-                OnPropertyChanged(nameof(Cteated));
+                OnPropertyChanged(nameof(Created));
                 OnPropertyChanged(nameof(LastModify));
                 OnPropertyChanged(nameof(UserModify));
 

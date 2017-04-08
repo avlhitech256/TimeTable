@@ -56,12 +56,16 @@
                Margin="10,0,5,0"/>
         <TextBox Name="HighSchoolEditCode" 
                  Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
                  ToolTip="Код учебного заведения"
                  Grid.Row="1" 
                  Grid.Column="1" 
                  Margin="3"/>
         <TextBox Name="HighSchoolEditName" 
                  Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
                  ToolTip="Наименование учебного заведения"
                  Grid.Row="3" 
                  Grid.Column="1" 
@@ -69,6 +73,7 @@
         <ComboBox x:Name="HighSchoolEditRector"
                   SelectedValue="{Binding Path=RectorId}"
                   ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  IsReadOnly="{Binding Path=ReadOnly}"
                   Grid.Row="5"
                   Grid.Column="1" Margin="3"/>
         <Grid Grid.Row="7" Grid.Column="1">
@@ -112,16 +117,14 @@
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
             <DatePicker Name="HighSchoolEditCreated" 
-                        SelectedDate="{Binding Path=SearchCriteria.CteatedFrom, 
-                                               Mode=OneWay}"
+                        SelectedDate="{Binding Path=Created, Mode=OneWay}"
                         ToolTip="Дата создания записи учебного заведения"
                         Grid.Row="0" 
                         Grid.Column="0" 
                         Margin="3"
                         IsEnabled="False"/>
             <DatePicker Name="HighSchoolEditLastModify" 
-                        SelectedDate="{Binding Path=SearchCriteria.CteatedTo, 
-                                               Mode=OneWay}"
+                        SelectedDate="{Binding Path=LastModify, Mode=OneWay}"
                         ToolTip="Дата последней модификации записи учебного заведения"
                         Grid.Row="0" 
                         Grid.Column="2" 

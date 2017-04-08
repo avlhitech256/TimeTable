@@ -25,7 +25,7 @@ namespace DataService.Model
         public string Name { get; set; }
         public long SpecialtyId { get; set; }
         public long Active { get; set; }
-        public System.DateTimeOffset Cteated { get; set; }
+        public System.DateTimeOffset Created { get; set; }
         public System.DateTimeOffset LastModify { get; set; }
         public string UserModify { get; set; }
     

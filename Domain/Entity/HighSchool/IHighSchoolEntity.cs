@@ -11,8 +11,8 @@ namespace Domain.Entity.HighSchool
         string Code { get; set; }
         string Name { get; set; }
         bool Active { get; set; }
-        DateTimeOffset Created { get; }
-        DateTimeOffset LastModify { get; }
+        DateTime Created { get; }
+        DateTime LastModify { get; }
         string UserModify { get; }
         long Rector { get; set; }
         Employee Employee { get; set; }
