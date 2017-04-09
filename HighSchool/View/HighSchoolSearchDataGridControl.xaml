@@ -19,7 +19,7 @@
                   Margin="2,27,0,3" 
                   Grid.RowSpan="2"
                   ItemsSource="{Binding HighSchools}"
-                  SelectedItem="{Binding Path=SelectedHighSchool, Mode=TwoWay}"
+                  SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" 

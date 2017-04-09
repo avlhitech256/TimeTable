@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using Domain.Data.Enum;
 using Domain.Event;
@@ -8,45 +7,13 @@ using Domain.Messenger.Impl;
 
 namespace HighSchool.ViewModel.Command
 {
-    internal class EditCommand : ICommand
+    internal class EditCommand : CommonCommand, ICommand
     {
-        #region Members
-
-        private bool canExecute;
-
-        #endregion
-
         #region Constructors
 
-        public EditCommand(IHighSchoolViewModel viewModel)
+        public EditCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
-            ViewModel = viewModel;
             ViewModel.PropertyChanged += ChangeCanExecute;
-            CanExecuteProperty = false;
-        }
-
-        #endregion
-
-        #region Properties
-
-        private IHighSchoolViewModel ViewModel { get; }
-
-        private bool CanExecuteProperty
-        {
-            get
-            {
-                return canExecute;
-            }
-
-            set
-            {
-                if (canExecute != value)
-                {
-                    canExecute = value;
-                    OnCanExecuteChanged();
-                }
-            }
-
         }
 
         #endregion
@@ -55,24 +22,13 @@ namespace HighSchool.ViewModel.Command
 
         private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ViewModel.SelectedHighSchool))
+            if (e.PropertyName == nameof(ViewModel.SelectedItem))
             {
-                CanExecuteProperty = ViewModel.SelectedHighSchool != null;
+                CanExecuteProperty = ViewModel.SelectedItem != null;
             }
         }
 
-        private void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
-
-
-        public bool CanExecute(object parameter)
-        {
-            return CanExecuteProperty;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             IMessenger messenger = ViewModel?.Messenger;
 
@@ -84,12 +40,6 @@ namespace HighSchool.ViewModel.Command
             }
 
         }
-
-        #endregion
-
-        #region Events
-
-        public event EventHandler CanExecuteChanged = delegate { };
 
         #endregion
     }

@@ -40,7 +40,7 @@ namespace HighSchool.ViewModel
 
         public HighSchoolSearchCriteria SearchCriteria => Model.SearchCriteria;
 
-        public IHighSchoolEntity SelectedHighSchool
+        public IHighSchoolEntity SelectedItem
         {
             get
             {
@@ -70,14 +70,14 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool?.Code;
+                return SelectedItem?.Code;
             }
 
             set
             {
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.Code = value;
+                    SelectedItem.Code = value;
                 }
 
             }
@@ -88,14 +88,14 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool?.Name;
+                return SelectedItem?.Name;
             }
 
             set
             {
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.Name = value;
+                    SelectedItem.Name = value;
                 }
 
             }
@@ -106,14 +106,14 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool != null && SelectedHighSchool.Active;
+                return SelectedItem != null && SelectedItem.Active;
             }
 
             set
             {
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.Active = value;
+                    SelectedItem.Active = value;
                 }
 
             }
@@ -123,23 +123,23 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedHighSchool?.Rector ?? 0;
+                return SelectedItem?.Rector ?? 0;
             }
 
             set
             {
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.Rector = value;
+                    SelectedItem.Rector = value;
                 }
             }
         }
 
-        public DateTime Created => SelectedHighSchool?.Created ?? DateTime.MinValue;
+        public DateTime Created => SelectedItem?.Created ?? DateTime.MinValue;
 
-        public DateTime LastModify => SelectedHighSchool?.LastModify ?? DateTime.MinValue;
+        public DateTime LastModify => SelectedItem?.LastModify ?? DateTime.MinValue;
 
-        public string UserModify => SelectedHighSchool?.UserModify;
+        public string UserModify => SelectedItem?.UserModify;
 
         public ICommand BackButtonCommand { get; private set; }
 
@@ -167,9 +167,9 @@ namespace HighSchool.ViewModel
             {
                 Model.PropertyChanged += OnChangedSelectedHighSchool;
 
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
+                    SelectedItem.PropertyChanged += OnChangedHighSchoolProperties;
                 }
 
             }
@@ -189,7 +189,7 @@ namespace HighSchool.ViewModel
         {
             if (e.PropertyName == nameof(Model.SelectedHighSchool))
             {
-                OnPropertyChanged(nameof(SelectedHighSchool));
+                OnPropertyChanged(nameof(SelectedItem));
                 OnPropertyChanged(nameof(Code));
                 OnPropertyChanged(nameof(Name));
                 OnPropertyChanged(nameof(Active));
@@ -202,11 +202,11 @@ namespace HighSchool.ViewModel
                     oldHighSchool.PropertyChanged -= OnChangedHighSchoolProperties;
                 }
 
-                oldHighSchool = SelectedHighSchool;
+                oldHighSchool = SelectedItem;
 
-                if (SelectedHighSchool != null)
+                if (SelectedItem != null)
                 {
-                    SelectedHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
+                    SelectedItem.PropertyChanged += OnChangedHighSchoolProperties;
                 }
 
             }

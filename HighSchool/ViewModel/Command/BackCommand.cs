@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Domain.Data.Enum;
 using Domain.Event;
 using Domain.Messenger;
@@ -7,62 +6,20 @@ using Domain.Messenger.Impl;
 
 namespace HighSchool.ViewModel.Command
 {
-    internal class BackCommand : ICommand
+    internal class BackCommand : CommonCommand, ICommand
     {
-        #region Members
-
-        private bool canExecute;
-
-        #endregion
-
         #region Constructors
 
-        public BackCommand(IHighSchoolViewModel viewModel)
+        public BackCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
-            ViewModel = viewModel;
             CanExecuteProperty = true;
-        }
-
-        #endregion
-
-        #region Properties
-
-        private IHighSchoolViewModel ViewModel { get; }
-
-        private bool CanExecuteProperty
-        {
-            get
-            {
-                return canExecute;
-            }
-
-            set
-            {
-                if (canExecute != value)
-                {
-                    canExecute = value;
-                    OnCanExecuteChanged();
-                }
-            }
-
         }
 
         #endregion
 
         #region Methods
 
-        private void OnCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
-        }
-
-
-        public bool CanExecute(object parameter)
-        {
-            return CanExecuteProperty;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             IMessenger messenger = ViewModel?.Messenger;
 
@@ -73,12 +30,6 @@ namespace HighSchool.ViewModel.Command
             }
 
         }
-
-        #endregion
-
-        #region Events
-
-        public event EventHandler CanExecuteChanged = delegate { };
 
         #endregion
     }
