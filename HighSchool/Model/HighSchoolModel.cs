@@ -127,24 +127,6 @@ namespace HighSchool.Model
             }
 
             OnPropertyChanged(nameof(HighSchools));
-
-            if (HighSchools.Count == 1)
-            {
-                SelectedHighSchool = HighSchools[0];
-            }
-
-        }
-
-        private IHighSchoolEntity GetHighSchool(long id)
-        {
-            IHighSchoolEntity highSchool =
-                HighSchools.FirstOrDefault(x => x.Id == id);
-            return highSchool;
-        }
-
-        public void UpdateHighSchool()
-        {
-            
         }
 
         #endregion

@@ -33,7 +33,6 @@
                 Margin="15,5">
         </Button>
         <Button x:Name="SaveButton" 
-                Command="{Binding Path=SearchButtonCommand}"
                 Grid.Row="5" 
                 ToolTip="Сохранить текущие изменения" 
                 Content="Сохранить" 
@@ -51,6 +50,7 @@
             </TextBlock>
         </Button>
         <Button x:Name="BackToSearchButton" 
+                Command="{Binding Path=BackButtonCommand}"
                 Grid.Row="8" 
                 ToolTip="Вернуться назад к поиску" 
                 Content="Назад" 

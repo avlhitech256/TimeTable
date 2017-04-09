@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Domain.Messenger;
 using Domain.DomainContext;
 using Domain.Entity.HighSchool;
@@ -7,7 +8,7 @@ using Domain.Entry;
 
 namespace HighSchool.ViewModel
 {
-    public interface IHighSchoolViewModel : IViewModel
+    public interface IHighSchoolViewModel : IViewModel, INotifyPropertyChanged
     {
         IDomainContext DomainContext { get; }
         IMessenger Messenger { get; }

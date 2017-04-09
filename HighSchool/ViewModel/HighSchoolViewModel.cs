@@ -177,7 +177,7 @@ namespace HighSchool.ViewModel
         }
         private void InitializeButtons()
         {
-            BackButtonCommand = null;
+            BackButtonCommand = new BackCommand(this);
             ForwardButtonCommand = null;
             NewButtonCommand = null;
             EditButtonCommand = new EditCommand(this);

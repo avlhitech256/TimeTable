@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Input;
 using Domain.Data.Enum;
 using Domain.Event;
@@ -8,7 +7,7 @@ using Domain.Messenger.Impl;
 
 namespace HighSchool.ViewModel.Command
 {
-    internal class EditCommand : ICommand
+    internal class BackCommand : ICommand
     {
         #region Members
 
@@ -18,11 +17,10 @@ namespace HighSchool.ViewModel.Command
 
         #region Constructors
 
-        public EditCommand(IHighSchoolViewModel viewModel)
+        public BackCommand(IHighSchoolViewModel viewModel)
         {
             ViewModel = viewModel;
-            ViewModel.PropertyChanged += ChangeCanExecute;
-            CanExecuteProperty = false;
+            CanExecuteProperty = true;
         }
 
         #endregion
@@ -53,14 +51,6 @@ namespace HighSchool.ViewModel.Command
 
         #region Methods
 
-        private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(ViewModel.SelectedHighSchool))
-            {
-                CanExecuteProperty = ViewModel.SelectedHighSchool != null;
-            }
-        }
-
         private void OnCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, new EventArgs());
@@ -78,8 +68,7 @@ namespace HighSchool.ViewModel.Command
 
             if (ViewModel != null && messenger != null)
             {
-                ViewModel.ReadOnly = false;
-                ViewModel.IsEditControl = true;
+                ViewModel.IsEditControl = false;
                 messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
             }
 
