@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Data.Notifier;
+using DataService.DataService;
 using DataService.Model;
 using Domain.DomainContext;
 
@@ -11,24 +12,27 @@ namespace Domain.Entity.HighSchool
 
         private long position;
         private DataService.Model.HighSchool highSchool;
+        private readonly string userName;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolEntity(IDomainContext domainContext)
+        public HighSchoolEntity(TimeTableEntities dbContext, string userName)
         {
-            DomainContext = domainContext;
+            DbContext = dbContext;
+            this.userName = userName;
             position = 0;
             CreateHighSchool();
         }
 
-        public HighSchoolEntity(IDomainContext domainContext, DataService.Model.HighSchool highSchool) 
-            : this(domainContext, highSchool, 0) {}
+        public HighSchoolEntity(TimeTableEntities dbContext, string userName, DataService.Model.HighSchool highSchool) 
+            : this(dbContext, userName, highSchool, 0) {}
 
-        public HighSchoolEntity(IDomainContext domainContext, DataService.Model.HighSchool highSchool, long position)
+        public HighSchoolEntity(TimeTableEntities dbContext, string userName, DataService.Model.HighSchool highSchool, long position)
         {
-            DomainContext = domainContext;
+            DbContext = dbContext;
+            this.userName = userName;
             this.highSchool = highSchool;
             this.position = position;
         }
@@ -37,7 +41,7 @@ namespace Domain.Entity.HighSchool
 
         #region Properties
 
-        private IDomainContext DomainContext { get; }
+        private TimeTableEntities DbContext { get; }
 
         public long Position
         {
@@ -58,24 +62,7 @@ namespace Domain.Entity.HighSchool
 
         }
         
-        public long Id
-        {
-            get
-            {
-                return HighSchool.Id;
-            }
-
-            set
-            {
-                if (HighSchool.Id != value)
-                {
-                    HighSchool.Id = value;
-                    OnPropertyChanged();
-                }
-
-            }
-
-        }
+        public long Id => HighSchool.Id;
 
         public string Code
         {
@@ -257,13 +244,13 @@ namespace Domain.Entity.HighSchool
 
         private void CreateHighSchool()
         {
-            DataService.Model.HighSchool newHighSchool = DomainContext?.DataService?.DBContext?.HighSchools?.Create();
+            DataService.Model.HighSchool newHighSchool = DbContext?.HighSchools?.Create();
 
             if (newHighSchool != null)
             {
-                DomainContext?.DataService?.DBContext?.HighSchools?.Add(newHighSchool);
+                DbContext?.HighSchools?.Add(newHighSchool);
                 HighSchool = newHighSchool;
-                UserModify = DomainContext?.UserName;
+                UserModify = userName;
                 DateTimeOffset now = DateTimeOffset.Now;
                 HighSchool.Created = now;
                 OnPropertyChanged(nameof(Created));
@@ -275,7 +262,7 @@ namespace Domain.Entity.HighSchool
 
         private void SetInfoAboutModify()
         {
-            UserModify = DomainContext?.UserName;
+            UserModify = userName;
             HighSchool.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
         }

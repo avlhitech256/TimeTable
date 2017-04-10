@@ -7,7 +7,7 @@ namespace Domain.Entity.HighSchool
     public interface IHighSchoolEntity : INotifyPropertyChanged
     {
         long Position { get; set; }
-        long Id { get; set; }
+        long Id { get; }
         string Code { get; set; }
         string Name { get; set; }
         bool Active { get; set; }

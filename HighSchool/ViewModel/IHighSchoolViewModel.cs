@@ -16,6 +16,7 @@ namespace HighSchool.ViewModel
         IHighSchoolEntity SelectedItem { get; }
         ObservableCollection<IHighSchoolEntity> HighSchools { get; }
         ObservableCollection<DataService.Model.Employee> Employees { get; }
+        bool HasChanges { get; }
         string Code { get; set; }
         string Name { get; set; }
         bool Active { get; set; }
@@ -24,5 +25,9 @@ namespace HighSchool.ViewModel
         DateTime LastModify { get; }
         string UserModify { get; }
         void ApplySearchCriteria();
+        void Edit();
+        void Save();
+        void Delete();
+        void Back();
     }
 }

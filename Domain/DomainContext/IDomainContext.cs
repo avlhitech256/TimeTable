@@ -1,6 +1,5 @@
 ﻿using Domain.Annotations;
 using Domain.Messenger;
-using DataService.DataService;
 using Domain.Entry;
 
 namespace Domain.DomainContext
@@ -9,9 +8,6 @@ namespace Domain.DomainContext
     {
         [CanBeNull]
         IMessenger Messenger { get; }
-
-        [CanBeNull]
-        IDataService DataService { get; }
 
         [CanBeNull]
         IViewModel ViewModel { get; set; }
@@ -26,7 +22,7 @@ namespace Domain.DomainContext
         string Workstation { get; }
 
         [CanBeNull]
-        string DataBaseServer { get; }
+        string DataBaseServer { get; set; }
     }
 
 }

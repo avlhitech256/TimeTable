@@ -5,17 +5,15 @@ namespace HighSchool.ViewModel.Command
 {
     internal class SearchCommand : CommonCommand, ICommand
     {
-        #region Members
-
-        private bool canExecute;
-
-        #endregion
-
         #region Constructors
 
         public SearchCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
-            ViewModel.SearchCriteria.SearchCriteriaChanged += ChangeCanExecute;
+            if (ViewModel != null && ViewModel.SearchCriteria != null)
+            {
+                ViewModel.SearchCriteria.SearchCriteriaChanged += ChangeCanExecute;
+            }
+
             CanExecuteProperty = true;
         }
 
@@ -30,7 +28,7 @@ namespace HighSchool.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            ViewModel.ApplySearchCriteria();
+            ViewModel?.ApplySearchCriteria();
             CanExecuteProperty = false;
         }
 

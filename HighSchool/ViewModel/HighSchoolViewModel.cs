@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using Common.Data.Notifier;
+using Domain.Data.Enum;
 using Domain.Messenger;
 using Domain.DomainContext;
 using Domain.Entity.HighSchool;
 using Domain.Entry;
+using Domain.Event;
+using Domain.Messenger.Impl;
 using HighSchool.Model;
 using HighSchool.ViewModel.Command;
 
@@ -17,14 +21,16 @@ namespace HighSchool.ViewModel
         #region Members
 
         private IHighSchoolEntity oldHighSchool;
-        
+        private bool hasChanges;
+
         #endregion
 
         #region Constructors
         public HighSchoolViewModel(IDomainContext context)
         {
             DomainContext = context;
-            Model = new HighSchoolModel(context);
+            Model = new HighSchoolModel(DomainContext);
+            DomainContext.DataBaseServer = Model.DataBaseServer;
             oldHighSchool = Model?.SelectedHighSchool;
             SubscribeEvents();
             ReadOnly = true;
@@ -61,6 +67,25 @@ namespace HighSchool.ViewModel
         public ObservableCollection<IHighSchoolEntity> HighSchools => Model.HighSchools;
 
         public ObservableCollection<DataService.Model.Employee> Employees => Model.Employees;
+
+        public bool HasChanges
+        {
+            get
+            {
+                return Model?.HasChanges ?? false;
+            }
+
+            set
+            {
+                if (hasChanges != value)
+                {
+                    hasChanges = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
 
         public IDomainContext DomainContext { get; }
 
@@ -141,7 +166,7 @@ namespace HighSchool.ViewModel
 
         public string UserModify => SelectedItem?.UserModify;
 
-        public ICommand BackButtonCommand { get; private set; }
+        public ICommand BackToSearchButtonCommand { get; private set; }
 
         public ICommand ForwardButtonCommand { get; private set; }
 
@@ -151,7 +176,11 @@ namespace HighSchool.ViewModel
 
         public ICommand SaveButtonCommand { get; private set; }
 
+        public ICommand DeleteButtonCommand { get; private set; }
+
         public ICommand SearchButtonCommand { get; private set; }
+
+        public ICommand ChangeEditModeButtonCommand { get; private set; }
 
         public bool ReadOnly { get; set; }
 
@@ -177,12 +206,14 @@ namespace HighSchool.ViewModel
         }
         private void InitializeButtons()
         {
-            BackButtonCommand = new BackCommand(this);
+            BackToSearchButtonCommand = new BackCommand(this);
             ForwardButtonCommand = null;
             NewButtonCommand = null;
             EditButtonCommand = new EditCommand(this);
-            SaveButtonCommand = null;
+            SaveButtonCommand = new SaveCommand(this);
+            DeleteButtonCommand = new DeleteCommand(this);
             SearchButtonCommand = new SearchCommand(this);
+            ChangeEditModeButtonCommand = null;
         }
 
         private void OnChangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
@@ -204,9 +235,9 @@ namespace HighSchool.ViewModel
 
                 oldHighSchool = SelectedItem;
 
-                if (SelectedItem != null)
+                if (oldHighSchool != null)
                 {
-                    SelectedItem.PropertyChanged += OnChangedHighSchoolProperties;
+                    oldHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
                 }
 
             }
@@ -216,11 +247,97 @@ namespace HighSchool.ViewModel
         private void OnChangedHighSchoolProperties(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(e.PropertyName);
+            HasChanges = Model?.HasChanges ?? false;
         }
 
         public void ApplySearchCriteria()
         {
             Model.ApplySearchCriteria();
+        }
+
+        public void Edit()
+        {
+            if (Messenger != null)
+            {
+                ReadOnly = false;
+                IsEditControl = true;
+                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+                HasChanges = Model.HasChanges;
+            }
+
+        }
+
+        public void Save()
+        {
+            Model.Save();
+        }
+
+        public void Delete()
+        {
+            if (Model != null && SelectedItem != null &&
+                MessageBox.Show("Текущая запись учебного заведения" +
+                                Environment.NewLine +
+                                "будет удалена без возможности" + 
+                                Environment.NewLine + 
+                                "восстановления!" +
+                                Environment.NewLine + Environment.NewLine +
+                                "Вы уверены, что ходите сделать" + 
+                                Environment.NewLine + "данную операцию?",
+                                "Удаление текущей записи",
+                                MessageBoxButton.YesNo,
+                                MessageBoxImage.Stop,
+                                MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            {
+                Model.Delete();
+                ApplySearchCriteria();
+                SendBackMessage();
+            }
+
+        }
+
+        public void Back()
+        {
+            if (Model != null && Model.HasChanges)
+            {
+                MessageBoxResult result = MessageBox.Show("В текущую запись учебного заведения" + 
+                                                          Environment.NewLine +
+                                                          "были внесены изменения." + 
+                                                          Environment.NewLine + Environment.NewLine +
+                                                          "Сохранить внесенные изменения?",
+                                                          "Сохранение текущей записи",
+                                                          MessageBoxButton.YesNoCancel,
+                                                          MessageBoxImage.Question,
+                                                          MessageBoxResult.Yes);
+                if (result != MessageBoxResult.Cancel)
+                {
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Model.Save();
+                    }
+                    else
+                    {
+                        Model.Rollback();
+                    }
+
+                    SendBackMessage();
+                }
+
+            }
+            else
+            {
+                SendBackMessage();
+            }
+
+        }
+
+        private void SendBackMessage()
+        {
+            if (Messenger != null)
+            {
+                IsEditControl = false;
+                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+            }
+
         }
 
         #endregion

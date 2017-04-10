@@ -1,16 +1,12 @@
 ﻿using System.Windows.Input;
-using Domain.Data.Enum;
-using Domain.Event;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
 
 namespace HighSchool.ViewModel.Command
 {
-    internal class BackCommand : CommonCommand, ICommand
+    internal class DeleteCommand : CommonCommand, ICommand
     {
         #region Constructors
 
-        public BackCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public DeleteCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
             CanExecuteProperty = true;
         }
@@ -21,9 +17,10 @@ namespace HighSchool.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            ViewModel?.Back();
+            ViewModel?.Delete();
         }
 
         #endregion
     }
+
 }

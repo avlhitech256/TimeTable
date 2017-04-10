@@ -30,15 +30,7 @@ namespace HighSchool.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            IMessenger messenger = ViewModel?.Messenger;
-
-            if (ViewModel != null && messenger != null)
-            {
-                ViewModel.ReadOnly = false;
-                ViewModel.IsEditControl = true;
-                messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
-            }
-
+            ViewModel?.Edit();
         }
 
         #endregion

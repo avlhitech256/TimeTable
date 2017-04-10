@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Common.Data.Notifier;
 using DataService.DataService;
@@ -21,6 +23,7 @@ namespace HighSchool.Model
 
         public HighSchoolModel(IDomainContext domainContext)
         {
+            DataService = new DataService.DataService.DataService();
             DomainContext = domainContext;
             InitializeSearchCriteria();
             InitializeHighSchools();
@@ -55,12 +58,14 @@ namespace HighSchool.Model
         public ObservableCollection<IHighSchoolEntity> HighSchools { get; private set; }
 
         public ObservableCollection<Employee> Employees { get; private set; }
+        public bool HasChanges => SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.HighSchool)?.State != EntityState.Unchanged;
+        public string DataBaseServer => DbContext?.Database?.Connection?.DataSource;
 
         private IDomainContext DomainContext { get; }
 
-        private IDataService DataService => DomainContext.DataService;
+        private IDataService DataService { get; }
 
-        private TimeTableEntities DBContext => DataService.DBContext;
+        private TimeTableEntities DbContext => DataService?.DBContext;
 
         #endregion
 
@@ -86,9 +91,9 @@ namespace HighSchool.Model
             HighSchools = new ObservableCollection<IHighSchoolEntity>();
             long position = 1;
 
-            foreach (DataService.Model.HighSchool item in DBContext.HighSchools)
+            foreach (DataService.Model.HighSchool item in DbContext.HighSchools)
             {
-                HighSchools.Add(new HighSchoolEntity(DomainContext, item, position));
+                HighSchools.Add(new HighSchoolEntity(DataService.DBContext, DomainContext.UserName, item, position));
             }
 
         }
@@ -97,7 +102,7 @@ namespace HighSchool.Model
         {
             Employees = new ObservableCollection<Employee>();
 
-            foreach (Employee item in DBContext.Employees)
+            foreach (Employee item in DbContext.Employees)
             {
                 Employees.Add(item);
             }
@@ -109,7 +114,7 @@ namespace HighSchool.Model
             HighSchools.Clear();
             long position = 1;
 
-            foreach (DataService.Model.HighSchool item in DBContext.HighSchools.ToList()
+            foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList()
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.Code) || 
                             x.Code.ToUpperInvariant().Contains(SearchCriteria.Code.ToUpperInvariant())).ToList()
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.Name) || 
@@ -123,10 +128,48 @@ namespace HighSchool.Model
                             x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
                 .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
             {
-                HighSchools.Add(new HighSchoolEntity(DomainContext, item, position));
+                HighSchools.Add(new HighSchoolEntity(DataService.DBContext, DomainContext.UserName, item, position));
             }
 
             OnPropertyChanged(nameof(HighSchools));
+        }
+
+        public void Rollback()
+        {
+            DbEntityEntry entry = DbContext.Entry(SelectedHighSchool.HighSchool);
+            if (entry != null)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Modified:
+                        entry.State = EntityState.Unchanged;
+                        break;
+                    case EntityState.Deleted:
+                        entry.Reload();
+                        break;
+                    case EntityState.Added:
+                        entry.State = EntityState.Detached;
+                        break;
+                }
+
+            }
+
+        }
+
+        public void Save()
+        {
+            DbContext.SaveChanges();
+        }
+
+        public void Delete()
+        {
+            if (SelectedHighSchool != null)
+            {
+                DbContext.HighSchools.Remove(SelectedHighSchool.HighSchool);
+                DbContext.SaveChanges();
+                SelectedHighSchool = null;
+            }
+
         }
 
         #endregion

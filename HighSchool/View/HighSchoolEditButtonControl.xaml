@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HighSchool.View"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="180">
+             d:DesignHeight="300" d:DesignWidth="180">
     <Grid>
         <Grid.RowDefinitions >
             <RowDefinition Height="10"></RowDefinition>
@@ -14,6 +14,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -26,13 +28,14 @@
                 Margin="15,5">
         </Button>
         <Button x:Name="EditButton" 
-                Command="{Binding Path=SearchButtonCommand}"
+                Command="{Binding Path=ChangeEditModeButtonCommand}"
                 Grid.Row="3" 
                 ToolTip="Редактировать текущую запись учебного заведения" 
                 Content="Редактировать" 
                 Margin="15,5">
         </Button>
         <Button x:Name="SaveButton" 
+                Command="{Binding Path=SaveButtonCommand}"
                 Grid.Row="5" 
                 ToolTip="Сохранить текущие изменения" 
                 Content="Сохранить" 
@@ -49,9 +52,16 @@
                        HorizontalAlignment="Center">
             </TextBlock>
         </Button>
-        <Button x:Name="BackToSearchButton" 
-                Command="{Binding Path=BackButtonCommand}"
+        <Button x:Name="DeleteButton" 
+                Command="{Binding Path=DeleteButtonCommand}"
                 Grid.Row="8" 
+                ToolTip="Удалить текущую запись учебного заведения" 
+                Content="Удалить" 
+                Margin="15,5">
+        </Button>
+        <Button x:Name="BackToSearchButton" 
+                Command="{Binding Path=BackToSearchButtonCommand}"
+                Grid.Row="10" 
                 ToolTip="Вернуться назад к поиску" 
                 Content="Назад" 
                 Margin="15,5">

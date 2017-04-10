@@ -83,7 +83,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <CheckBox Name="HighSchoolEditActive" 
-                  IsChecked="{Binding Path=SearchCriteria.Active}"
+                  IsChecked="{Binding Path=Active}"
                   ToolTip="Активная запись"
                   Grid.Row="0" 
                   Grid.Column="0" 
