@@ -22,6 +22,7 @@ namespace HighSchool.ViewModel
 
         private IHighSchoolEntity oldHighSchool;
         private bool hasChanges;
+        private bool readOnly;
 
         #endregion
 
@@ -117,7 +118,7 @@ namespace HighSchool.ViewModel
             }
 
             set
-            {
+           {
                 if (SelectedItem != null)
                 {
                     SelectedItem.Name = value;
@@ -182,7 +183,23 @@ namespace HighSchool.ViewModel
 
         public ICommand ChangeEditModeButtonCommand { get; private set; }
 
-        public bool ReadOnly { get; set; }
+        public bool ReadOnly
+        {
+            get
+            {
+                return readOnly;
+            }
+
+            set
+            {
+                if (readOnly != value)
+                {
+                    readOnly = value;
+                    OnPropertyChanged();
+                }
+
+            }
+        }
 
         public bool IsEditControl { get; set; }
 
@@ -257,6 +274,7 @@ namespace HighSchool.ViewModel
 
         public void Add()
         {
+            ReadOnly = false;
             Model.Add();
         }
 
@@ -274,7 +292,9 @@ namespace HighSchool.ViewModel
 
         public void Save()
         {
+            ReadOnly = true;
             Model.Save();
+            HasChanges = Model.HasChanges;
         }
 
         public void Delete()

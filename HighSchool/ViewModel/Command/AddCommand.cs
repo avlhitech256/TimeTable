@@ -12,7 +12,7 @@ namespace HighSchool.ViewModel.Command
             if (ViewModel != null)
             {
                 ViewModel.PropertyChanged += ChangeCanExecute;
-                CanExecuteProperty = !ViewModel.HasChanges && !ViewModel.ReadOnly;
+                CanExecuteProperty = ViewModel.ReadOnly;
             }
 
         }
@@ -23,9 +23,9 @@ namespace HighSchool.ViewModel.Command
 
         private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ViewModel.HasChanges))
+            if (e.PropertyName == nameof(ViewModel.ReadOnly))
             {
-                CanExecuteProperty = !ViewModel.HasChanges && !ViewModel.ReadOnly;
+                CanExecuteProperty = ViewModel.ReadOnly;
             }
 
         }

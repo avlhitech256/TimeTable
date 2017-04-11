@@ -16,6 +16,7 @@ namespace HighSchool.Model
         #region Members
 
         private IHighSchoolEntity selectedHighSchool;
+        private ObservableCollection<Employee> employees;
 
         #endregion
 
@@ -61,7 +62,23 @@ namespace HighSchool.Model
 
         public ObservableCollection<IHighSchoolEntity> HighSchools { get; private set; }
 
-        public ObservableCollection<Employee> Employees => DbContext.Employees.Local;
+        public ObservableCollection<Employee> Employees
+        {
+            get
+            {
+                if (employees == null)
+                {
+                    employees = new ObservableCollection<Employee>();
+                    Employee item0 = new Employee() {Id = 0, Name = "Любой ректор"};
+                    employees.Add(item0);
+                    DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
+                    OnPropertyChanged();
+                }
+
+                return employees;
+            }
+
+        }
         public bool HasChanges => SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.HighSchool)?.State != EntityState.Unchanged;
         public string DataBaseServer => DbContext?.Database?.Connection?.DataSource;
 
@@ -95,10 +112,9 @@ namespace HighSchool.Model
             HighSchools = new ObservableCollection<IHighSchoolEntity>();
             long position = 1;
 
-            foreach (DataService.Model.HighSchool item in DbContext.HighSchools)
+            foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList())
             {
-                HighSchools.Add(new HighSchoolEntity(DataService
-                    , item, position));
+                HighSchools.Add(new HighSchoolEntity(DataService, item, position));
             }
 
         }
@@ -120,7 +136,7 @@ namespace HighSchool.Model
                             (!SearchCriteria.LastModifyTo.HasValue || x.LastModify < SearchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
                 .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.UserModify) || 
                             x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
-                .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
+                .Where(x => SearchCriteria.RectorId <= 0L || x.Rector == SearchCriteria.RectorId))
             {
                 HighSchools.Add(new HighSchoolEntity(DataService, item, position));
             }

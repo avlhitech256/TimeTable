@@ -71,7 +71,7 @@
                  Grid.Column="1" 
                  Margin="3"/>
         <ComboBox x:Name="HighSchoolEditRector"
-                  SelectedValue="{Binding Path=RectorId}"
+                  SelectedValue="{Binding Path=RectorId, UpdateSourceTrigger=PropertyChanged}"
                   ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
                   IsReadOnly="{Binding Path=ReadOnly}"
                   Grid.Row="5"
