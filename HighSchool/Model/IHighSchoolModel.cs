@@ -14,6 +14,7 @@ namespace HighSchool.Model
         bool HasChanges { get; }
         string DataBaseServer { get; }
         void ApplySearchCriteria();
+        void Add();
         void Save();
         void Delete();
         void Rollback();

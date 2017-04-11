@@ -208,7 +208,7 @@ namespace HighSchool.ViewModel
         {
             BackToSearchButtonCommand = new BackCommand(this);
             ForwardButtonCommand = null;
-            NewButtonCommand = null;
+            NewButtonCommand = new AddCommand(this);
             EditButtonCommand = new EditCommand(this);
             SaveButtonCommand = new SaveCommand(this);
             DeleteButtonCommand = new DeleteCommand(this);
@@ -253,6 +253,11 @@ namespace HighSchool.ViewModel
         public void ApplySearchCriteria()
         {
             Model.ApplySearchCriteria();
+        }
+
+        public void Add()
+        {
+            Model.Add();
         }
 
         public void Edit()

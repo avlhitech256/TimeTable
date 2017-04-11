@@ -25,6 +25,7 @@ namespace HighSchool.ViewModel
         DateTime LastModify { get; }
         string UserModify { get; }
         void ApplySearchCriteria();
+        void Add();
         void Edit();
         void Save();
         void Delete();

@@ -12,27 +12,24 @@ namespace Domain.Entity.HighSchool
 
         private long position;
         private DataService.Model.HighSchool highSchool;
-        private readonly string userName;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolEntity(TimeTableEntities dbContext, string userName)
+        public HighSchoolEntity(IDataService dataService)
         {
-            DbContext = dbContext;
-            this.userName = userName;
+            DataService = dataService;
             position = 0;
             CreateHighSchool();
         }
 
-        public HighSchoolEntity(TimeTableEntities dbContext, string userName, DataService.Model.HighSchool highSchool) 
-            : this(dbContext, userName, highSchool, 0) {}
+        public HighSchoolEntity(IDataService dataService, DataService.Model.HighSchool highSchool) 
+            : this(dataService, highSchool, 0) {}
 
-        public HighSchoolEntity(TimeTableEntities dbContext, string userName, DataService.Model.HighSchool highSchool, long position)
+        public HighSchoolEntity(IDataService dataService, DataService.Model.HighSchool highSchool, long position)
         {
-            DbContext = dbContext;
-            this.userName = userName;
+            DataService = dataService;
             this.highSchool = highSchool;
             this.position = position;
         }
@@ -41,7 +38,7 @@ namespace Domain.Entity.HighSchool
 
         #region Properties
 
-        private TimeTableEntities DbContext { get; }
+        private IDataService DataService { get; }
 
         public long Position
         {
@@ -244,13 +241,13 @@ namespace Domain.Entity.HighSchool
 
         private void CreateHighSchool()
         {
-            DataService.Model.HighSchool newHighSchool = DbContext?.HighSchools?.Create();
+            DataService.Model.HighSchool newHighSchool = DataService?.DBContext?.HighSchools?.Create();
 
             if (newHighSchool != null)
             {
-                DbContext?.HighSchools?.Add(newHighSchool);
+                DataService?.DBContext?.HighSchools?.Add(newHighSchool);
                 HighSchool = newHighSchool;
-                UserModify = userName;
+                UserModify = DataService?.UserName;
                 DateTimeOffset now = DateTimeOffset.Now;
                 HighSchool.Created = now;
                 OnPropertyChanged(nameof(Created));
@@ -262,7 +259,7 @@ namespace Domain.Entity.HighSchool
 
         private void SetInfoAboutModify()
         {
-            UserModify = userName;
+            UserModify = DataService?.UserName;
             HighSchool.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
         }

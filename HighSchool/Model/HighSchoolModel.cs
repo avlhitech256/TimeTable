@@ -23,11 +23,15 @@ namespace HighSchool.Model
 
         public HighSchoolModel(IDomainContext domainContext)
         {
-            DataService = new DataService.DataService.DataService();
             DomainContext = domainContext;
+
+            DataService = new DataService.DataService.DataService()
+            {
+                UserName = DomainContext.UserName
+            };
+
             InitializeSearchCriteria();
             InitializeHighSchools();
-            InitializeEmployee();
         }
 
         #endregion
@@ -57,7 +61,7 @@ namespace HighSchool.Model
 
         public ObservableCollection<IHighSchoolEntity> HighSchools { get; private set; }
 
-        public ObservableCollection<Employee> Employees { get; private set; }
+        public ObservableCollection<Employee> Employees => DbContext.Employees.Local;
         public bool HasChanges => SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.HighSchool)?.State != EntityState.Unchanged;
         public string DataBaseServer => DbContext?.Database?.Connection?.DataSource;
 
@@ -93,18 +97,8 @@ namespace HighSchool.Model
 
             foreach (DataService.Model.HighSchool item in DbContext.HighSchools)
             {
-                HighSchools.Add(new HighSchoolEntity(DataService.DBContext, DomainContext.UserName, item, position));
-            }
-
-        }
-
-        private void InitializeEmployee()
-        {
-            Employees = new ObservableCollection<Employee>();
-
-            foreach (Employee item in DbContext.Employees)
-            {
-                Employees.Add(item);
+                HighSchools.Add(new HighSchoolEntity(DataService
+                    , item, position));
             }
 
         }
@@ -128,10 +122,15 @@ namespace HighSchool.Model
                             x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
                 .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
             {
-                HighSchools.Add(new HighSchoolEntity(DataService.DBContext, DomainContext.UserName, item, position));
+                HighSchools.Add(new HighSchoolEntity(DataService, item, position));
             }
 
             OnPropertyChanged(nameof(HighSchools));
+        }
+
+        public void Add()
+        {
+            SelectedHighSchool = new HighSchoolEntity(DataService);
         }
 
         public void Rollback()

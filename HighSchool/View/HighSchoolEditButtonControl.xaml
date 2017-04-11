@@ -22,6 +22,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button x:Name="AddButton" 
+                Command="{Binding Path=NewButtonCommand}"
                 Grid.Row="1" 
                 ToolTip="Создать новое учебное заведение" 
                 Content="Создать" 

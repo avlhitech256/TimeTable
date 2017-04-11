@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Data.Notifier;
 using DataService.Model;
 
 namespace DataService.DataService
 {
-    public class DataService : IDataService
+    public class DataService : Notifier, IDataService
     {
         #region Members
 
         private TimeTableEntities dbContext;
+        private string userName;
 
         #endregion
 
@@ -16,7 +18,8 @@ namespace DataService.DataService
 
         public DataService()
         {
-            dbContext = new TimeTableEntities(); 
+            dbContext = new TimeTableEntities();
+            userName = string.Empty;
         }
 
         #endregion
@@ -25,13 +28,22 @@ namespace DataService.DataService
 
         public TimeTableEntities DBContext => dbContext;
 
-        #endregion
-
-        #region Methods
-
-        public List<HighSchool> GetHighSchools()
+        public string UserName
         {
-            return dbContext.HighSchools.ToList();
+            get
+            {
+                return userName;
+            }
+
+            set
+            {
+                if (userName != value)
+                {
+                    userName = value;
+                    OnPropertyChanged();
+                }
+            }
+
         }
 
         #endregion

@@ -6,6 +6,6 @@ namespace DataService.DataService
     public interface IDataService
     {
         TimeTableEntities DBContext { get; }
-        List<HighSchool> GetHighSchools();
+        string UserName { get; set; }
     }
 }
