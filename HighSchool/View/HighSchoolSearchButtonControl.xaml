@@ -24,7 +24,13 @@
                 Content="Поиск" 
                 Margin="15,5">
         </Button>
-        <Button x:Name="AddButton" Grid.Row="3" ToolTip="Создать новое учебное заведение" Content="Создать" Margin="15,5"></Button>
+        <Button x:Name="AddButton" 
+                Command="{Binding Path=NewInSearchButtonCommand}"
+                Grid.Row="3" 
+                ToolTip="Создать новое учебное заведение" 
+                Content="Создать" 
+                Margin="15,5">
+        </Button>
         <Button x:Name="ViewButton" Grid.Row="5" ToolTip="Просмотр записи учебного заведения" Content="Просмотр" Margin="15,5"></Button>
         <Button x:Name="EditButton" 
                 Command="{Binding Path=EditButtonCommand}"

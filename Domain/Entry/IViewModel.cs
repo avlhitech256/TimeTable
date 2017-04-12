@@ -6,6 +6,7 @@ namespace Domain.Entry
     {
         ICommand BackToSearchButtonCommand { get; }
         ICommand NewButtonCommand { get; }
+        ICommand NewInSearchButtonCommand { get; }
         ICommand EditButtonCommand { get; }
         ICommand SaveButtonCommand { get; }
         ICommand DeleteButtonCommand { get; }

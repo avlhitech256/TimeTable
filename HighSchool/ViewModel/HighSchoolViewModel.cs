@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Common.Data.Notifier;
@@ -23,6 +24,7 @@ namespace HighSchool.ViewModel
         private IHighSchoolEntity oldHighSchool;
         private bool hasChanges;
         private bool readOnly;
+        private bool isEditControl;
 
         #endregion
 
@@ -145,7 +147,7 @@ namespace HighSchool.ViewModel
             }
 
         }
-        public long RectorId
+        public long Rector
         {
             get
             {
@@ -172,6 +174,8 @@ namespace HighSchool.ViewModel
         public ICommand ForwardButtonCommand { get; private set; }
 
         public ICommand NewButtonCommand { get; private set; }
+
+        public ICommand NewInSearchButtonCommand { get; private set; }
 
         public ICommand EditButtonCommand { get; private set; }
 
@@ -201,7 +205,24 @@ namespace HighSchool.ViewModel
             }
         }
 
-        public bool IsEditControl { get; set; }
+        public bool IsEditControl
+        {
+            get
+            {
+                return isEditControl;
+            }
+
+            set
+            {
+                if (isEditControl != value)
+                {
+                    isEditControl = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
 
         #endregion
 
@@ -226,6 +247,7 @@ namespace HighSchool.ViewModel
             BackToSearchButtonCommand = new BackCommand(this);
             ForwardButtonCommand = null;
             NewButtonCommand = new AddCommand(this);
+            NewInSearchButtonCommand = new AddInSearchCommand(this);
             EditButtonCommand = new EditCommand(this);
             SaveButtonCommand = new SaveCommand(this);
             DeleteButtonCommand = new DeleteCommand(this);
@@ -275,6 +297,15 @@ namespace HighSchool.ViewModel
         public void Add()
         {
             ReadOnly = false;
+            Model.Add();
+        }
+
+        public void AddInSearch()
+        {
+            ReadOnly = false;
+            IsEditControl = true;
+            Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+            HasChanges = Model.HasChanges;
             Model.Add();
         }
 
@@ -359,6 +390,19 @@ namespace HighSchool.ViewModel
         {
             if (Messenger != null)
             {
+                IHighSchoolEntity oldSelectedItem = SelectedItem;
+                Model.ApplySearchCriteria();
+
+                if (HighSchools.All(x => x.Id != oldSelectedItem.Id))
+                {
+                    MessageBox.Show("Критерии поиска не включают" + Environment.NewLine +
+                                    "добавленные или измененные записи" + Environment.NewLine +
+                                    "учебных заведений. Для их отображения" + Environment.NewLine +
+                                    "измените критерии поиска.", 
+                                    "Поиск записей учебных заведений",
+                                    MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                }
+
                 IsEditControl = false;
                 Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
             }

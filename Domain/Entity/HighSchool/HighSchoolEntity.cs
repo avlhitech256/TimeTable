@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Common.Data.Notifier;
 using DataService.DataService;
 using DataService.Model;
-using Domain.DomainContext;
 
 namespace Domain.Entity.HighSchool
 {
@@ -72,7 +72,7 @@ namespace Domain.Entity.HighSchool
             {
                 if (HighSchool.Code != value)
                 {
-                    HighSchool.Code = value;
+                    HighSchool.Code = value.ToUpper();
                     OnPropertyChanged();
                 }
 
@@ -247,6 +247,8 @@ namespace Domain.Entity.HighSchool
             {
                 DataService?.DBContext?.HighSchools?.Add(newHighSchool);
                 HighSchool = newHighSchool;
+                Active = true;
+                Rector = DataService?.DBContext?.Employees?.FirstOrDefault()?.Id ?? 0;
                 UserModify = DataService?.UserName;
                 DateTimeOffset now = DateTimeOffset.Now;
                 HighSchool.Created = now;

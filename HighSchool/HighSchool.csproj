@@ -57,6 +57,7 @@
     <Compile Include="Model\IHighSchoolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Command\AddCommand.cs" />
+    <Compile Include="ViewModel\Command\AddInSearchCommand.cs" />
     <Compile Include="ViewModel\Command\BackCommand.cs" />
     <Compile Include="ViewModel\Command\CommonCommand.cs" />
     <Compile Include="ViewModel\Command\DeleteCommand.cs" />

@@ -20,12 +20,13 @@ namespace HighSchool.ViewModel
         string Code { get; set; }
         string Name { get; set; }
         bool Active { get; set; }
-        long RectorId { get; set; }
+        long Rector { get; set; }
         DateTime Created { get; }
         DateTime LastModify { get; }
         string UserModify { get; }
         void ApplySearchCriteria();
         void Add();
+        void AddInSearch();
         void Edit();
         void Save();
         void Delete();
