@@ -43,6 +43,7 @@
                 Margin="15,5">
         </Button>
         <Button x:Name="SaveAndNewButton" 
+                Command="{Binding Path=SaveAndNewButtonCommand}"
                 Grid.Row="6" 
                 ToolTip="Просмотр записи учебного заведения" 
                 Margin="15,5">

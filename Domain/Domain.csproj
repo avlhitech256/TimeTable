@@ -58,6 +58,7 @@
     <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
     <Compile Include="Entry\ControlState.cs" />
     <Compile Include="Entry\IViewModel.cs" />
+    <Compile Include="Event\EntityExceptionEventArgs.cs" />
     <Compile Include="Event\LeftMenuMouseOverEventArgs.cs" />
     <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

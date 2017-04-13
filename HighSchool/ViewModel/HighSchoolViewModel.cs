@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -9,7 +10,6 @@ using Domain.Data.Enum;
 using Domain.Messenger;
 using Domain.DomainContext;
 using Domain.Entity.HighSchool;
-using Domain.Entry;
 using Domain.Event;
 using Domain.Messenger.Impl;
 using HighSchool.Model;
@@ -36,6 +36,7 @@ namespace HighSchool.ViewModel
             DomainContext.DataBaseServer = Model.DataBaseServer;
             oldHighSchool = Model?.SelectedHighSchool;
             SubscribeEvents();
+            SubscribeMessenger();
             ReadOnly = true;
             IsEditControl = false;
             InitializeButtons();
@@ -171,15 +172,15 @@ namespace HighSchool.ViewModel
 
         public ICommand BackToSearchButtonCommand { get; private set; }
 
-        public ICommand ForwardButtonCommand { get; private set; }
-
         public ICommand NewButtonCommand { get; private set; }
 
-        public ICommand NewInSearchButtonCommand { get; private set; }
+        public ICommand ViewButtonCommand { get; private set; }
 
         public ICommand EditButtonCommand { get; private set; }
 
         public ICommand SaveButtonCommand { get; private set; }
+
+        public ICommand SaveAndNewButtonCommand { get; private set; }
 
         public ICommand DeleteButtonCommand { get; private set; }
 
@@ -218,6 +219,12 @@ namespace HighSchool.ViewModel
                 {
                     isEditControl = value;
                     OnPropertyChanged();
+
+                    if (!value)
+                    {
+                        ReadOnly = true;
+                    }
+
                 }
 
             }
@@ -233,6 +240,7 @@ namespace HighSchool.ViewModel
             if (Model != null)
             {
                 Model.PropertyChanged += OnChangedSelectedHighSchool;
+                Model.EntityException += OnEntityException;
 
                 if (SelectedItem != null)
                 {
@@ -242,14 +250,22 @@ namespace HighSchool.ViewModel
             }
 
         }
+
+        private void SubscribeMessenger()
+        {
+            Messenger.Register<EntityException>(CommandName.ShowEntityException, 
+                                                ShowEntityException, 
+                                                CanShowEntityException);
+        }
+
         private void InitializeButtons()
         {
             BackToSearchButtonCommand = new BackCommand(this);
-            ForwardButtonCommand = null;
             NewButtonCommand = new AddCommand(this);
-            NewInSearchButtonCommand = new AddInSearchCommand(this);
+            ViewButtonCommand = new ViewCommand(this);
             EditButtonCommand = new EditCommand(this);
             SaveButtonCommand = new SaveCommand(this);
+            SaveAndNewButtonCommand = new SaveAndNewCommand(this);
             DeleteButtonCommand = new DeleteCommand(this);
             SearchButtonCommand = new SearchCommand(this);
             ChangeEditModeButtonCommand = null;
@@ -279,8 +295,39 @@ namespace HighSchool.ViewModel
                     oldHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
                 }
 
+                HasChanges = Model?.HasChanges ?? false;
             }
 
+        }
+
+        private void OnEntityException(object sender, EntityExceptionEventArgs e)
+        {
+            ShowEntityException(e.EntityException);
+        }
+
+        private void ShowEntityException(EntityException exception)
+        {
+            string header = exception.Source +
+                            " - Ошибка соединения с сервером баз данных (" + exception.HResult + ")";
+            string message = exception.Message;
+
+            if (!string.IsNullOrWhiteSpace(exception.HelpLink))
+            {
+                message = message + Environment.NewLine + Environment.NewLine +
+                          "Дополнительную информацию об ошибке можно посмотреть перейдя по нижеприведенной ссылке: " +
+                          Environment.NewLine + exception.HelpLink;
+            }
+
+            message = message + Environment.NewLine + Environment.NewLine +
+                      "Данная ошибка возникла в следующем методе: " + exception.TargetSite +
+                      Environment.NewLine + Environment.NewLine + exception.StackTrace;
+
+            MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Stop, MessageBoxResult.OK);
+        }
+
+        private bool CanShowEntityException(EntityException exception)
+        {
+            return true;
         }
 
         private void OnChangedHighSchoolProperties(object sender, PropertyChangedEventArgs e)
@@ -297,25 +344,33 @@ namespace HighSchool.ViewModel
         public void Add()
         {
             ReadOnly = false;
-            Model.Add();
-        }
 
-        public void AddInSearch()
-        {
-            ReadOnly = false;
-            IsEditControl = true;
-            Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+            if (!IsEditControl)
+            {
+                GoToEditControl();
+            }
+
             HasChanges = Model.HasChanges;
             Model.Add();
         }
 
+        public void View()
+        {
+            if (SelectedItem != null)
+            {
+                ReadOnly = true;
+                GoToEditControl();
+                HasChanges = Model.HasChanges;
+            }
+
+        }
+
         public void Edit()
         {
-            if (Messenger != null)
+            if (SelectedItem != null)
             {
                 ReadOnly = false;
-                IsEditControl = true;
-                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+                GoToEditControl();
                 HasChanges = Model.HasChanges;
             }
 
@@ -323,9 +378,23 @@ namespace HighSchool.ViewModel
 
         public void Save()
         {
-            ReadOnly = true;
-            Model.Save();
-            HasChanges = Model.HasChanges;
+            if (HasChanges && !ReadOnly && ValidateCode())
+            {
+                ReadOnly = true;
+                Model.Save();
+                HasChanges = Model.HasChanges;
+            }
+
+        }
+
+        public void SaveAndAdd()
+        {
+            if (HasChanges && !ReadOnly)
+            {
+                Save();
+                Add();
+            }
+
         }
 
         public void Delete()
@@ -346,7 +415,12 @@ namespace HighSchool.ViewModel
             {
                 Model.Delete();
                 ApplySearchCriteria();
-                SendBackMessage();
+
+                if (IsEditControl)
+                {
+                    SendBackMessage();
+                }
+
             }
 
         }
@@ -393,7 +467,7 @@ namespace HighSchool.ViewModel
                 IHighSchoolEntity oldSelectedItem = SelectedItem;
                 Model.ApplySearchCriteria();
 
-                if (HighSchools.All(x => x.Id != oldSelectedItem.Id))
+                if (oldSelectedItem != null && HighSchools.All(x => x.Id != oldSelectedItem.Id))
                 {
                     MessageBox.Show("Критерии поиска не включают" + Environment.NewLine +
                                     "добавленные или измененные записи" + Environment.NewLine +
@@ -403,13 +477,47 @@ namespace HighSchool.ViewModel
                                     MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
                 }
 
+                GoToSearchControl();
+            }
+
+        }
+
+        private void GoToEditControl()
+        {
+            if (Messenger != null)
+            {
+                IsEditControl = true;
+                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+            }
+
+        }
+
+        private void GoToSearchControl()
+        {
+            if (Messenger != null)
+            {
                 IsEditControl = false;
                 Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
             }
 
         }
 
-        #endregion
+        private bool ValidateCode()
+        {
+            bool result = !string.IsNullOrWhiteSpace(Code);
 
+            if (!result)
+            {
+                MessageBox.Show("Поле \"Код:\" не заполнено. Данное поле" + Environment.NewLine +
+                                "является обязательным. Заполните это поле" + Environment.NewLine +
+                                "и посторите попытку сохранения снова.",
+                                "Ошибка сохранения!",
+                                MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

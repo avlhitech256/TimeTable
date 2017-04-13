@@ -3,16 +3,15 @@ using System.Windows.Input;
 
 namespace HighSchool.ViewModel.Command
 {
-    internal class AddInSearchCommand : CommonCommand, ICommand
+    internal class SaveAndNewCommand : CommonCommand, ICommand
     {
         #region Constructors
 
-        public AddInSearchCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public SaveAndNewCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
             if (ViewModel != null)
             {
                 ViewModel.PropertyChanged += ChangeCanExecute;
-                CanExecuteProperty = !ViewModel.IsEditControl;
             }
 
         }
@@ -23,19 +22,18 @@ namespace HighSchool.ViewModel.Command
 
         private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != nameof(ViewModel.IsEditControl))
+            if (e.PropertyName == nameof(ViewModel.HasChanges))
             {
-                CanExecuteProperty = !ViewModel.IsEditControl;
+                CanExecuteProperty = ViewModel.HasChanges && !ViewModel.ReadOnly;
             }
 
         }
 
         public override void Execute(object parameter)
         {
-            ViewModel?.AddInSearch();
+            ViewModel?.SaveAndAdd();
         }
 
         #endregion
     }
-
 }

@@ -26,9 +26,10 @@ namespace HighSchool.ViewModel
         string UserModify { get; }
         void ApplySearchCriteria();
         void Add();
-        void AddInSearch();
+        void View();
         void Edit();
         void Save();
+        void SaveAndAdd();
         void Delete();
         void Back();
     }

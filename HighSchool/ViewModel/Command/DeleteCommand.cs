@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 
 namespace HighSchool.ViewModel.Command
 {
@@ -8,12 +9,20 @@ namespace HighSchool.ViewModel.Command
 
         public DeleteCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
-            CanExecuteProperty = true;
+            ViewModel.PropertyChanged += ChangeCanExecute;
         }
 
         #endregion
 
         #region Methods
+
+        private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ViewModel.SelectedItem))
+            {
+                CanExecuteProperty = ViewModel.SelectedItem != null;
+            }
+        }
 
         public override void Execute(object parameter)
         {

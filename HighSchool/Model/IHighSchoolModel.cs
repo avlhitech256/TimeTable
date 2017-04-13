@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Domain.Entity.HighSchool;
+using Domain.Event;
 using HighSchool.ViewModel;
 
 namespace HighSchool.Model
@@ -18,5 +19,7 @@ namespace HighSchool.Model
         void Save();
         void Delete();
         void Rollback();
+
+        event EntityExceptionEventHandler EntityException;
     }
 }

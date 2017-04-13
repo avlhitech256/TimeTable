@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HighSchool.View"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="150">
+             d:DesignHeight="250" d:DesignWidth="150">
     <Grid>
         <Grid.RowDefinitions >
             <RowDefinition Height="10"></RowDefinition>
@@ -14,6 +14,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -25,19 +27,32 @@
                 Margin="15,5">
         </Button>
         <Button x:Name="AddButton" 
-                Command="{Binding Path=NewInSearchButtonCommand}"
+                Command="{Binding Path=NewButtonCommand}"
                 Grid.Row="3" 
                 ToolTip="Создать новое учебное заведение" 
                 Content="Создать" 
                 Margin="15,5">
         </Button>
-        <Button x:Name="ViewButton" Grid.Row="5" ToolTip="Просмотр записи учебного заведения" Content="Просмотр" Margin="15,5"></Button>
+        <Button x:Name="ViewButton" 
+                Command="{Binding Path=ViewButtonCommand}"
+                Grid.Row="5" 
+                ToolTip="Просмотр записи учебного заведения" 
+                Content="Просмотр" 
+                Margin="15,5">
+        </Button>
         <Button x:Name="EditButton" 
                 Command="{Binding Path=EditButtonCommand}"
                 Grid.Row="6" 
                 ToolTip="Редактирование записи учебного заведения" 
                 Content="Редактировать" 
-                Margin="15,5"
-                ></Button>
+                Margin="15,5">
+        </Button>
+        <Button x:Name="DeleteButton" 
+                Command="{Binding Path=DeleteButtonCommand}"
+                Grid.Row="8" 
+                ToolTip="Удалить текущую запись учебного заведения" 
+                Content="Удалить" 
+                Margin="15,5">
+        </Button>
     </Grid>
 </UserControl>

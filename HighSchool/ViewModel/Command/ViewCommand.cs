@@ -3,17 +3,13 @@ using System.Windows.Input;
 
 namespace HighSchool.ViewModel.Command
 {
-    class SaveCommand : CommonCommand, ICommand
+    internal class ViewCommand : CommonCommand, ICommand
     {
         #region Constructors
 
-        public SaveCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public ViewCommand(IHighSchoolViewModel viewModel) : base(viewModel)
         {
-            if (ViewModel != null)
-            {
-                ViewModel.PropertyChanged += ChangeCanExecute;
-            }
-
+            ViewModel.PropertyChanged += ChangeCanExecute;
         }
 
         #endregion
@@ -22,19 +18,17 @@ namespace HighSchool.ViewModel.Command
 
         private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ViewModel.HasChanges))
+            if (e.PropertyName == nameof(ViewModel.SelectedItem))
             {
-                CanExecuteProperty = ViewModel.HasChanges && !ViewModel.ReadOnly;
+                CanExecuteProperty = ViewModel.SelectedItem != null;
             }
-
         }
 
         public override void Execute(object parameter)
         {
-            ViewModel?.Save();
+            ViewModel?.View();
         }
 
         #endregion
     }
-
 }
