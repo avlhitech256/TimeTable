@@ -25,13 +25,13 @@
                 Command="{Binding Path=NewButtonCommand}"
                 Grid.Row="1" 
                 ToolTip="Создать новое учебное заведение" 
-                Content="Создать" 
+                Content="Создать"
                 Margin="15,5">
         </Button>
         <Button x:Name="EditButton" 
-                Command="{Binding Path=ChangeEditModeButtonCommand}"
+                Command="{Binding Path=EditButtonCommand}"
                 Grid.Row="3" 
-                ToolTip="Редактировать текущую запись учебного заведения" 
+                ToolTip="{Binding Path=ToolTipForEditButton}" 
                 Content="Редактировать" 
                 Margin="15,5">
         </Button>

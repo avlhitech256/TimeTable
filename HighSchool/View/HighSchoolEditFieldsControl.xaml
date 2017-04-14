@@ -84,6 +84,7 @@
             </Grid.ColumnDefinitions>
             <CheckBox Name="HighSchoolEditActive" 
                   IsChecked="{Binding Path=Active}"
+                  IsEnabled="{Binding Path=Enabled}"
                   ToolTip="Активная запись"
                   Grid.Row="0" 
                   Grid.Column="0" 

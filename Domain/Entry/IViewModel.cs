@@ -13,7 +13,9 @@ namespace Domain.Entry
         ICommand DeleteButtonCommand { get; }
         ICommand SearchButtonCommand { get; }
         ICommand ChangeEditModeButtonCommand { get; }
+        string ToolTipForEditButton { get; }
         bool ReadOnly { get; set; }
+        bool Enabled { get; set; }
         bool IsEditControl { get; set; }
     }
 }

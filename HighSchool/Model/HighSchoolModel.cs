@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Common.Data.Notifier;
 using DataService.DataService;
 using DataService.Model;
@@ -288,7 +289,7 @@ namespace HighSchool.Model
 
                     }
 
-                    DbContext.SaveChanges();
+                    Save();
                 }
 
             }
@@ -299,11 +300,25 @@ namespace HighSchool.Model
 
         }
 
+        public bool ValidateRequiredCode()
+        {
+            return string.IsNullOrWhiteSpace(SelectedHighSchool.Code);
+        }
+
+        public bool ValidateUniqueCode()
+        {
+            return DbContext.HighSchools.ToList().All(x => x.Code != SelectedHighSchool.Code);
+        }
+
         public void Save()
         {
             try
             {
-                DbContext.SaveChanges();
+                if (HasChanges)
+                {
+                    DbContext.SaveChanges();
+                }
+
             }
             catch (EntityException e)
             {
@@ -319,7 +334,7 @@ namespace HighSchool.Model
                 if (SelectedHighSchool != null)
                 {
                     DbContext.HighSchools.Remove(SelectedHighSchool.HighSchool);
-                    DbContext.SaveChanges();
+                    Save();
                     SelectedHighSchool = null;
                 }
 

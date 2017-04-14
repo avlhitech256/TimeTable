@@ -19,6 +19,8 @@ namespace HighSchool.Model
         void Save();
         void Delete();
         void Rollback();
+        bool ValidateRequiredCode();
+        bool ValidateUniqueCode();
 
         event EntityExceptionEventHandler EntityException;
     }

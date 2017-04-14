@@ -43,7 +43,7 @@
         <Button x:Name="EditButton" 
                 Command="{Binding Path=EditButtonCommand}"
                 Grid.Row="6" 
-                ToolTip="Редактирование записи учебного заведения" 
+                ToolTip="{Binding Path=ToolTipForEditButton}" 
                 Content="Редактировать" 
                 Margin="15,5">
         </Button>

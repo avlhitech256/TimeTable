@@ -25,6 +25,8 @@ namespace HighSchool.ViewModel
         private bool hasChanges;
         private bool readOnly;
         private bool isEditControl;
+        private string toolTipForEditButton;
+        private bool enabled;
 
         #endregion
 
@@ -40,6 +42,7 @@ namespace HighSchool.ViewModel
             ReadOnly = true;
             IsEditControl = false;
             InitializeButtons();
+            InitializeProperties();
         }
 
         #endregion
@@ -188,6 +191,25 @@ namespace HighSchool.ViewModel
 
         public ICommand ChangeEditModeButtonCommand { get; private set; }
 
+        public string ToolTipForEditButton
+        {
+            get
+            {
+                return toolTipForEditButton;
+            }
+
+            private set
+            {
+                if (toolTipForEditButton != value)
+                {
+                    toolTipForEditButton = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+
         public bool ReadOnly
         {
             get
@@ -200,10 +222,34 @@ namespace HighSchool.ViewModel
                 if (readOnly != value)
                 {
                     readOnly = value;
+                    Enabled = !value;
                     OnPropertyChanged();
                 }
 
             }
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    ReadOnly = !value;
+                    ToolTipForEditButton = value
+                        ? "Закончить редактирование текущей записи"
+                        : "Редактировать текущую запись";
+                    OnPropertyChanged();
+                }
+
+            }
+
         }
 
         public bool IsEditControl
@@ -271,18 +317,17 @@ namespace HighSchool.ViewModel
             ChangeEditModeButtonCommand = null;
         }
 
+        private void InitializeProperties()
+        {
+            ReadOnly = true;
+            Enabled = false;
+            ToolTipForEditButton = "Редактировать текущую запись";
+        }
+
         private void OnChangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Model.SelectedHighSchool))
             {
-                OnPropertyChanged(nameof(SelectedItem));
-                OnPropertyChanged(nameof(Code));
-                OnPropertyChanged(nameof(Name));
-                OnPropertyChanged(nameof(Active));
-                OnPropertyChanged(nameof(Created));
-                OnPropertyChanged(nameof(LastModify));
-                OnPropertyChanged(nameof(UserModify));
-
                 if (oldHighSchool != null)
                 {
                     oldHighSchool.PropertyChanged -= OnChangedHighSchoolProperties;
@@ -296,6 +341,13 @@ namespace HighSchool.ViewModel
                 }
 
                 HasChanges = Model?.HasChanges ?? false;
+                OnPropertyChanged(nameof(SelectedItem));
+                OnPropertyChanged(nameof(Code));
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(Active));
+                OnPropertyChanged(nameof(Created));
+                OnPropertyChanged(nameof(LastModify));
+                OnPropertyChanged(nameof(UserModify));
             }
 
         }
@@ -344,12 +396,7 @@ namespace HighSchool.ViewModel
         public void Add()
         {
             ReadOnly = false;
-
-            if (!IsEditControl)
-            {
-                GoToEditControl();
-            }
-
+            GoToEditControl();
             HasChanges = Model.HasChanges;
             Model.Add();
         }
@@ -369,7 +416,9 @@ namespace HighSchool.ViewModel
         {
             if (SelectedItem != null)
             {
-                ReadOnly = false;
+                bool oldReadOnly = ReadOnly;
+                Save();
+                ReadOnly = !oldReadOnly;
                 GoToEditControl();
                 HasChanges = Model.HasChanges;
             }
@@ -378,7 +427,7 @@ namespace HighSchool.ViewModel
 
         public void Save()
         {
-            if (HasChanges && !ReadOnly && ValidateCode())
+            if (HasChanges && !ReadOnly && Validate())
             {
                 ReadOnly = true;
                 Model.Save();
@@ -484,7 +533,7 @@ namespace HighSchool.ViewModel
 
         private void GoToEditControl()
         {
-            if (Messenger != null)
+            if (Messenger != null && !IsEditControl)
             {
                 IsEditControl = true;
                 Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
@@ -494,7 +543,7 @@ namespace HighSchool.ViewModel
 
         private void GoToSearchControl()
         {
-            if (Messenger != null)
+            if (Messenger != null && IsEditControl)
             {
                 IsEditControl = false;
                 Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
@@ -502,17 +551,28 @@ namespace HighSchool.ViewModel
 
         }
 
-        private bool ValidateCode()
+        private bool Validate()
         {
-            bool result = !string.IsNullOrWhiteSpace(Code);
+            bool result = true;
 
-            if (!result)
+            if (Model.ValidateRequiredCode())
             {
                 MessageBox.Show("Поле \"Код:\" не заполнено. Данное поле" + Environment.NewLine +
                                 "является обязательным. Заполните это поле" + Environment.NewLine +
                                 "и посторите попытку сохранения снова.",
                                 "Ошибка сохранения!",
                                 MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                result = false;
+            }
+            else if (Model.ValidateUniqueCode())
+            {
+                MessageBox.Show("Поле \"Код:\" является уникальным. Данное поле" + Environment.NewLine +
+                                "содержит данные, которые уже были внесены в одну" + Environment.NewLine + 
+                                "из сохраненных записей. Измените значение этого" + Environment.NewLine +
+                                "поля и посторите попытку сохранения снова.",
+                                "Ошибка сохранения!",
+                                MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                result = false;
             }
 
             return result;
