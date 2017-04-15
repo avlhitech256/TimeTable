@@ -1,4 +1,4 @@
-﻿using Common.Data.Notifier;
+﻿using Domain.Data.Notifier;
 
 namespace TimeTable.ViewModel.LeftMenu
 {

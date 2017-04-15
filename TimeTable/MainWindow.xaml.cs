@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using Domain.Data.Enum;
-using Domain.Messenger.Impl;
 using Domain.DomainContext;
-using TimeTable.View.LeftMenu;
 using TimeTable.ViewModel.MainWindow;
 
 namespace TimeTable

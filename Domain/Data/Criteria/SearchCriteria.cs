@@ -1,9 +1,8 @@
 ﻿using System;
-using Common.Data.Notifier;
 
 namespace Domain.Data.Criteria
 {
-    public class SearchCriteria : Notifier
+    public class SearchCriteria : Notifier.Notifier
     {
         #region Members
 

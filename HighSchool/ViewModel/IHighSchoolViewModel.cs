@@ -4,7 +4,7 @@ using System.ComponentModel;
 using Domain.Messenger;
 using Domain.DomainContext;
 using Domain.Entity.HighSchool;
-using Domain.Entry;
+using Domain.ViewModel;
 
 namespace HighSchool.ViewModel
 {

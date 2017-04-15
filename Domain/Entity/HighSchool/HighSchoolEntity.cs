@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Data.Entity.Core;
 using System.Linq;
-using Common.Data.Notifier;
-using DataService.DataService;
-using DataService.Model;
+using Domain.Data.Notifier;
 using Domain.Messenger;
 using Domain.Messenger.Impl;
+using DataService.DataService;
+using DataService.Model;
 
 namespace Domain.Entity.HighSchool
 {
@@ -14,7 +14,7 @@ namespace Domain.Entity.HighSchool
         #region Members
 
         private long position;
-        private DataService.Model.HighSchool highSchool;
+        private DataService.Model.HighSchool _entity;
 
         #endregion
 
@@ -28,14 +28,14 @@ namespace Domain.Entity.HighSchool
             CreateHighSchool();
         }
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool highSchool) 
-            : this(dataService, messanger, highSchool, 0) {}
+        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool _entity) 
+            : this(dataService, messanger, _entity, 0) {}
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool highSchool, long position)
+        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool _entity, long position)
         {
             DataService = dataService;
             Messenger = messanger;
-            this.highSchool = highSchool;
+            this._entity = _entity;
             this.position = position;
         }
 
@@ -66,20 +66,20 @@ namespace Domain.Entity.HighSchool
 
         }
         
-        public long Id => HighSchool.Id;
+        public long Id => Entity.Id;
 
         public string Code
         {
             get
             {
-                return HighSchool?.Code;
+                return Entity?.Code;
             }
 
             set
             {
-                if (HighSchool != null && HighSchool.Code != value)
+                if (Entity != null && Entity.Code != value)
                 {
-                    HighSchool.Code = value.ToUpper();
+                    Entity.Code = value.ToUpper();
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -92,14 +92,14 @@ namespace Domain.Entity.HighSchool
         {
             get
             {
-                return HighSchool?.Name;
+                return Entity?.Name;
             }
 
             set
             {
-                if (HighSchool != null && HighSchool.Name != value)
+                if (Entity != null && Entity.Name != value)
                 {
-                    HighSchool.Name = value;
+                    Entity.Name = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -112,14 +112,14 @@ namespace Domain.Entity.HighSchool
         {
             get
             {
-                return HighSchool?.Active ?? true;
+                return Entity?.Active ?? true;
             }
 
             set
             {
-                if (HighSchool != null && HighSchool.Active != value)
+                if (Entity != null && Entity.Active != value)
                 {
-                    HighSchool.Active = value;
+                    Entity.Active = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -132,14 +132,14 @@ namespace Domain.Entity.HighSchool
         {
             get
             {
-                return HighSchool?.Created.DateTime ?? DateTime.Now;
+                return Entity?.Created.DateTime ?? DateTime.Now;
             }
 
             private set
             {
-                if (HighSchool != null && HighSchool.Created != value)
+                if (Entity != null && Entity.Created != value)
                 {
-                    HighSchool.Created = value;
+                    Entity.Created = value;
                     OnPropertyChanged();
                 }
 
@@ -147,20 +147,20 @@ namespace Domain.Entity.HighSchool
 
         }
 
-        public DateTime LastModify => HighSchool?.LastModify.DateTime ?? DateTime.Now;
+        public DateTime LastModify => Entity?.LastModify.DateTime ?? DateTime.Now;
 
         public string UserModify
         {
             get
             {
-                return HighSchool?.UserModify;
+                return Entity?.UserModify;
             }
 
             private set
             {
-                if (HighSchool != null && HighSchool.UserModify != value)
+                if (Entity != null && Entity.UserModify != value)
                 {
-                    HighSchool.UserModify = value;
+                    Entity.UserModify = value;
                     OnPropertyChanged();
                 }
 
@@ -172,14 +172,14 @@ namespace Domain.Entity.HighSchool
         {
             get
             {
-                return HighSchool?.Rector ?? 0L;
+                return Entity?.Rector ?? 0L;
             }
 
             set
             {
-                if (HighSchool != null && HighSchool.Rector != value)
+                if (Entity != null && Entity.Rector != value)
                 {
-                    HighSchool.Rector = value;
+                    Entity.Rector = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -192,14 +192,14 @@ namespace Domain.Entity.HighSchool
         {
             get
             {
-                return HighSchool?.Employee;
+                return Entity?.Employee;
             }
 
             set
             {
-                if (HighSchool != null && HighSchool.Employee != value)
+                if (Entity != null && Entity.Employee != value)
                 {
-                    HighSchool.Employee = value;
+                    Entity.Employee = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -208,18 +208,18 @@ namespace Domain.Entity.HighSchool
 
         }
 
-        public DataService.Model.HighSchool HighSchool
+        public DataService.Model.HighSchool Entity
         {
             get
             {
-                return highSchool;
+                return _entity;
             }
 
             private set
             {
-                if (highSchool != value)
+                if (_entity != value)
                 {
-                    highSchool = value;
+                    _entity = value;
                     OnPropertyChanged();
                 }
 
@@ -243,15 +243,15 @@ namespace Domain.Entity.HighSchool
                     if (newHighSchool != null)
                     {
                         DataService?.DBContext?.HighSchools?.Add(newHighSchool);
-                        HighSchool = newHighSchool;
+                        Entity = newHighSchool;
                         Active = true;
                         Employee employee = DataService.DBContext.Employees.FirstOrDefault();
                         Rector = employee?.Id ?? 0;
                         UserModify = DataService?.UserName;
                         DateTimeOffset now = DateTimeOffset.Now;
-                        HighSchool.Created = now;
+                        Entity.Created = now;
                         OnPropertyChanged(nameof(Created));
-                        HighSchool.LastModify = now;
+                        Entity.LastModify = now;
                         OnPropertyChanged(nameof(LastModify));
                     }
 
@@ -268,7 +268,7 @@ namespace Domain.Entity.HighSchool
         private void SetInfoAboutModify()
         {
             UserModify = DataService?.UserName;
-            HighSchool.LastModify = DateTimeOffset.Now;
+            Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
         }
 

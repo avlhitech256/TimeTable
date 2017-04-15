@@ -1,4 +1,4 @@
-﻿using Common.Data.Notifier;
+﻿using Domain.Data.Notifier;
 using Domain.Messenger;
 using Domain.Messenger.Impl;
 using Domain.DomainContext;

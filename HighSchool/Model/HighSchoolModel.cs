@@ -4,8 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Common.Data.Notifier;
+using Domain.Data.Notifier;
 using DataService.DataService;
 using DataService.Model;
 using Domain.DomainContext;
@@ -123,7 +122,7 @@ namespace HighSchool.Model
 
                 try
                 {
-                    hasChanges = SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.HighSchool)?.State != EntityState.Unchanged;
+                    hasChanges = SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.Entity)?.State != EntityState.Unchanged;
                 }
                 catch (EntityException e)
                 {
@@ -269,7 +268,7 @@ namespace HighSchool.Model
             {
                 if (DbContext != null)
                 {
-                    DbEntityEntry entry = DbContext.Entry(SelectedHighSchool.HighSchool);
+                    DbEntityEntry entry = DbContext.Entry(SelectedHighSchool.Entity);
 
                     if (entry != null)
                     {
@@ -333,7 +332,7 @@ namespace HighSchool.Model
             {
                 if (SelectedHighSchool != null)
                 {
-                    DbContext.HighSchools.Remove(SelectedHighSchool.HighSchool);
+                    DbContext.HighSchools.Remove(SelectedHighSchool.Entity);
                     Save();
                     SelectedHighSchool = null;
                 }

@@ -1,4 +1,4 @@
-﻿namespace Common.Data.Convert
+﻿namespace Domain.Data.Convert
 {
     public static class Convert
     {

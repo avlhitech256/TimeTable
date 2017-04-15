@@ -1,9 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
-using Domain.Data.Enum;
-using Domain.Event;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
 
 namespace HighSchool.ViewModel.Command
 {

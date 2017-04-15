@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Domain.Annotations;
 
-namespace Common.Data.Notifier
+namespace Domain.Data.Notifier
 {
     public class Notifier : INotifyPropertyChanged
     {

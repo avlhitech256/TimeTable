@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Data.Notifier;
+﻿using Domain.Data.Notifier;
 using DataService.Model;
 
 namespace DataService.DataService

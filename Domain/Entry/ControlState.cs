@@ -1,4 +1,4 @@
-﻿namespace Domain.Entry
+﻿namespace Domain.ViewModel
 {
     public enum ControlState
     {

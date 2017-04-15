@@ -1,6 +1,6 @@
 ﻿using Domain.Annotations;
 using Domain.Messenger;
-using Domain.Entry;
+using Domain.ViewModel;
 
 namespace Domain.DomainContext
 {

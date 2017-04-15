@@ -1,7 +1,8 @@
 ﻿using System;
-using Common.Data.Notifier;
+using Domain.Annotations;
+using Domain.Data.Notifier;
 using Domain.Messenger;
-using Domain.Entry;
+using Domain.ViewModel;
 
 
 namespace Domain.DomainContext
@@ -19,7 +20,7 @@ namespace Domain.DomainContext
 
         public DomainContext()
         {
-            Messenger = new Common.Messenger.Impl.Messenger();
+            Messenger = new Domain.Messenger.Impl.Messenger();
             UserName = Environment.UserName;
             UserDomain = Environment.UserDomainName;
             Workstation = Environment.MachineName;
@@ -30,7 +31,10 @@ namespace Domain.DomainContext
 
         #region Properties
 
+        [CanBeNull]
         public IMessenger Messenger { get; }
+
+        [CanBeNull]
         public IViewModel ViewModel
         {
             get
@@ -48,9 +52,17 @@ namespace Domain.DomainContext
             }
 
         }
+
+        [CanBeNull]
         public string UserName { get; }
+
+        [CanBeNull]
         public string UserDomain { get; }
+
+        [CanBeNull]
         public string Workstation { get; }
+
+        [CanBeNull]
         public string DataBaseServer
         {
             get
