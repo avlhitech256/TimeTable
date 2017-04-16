@@ -1,11 +1,11 @@
 ﻿using System;
-using Domain.Annotations;
-using Domain.Data.Notifier;
-using Domain.Messenger;
-using Domain.ViewModel;
+using Common.Data.Notifier;
+using Common.Annotations;
+using Common.Messenger;
+using Common.ViewModel;
 
 
-namespace Domain.DomainContext
+namespace Common.DomainContext
 {
     public class DomainContext : Notifier, IDomainContext
     {
@@ -20,7 +20,7 @@ namespace Domain.DomainContext
 
         public DomainContext()
         {
-            Messenger = new Domain.Messenger.Impl.Messenger();
+            Messenger = new global::Common.Messenger.Impl.Messenger();
             UserName = Environment.UserName;
             UserDomain = Environment.UserDomainName;
             Workstation = Environment.MachineName;

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Domain.DomainContext;
+using Common.DomainContext;
 
 namespace TimeTable.View.FooterStatusBar
 {

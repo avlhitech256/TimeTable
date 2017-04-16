@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.Core;
 
-namespace Domain.Event
+namespace Common.Event
 {
     public class EntityExceptionEventArgs : EventArgs
     {

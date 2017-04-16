@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Domain.Entity
+namespace DataService.Entity
 {
     public interface IDomainEntity<T> : INotifyPropertyChanged where T : class
     {

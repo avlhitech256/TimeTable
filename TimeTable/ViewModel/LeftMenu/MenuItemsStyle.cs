@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Domain.Data.Enum;
-using Domain.Data.Notifier;
-using Domain.Event;
+using Common.Data.Notifier;
+using Common.Data.Enum;
+using Common.Event;
 
 namespace TimeTable.ViewModel.LeftMenu
 {

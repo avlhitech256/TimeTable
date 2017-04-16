@@ -1,8 +1,9 @@
 ﻿using System;
+using Common.Data.Notifier;
 
-namespace Domain.Data.Criteria
+namespace Domain.SearchCriteria
 {
-    public class SearchCriteria : Notifier.Notifier
+    public class SearchCriteria : Notifier, ISearchCriteria
     {
         #region Members
 
@@ -184,12 +185,14 @@ namespace Domain.Data.Criteria
             }
         }
 
+        #endregion
+
+        #region Methods
         protected virtual void OnSearchCriteriaChanged()
         {
             SearchCriteriaChanged?.Invoke(this, new EventArgs());
         }
-
-
+        
         #endregion
 
         #region Events

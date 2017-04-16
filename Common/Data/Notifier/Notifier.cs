@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Domain.Annotations;
+using Common.Annotations;
 
-namespace Domain.Data.Notifier
+namespace Common.Data.Notifier
 {
     public class Notifier : INotifyPropertyChanged
     {

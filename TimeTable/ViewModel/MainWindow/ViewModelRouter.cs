@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Domain.Data.Enum;
-using Domain.DomainContext;
+using Common.Data.Enum;
+using Common.DomainContext;
 
 namespace TimeTable.ViewModel.MainWindow
 {

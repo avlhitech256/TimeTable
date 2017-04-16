@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using Domain.DomainContext;
-using Domain.ViewModel;
+using Common.DomainContext;
+using Common.ViewModel;
 using HighSchool.View;
-using Domain.Data.Enum;
+using Common.Data.Enum;
 
 namespace TimeTable.ViewModel.MainWindow
 {

@@ -1,8 +1,8 @@
-﻿using Domain.Data.Notifier;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
-using Domain.DomainContext;
-using Domain.Event;
+﻿using Common.Data.Notifier;
+using Common.Messenger;
+using Common.Messenger.Impl;
+using Common.DomainContext;
+using Common.Event;
 
 namespace TimeTable.ViewModel.MainWindow
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace Domain.Messenger.Impl
+namespace Common.Messenger.Impl
 {
     public class Messenger : IMessenger
     {

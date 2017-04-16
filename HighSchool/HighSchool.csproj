@@ -65,7 +65,6 @@
     <Compile Include="ViewModel\Command\SaveCommand.cs" />
     <Compile Include="ViewModel\Command\SearchCommand.cs" />
     <Compile Include="ViewModel\Command\ViewCommand.cs" />
-    <Compile Include="ViewModel\HighSchoolSearchCriteria.cs" />
     <Compile Include="ViewModel\HighSchoolViewModel.cs" />
     <Compile Include="ViewModel\IHighSchoolViewModel.cs" />
     <Compile Include="View\HighSchoolEditButtonControl.xaml.cs">

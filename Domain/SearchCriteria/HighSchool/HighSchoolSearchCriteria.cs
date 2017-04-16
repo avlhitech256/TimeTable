@@ -1,6 +1,4 @@
-﻿using Domain.Data.Criteria;
-
-namespace HighSchool.ViewModel
+﻿namespace Domain.SearchCriteria.HighSchool
 {
     public class HighSchoolSearchCriteria : SearchCriteria
     {

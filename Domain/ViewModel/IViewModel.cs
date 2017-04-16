@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Domain.ViewModel
+namespace Common.ViewModel
 {
     public interface IViewModel
     {

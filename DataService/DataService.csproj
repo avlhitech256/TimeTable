@@ -53,6 +53,11 @@
   <ItemGroup>
     <Compile Include="DataService\DataService.cs" />
     <Compile Include="DataService\IDataService.cs" />
+    <Compile Include="Entity\DomainEntityFactory.cs" />
+    <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
+    <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
+    <Compile Include="Entity\IDomainEntity.cs" />
+    <Compile Include="Entity\IDomainEntityFactory.cs" />
     <Compile Include="Model\Chair.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
@@ -87,15 +92,6 @@
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Specialty.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagrams_Result.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sysdiagram.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,6 +130,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

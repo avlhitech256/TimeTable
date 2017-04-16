@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Data.Entity.Core;
 using System.Linq;
-using Domain.Data.Notifier;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
+using Common.Data.Notifier;
+using Common.Messenger;
+using Common.Messenger.Impl;
 using DataService.DataService;
 using DataService.Model;
 
-namespace Domain.Entity.HighSchool
+namespace DataService.Entity.HighSchool
 {
     public class HighSchoolEntity : Notifier, IHighSchoolEntity
     {
         #region Members
 
         private long position;
-        private DataService.Model.HighSchool _entity;
+        private Model.HighSchool entity;
 
         #endregion
 
@@ -28,14 +28,14 @@ namespace Domain.Entity.HighSchool
             CreateHighSchool();
         }
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool _entity) 
-            : this(dataService, messanger, _entity, 0) {}
+        public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity) 
+            : this(dataService, messanger, entity, 0) {}
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, DataService.Model.HighSchool _entity, long position)
+        public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity, long position)
         {
             DataService = dataService;
             Messenger = messanger;
-            this._entity = _entity;
+            this.entity = entity;
             this.position = position;
         }
 
@@ -208,18 +208,18 @@ namespace Domain.Entity.HighSchool
 
         }
 
-        public DataService.Model.HighSchool Entity
+        public Model.HighSchool Entity
         {
             get
             {
-                return _entity;
+                return entity;
             }
 
             private set
             {
-                if (_entity != value)
+                if (entity != value)
                 {
-                    _entity = value;
+                    entity = value;
                     OnPropertyChanged();
                 }
 
@@ -238,7 +238,7 @@ namespace Domain.Entity.HighSchool
                 if (DataService != null && DataService.DBContext != null && 
                     DataService?.DBContext.HighSchools != null && DataService?.DBContext.Employees != null)
                 {
-                    DataService.Model.HighSchool newHighSchool = DataService?.DBContext?.HighSchools?.Create();
+                    Model.HighSchool newHighSchool = DataService?.DBContext?.HighSchools?.Create();
 
                     if (newHighSchool != null)
                     {
@@ -273,7 +273,6 @@ namespace Domain.Entity.HighSchool
         }
 
         #endregion
-
     }
 
 }

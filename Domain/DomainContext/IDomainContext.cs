@@ -1,8 +1,8 @@
-﻿using Domain.Annotations;
-using Domain.Messenger;
-using Domain.ViewModel;
+﻿using Common.Annotations;
+using Common.Messenger;
+using Common.ViewModel;
 
-namespace Domain.DomainContext
+namespace Common.DomainContext
 {
     public interface IDomainContext
     {

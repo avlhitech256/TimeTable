@@ -1,4 +1,4 @@
-﻿namespace Domain.Messenger.Impl
+﻿namespace Common.Messenger.Impl
 {
     public enum CommandName
     {

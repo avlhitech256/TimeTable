@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Domain.Data.Enum
+namespace Common.Data.Enum
 {
     /// <summary>
     /// StringEnum класс предоставляет статические методы для работы со строковыми значениями в перечислениях.

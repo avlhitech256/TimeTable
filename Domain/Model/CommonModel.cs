@@ -7,33 +7,29 @@ using System.Linq;
 using Common.Data.Notifier;
 using Common.DomainContext;
 using Common.Event;
+using Common.Messenger;
 using DataService.DataService;
-using DataService.Entity.HighSchool;
+using DataService.Entity;
 using DataService.Model;
 using Domain.SearchCriteria;
-using Domain.SearchCriteria.HighSchool;
-using HighSchool.ViewModel;
 
-namespace HighSchool.Model
+namespace Domain.Model
 {
-    public class HighSchoolModel : Notifier, IHighSchoolModel
+    public class CommonModel<T> : Notifier, ICommonModel<T> where T : class
     {
         #region Members
 
-        private IHighSchoolEntity selectedItem;
-        private ObservableCollection<Employee> employees;
-        private ObservableCollection<IHighSchoolEntity> entities;
-        private bool employeesIsLoaded;
+        private IDomainEntity<T> selectedItem;
+        private ObservableCollection<IDomainEntity<T>> entities;
         private bool entitiesIsLoaded;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolModel(IDomainContext domainContext)
+        protected CommonModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
-            employeesIsLoaded = false;
             entitiesIsLoaded = false;
             InitializeDataService();
             InitializeSearchCriteria();
@@ -43,16 +39,16 @@ namespace HighSchool.Model
 
         #region Properties
 
-        public ISearchCriteria SearchCriteria { get; private set; }
+        public SearchCriteria.ISearchCriteria SearchCriteria { get; private set; }
 
-        public IHighSchoolEntity SelectedItem
+        public IDomainEntity<T> SelectedItem
         {
             get
             {
                 return selectedItem;
             }
 
-            set
+            private set
             {
                 if (selectedItem != value)
                 {
@@ -64,13 +60,13 @@ namespace HighSchool.Model
 
         }
 
-        public ObservableCollection<IHighSchoolEntity> Entities
+        public ObservableCollection<IDomainEntity<T>> Entities
         {
             get
             {
                 if (!entitiesIsLoaded && entities == null)
                 {
-                    InitializeHighSchools();
+                    InitializeEntities();
                     entitiesIsLoaded = true;
                 }
 
@@ -85,33 +81,6 @@ namespace HighSchool.Model
                     OnPropertyChanged();
                 }
 
-            }
-
-        }
-
-        public ObservableCollection<Employee> Employees
-        {
-            get
-            {
-                if (!employeesIsLoaded && employees == null)
-                {
-                    try
-                    {
-                        employees = new ObservableCollection<Employee>();
-                        Employee item0 = new Employee() { Id = 0, Name = "Любой ректор" };
-                        employees.Add(item0);
-                        DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
-                        OnPropertyChanged();
-                        employeesIsLoaded = true;
-                    }
-                    catch (EntityException e)
-                    {
-                        OnEntityException(e);
-                    }
-
-                }
-
-                return employees;
             }
 
         }
@@ -156,11 +125,13 @@ namespace HighSchool.Model
 
         }
 
-        private IDomainContext DomainContext { get; }
+        protected IDomainContext DomainContext { get; }
 
-        private IDataService DataService { get; set; }
+        protected IMessenger Messenger => DomainContext?.Messenger;
 
-        private TimeTableEntities DbContext => DataService?.DBContext;
+        protected IDataService DataService { get; set; }
+
+        protected TimeTableEntities DbContext => DataService?.DBContext;
 
         #endregion
 
@@ -185,32 +156,31 @@ namespace HighSchool.Model
 
         private void InitializeSearchCriteria()
         {
-            SearchCriteria = new HighSchoolSearchCriteria
-            {
-                Code = string.Empty,
-                Name = string.Empty,
-                Active = true,
-                CteatedTo = null,
-                CteatedFrom = null,
-                LastModifyTo = null,
-                LastModifyFrom = null,
-                UserModify = string.Empty
-            };
+            SearchCriteria = new SearchCriteriaFactory().GetSearchCriteria(typeof(T));
+            SearchCriteria.Code = string.Empty;
+            SearchCriteria.Name = string.Empty;
+            SearchCriteria.Active = true;
+            SearchCriteria.CteatedTo = null;
+            SearchCriteria.CteatedFrom = null;
+            SearchCriteria.LastModifyTo = null;
+            SearchCriteria.LastModifyFrom = null;
+            SearchCriteria.UserModify = string.Empty;
         }
 
-        private void InitializeHighSchools()
+        private void InitializeEntities()
         {
-            var tempHighSchools = new ObservableCollection<IHighSchoolEntity>();
+            var domainEntities = new ObservableCollection<IDomainEntity<T>>();
             long position = 1;
+            IDomainEntityFactory factory = new DomainEntityFactory(DataService, Messenger);
 
             try
             {
-                foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList())
+                foreach (T item in DbContext.Set<T>().ToList())
                 {
-                    tempHighSchools.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
+                    domainEntities.Add(factory.GetDomainEntity(item, position));
                 }
 
-                Entities = tempHighSchools;
+                Entities = domainEntities;
             }
             catch (EntityException e)
             {
@@ -219,49 +189,27 @@ namespace HighSchool.Model
 
         }
 
+        protected virtual List<T> SelectEntities()
+        {
+            List<T> selectedEntities = DbContext.Set<T>().ToList();
+
+            return selectedEntities;
+        }
+
         public void ApplySearchCriteria()
         {
             Entities.Clear();
             long position = 1;
+            IDomainEntityFactory factory = new DomainEntityFactory(DataService, Messenger);
 
             try
             {
-                HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
-
-                if (searchCriteria != null)
+                foreach (T item in SelectEntities())
                 {
-                    List<DataService.Model.HighSchool> selectedListHighSchool =
-                        DbContext.HighSchools.ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Code) ||
-                                        x.Code.ToUpperInvariant().Contains(searchCriteria.Code.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Name) ||
-                                        x.Name.ToUpperInvariant().Contains(searchCriteria.Name.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => !searchCriteria.Active || x.Active).ToList()
-                            .Where(
-                                x =>
-                                    (!searchCriteria.CteatedFrom.HasValue ||
-                                     x.Created >= searchCriteria.CteatedFrom.Value) &&
-                                    (!searchCriteria.CteatedTo.HasValue ||
-                                     x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
-                            .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
-                                         x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
-                                        (!searchCriteria.LastModifyTo.HasValue ||
-                                         x.LastModify < searchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
-                                        x.UserModify.ToUpperInvariant()
-                                            .Contains(searchCriteria.UserModify.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
-
-                    foreach (DataService.Model.HighSchool item in selectedListHighSchool)
-                    {
-                        Entities.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
-                    }
-
-                    OnPropertyChanged(nameof(Entities));
+                    Entities.Add(factory.GetDomainEntity(item, position));
                 }
+
+                OnPropertyChanged(nameof(Entities));
             }
             catch (EntityException e)
             {
@@ -272,7 +220,8 @@ namespace HighSchool.Model
 
         public void Add()
         {
-            SelectedItem = new HighSchoolEntity(DataService, DomainContext.Messenger);
+            IDomainEntityFactory factory = new DomainEntityFactory(DataService, Messenger);
+            SelectedItem = factory.GetDomainEntity<T>();
         }
 
         public void Rollback()
@@ -345,7 +294,7 @@ namespace HighSchool.Model
             {
                 if (SelectedItem != null)
                 {
-                    DbContext.HighSchools.Remove(SelectedItem.Entity);
+                    DbContext.Set<T>().Remove(SelectedItem.Entity);
                     Save();
                     SelectedItem = null;
                 }
@@ -358,7 +307,7 @@ namespace HighSchool.Model
 
         }
 
-        private void OnEntityException(EntityException e)
+        protected void OnEntityException(EntityException e)
         {
             EntityException?.Invoke(this, new EntityExceptionEventArgs(e));
         }
@@ -372,5 +321,4 @@ namespace HighSchool.Model
         #endregion
 
     }
-
 }

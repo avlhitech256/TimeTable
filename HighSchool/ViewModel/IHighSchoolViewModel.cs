@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Domain.Messenger;
-using Domain.DomainContext;
-using Domain.Entity.HighSchool;
-using Domain.ViewModel;
+using Common.Messenger;
+using Common.DomainContext;
+using Common.ViewModel;
+using DataService.Entity.HighSchool;
+using DataService.Model;
+using Domain.SearchCriteria;
+using Domain.SearchCriteria.HighSchool;
 
 namespace HighSchool.ViewModel
 {
@@ -12,10 +15,10 @@ namespace HighSchool.ViewModel
     {
         IDomainContext DomainContext { get; }
         IMessenger Messenger { get; }
-        HighSchoolSearchCriteria SearchCriteria { get; }
-        IHighSchoolEntity SelectedItem { get; }
+        ISearchCriteria SearchCriteria { get; }
+        IHighSchoolEntity SelectedItem { get; set; }
         ObservableCollection<IHighSchoolEntity> HighSchools { get; }
-        ObservableCollection<DataService.Model.Employee> Employees { get; }
+        ObservableCollection<Employee> Employees { get; }
         bool HasChanges { get; }
         string Code { get; set; }
         string Name { get; set; }

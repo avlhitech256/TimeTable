@@ -1,4 +1,4 @@
-﻿namespace Domain.Data.Enum
+﻿namespace Common.Data.Enum
 {
     public enum MenuItemName
     {

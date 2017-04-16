@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using Domain.DomainContext;
+using Common.DomainContext;
 using TimeTable.ViewModel.MainWindow;
 
 namespace TimeTable

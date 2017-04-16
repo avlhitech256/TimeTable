@@ -50,14 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Criteria\SearchCriteria.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
-    <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
-    <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
     <Compile Include="Entry\ControlState.cs" />
-    <Compile Include="Entity\IDomainEntity.cs" />
+    <Compile Include="Model\CommonModel.cs" />
+    <Compile Include="Model\ICommonModel.cs" />
+    <Compile Include="SearchCriteria\HighSchool\HighSchoolSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\ISearchCriteria.cs" />
+    <Compile Include="SearchCriteria\SearchCriteria.cs" />
+    <Compile Include="SearchCriteria\SearchCriteriaFactory.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="Event\EntityExceptionEventArgs.cs" />
     <Compile Include="Event\LeftMenuMouseOverEventArgs.cs" />
@@ -79,7 +81,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="Data\Criteria\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

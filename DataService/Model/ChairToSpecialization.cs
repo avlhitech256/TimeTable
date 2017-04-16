@@ -9,9 +9,7 @@
 
 namespace DataService.Model
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class ChairToSpecialization
     {
         public long Id { get; set; }

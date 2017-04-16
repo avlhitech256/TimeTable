@@ -1,5 +1,5 @@
-﻿using Domain.Data.Enum;
-using Domain.Data.Notifier;
+﻿using Common.Data.Notifier;
+using Common.Data.Enum;
 
 namespace TimeTable.ViewModel.LeftMenu
 {

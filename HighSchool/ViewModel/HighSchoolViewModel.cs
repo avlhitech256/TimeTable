@@ -5,13 +5,16 @@ using System.Data.Entity.Core;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Domain.Data.Enum;
-using Domain.Data.Notifier;
-using Domain.Messenger;
-using Domain.DomainContext;
-using Domain.Entity.HighSchool;
-using Domain.Event;
-using Domain.Messenger.Impl;
+using Common.Data.Notifier;
+using Common.Data.Enum;
+using Common.Messenger;
+using Common.DomainContext;
+using Common.Event;
+using Common.Messenger.Impl;
+using DataService.Entity.HighSchool;
+using DataService.Model;
+using Domain.SearchCriteria;
+using Domain.SearchCriteria.HighSchool;
 using HighSchool.Model;
 using HighSchool.ViewModel.Command;
 
@@ -36,7 +39,7 @@ namespace HighSchool.ViewModel
             DomainContext = context;
             Model = new HighSchoolModel(DomainContext);
             DomainContext.DataBaseServer = Model.DataBaseServer;
-            oldHighSchool = Model?.SelectedHighSchool;
+            oldHighSchool = Model?.SelectedItem;
             SubscribeEvents();
             SubscribeMessenger();
             ReadOnly = true;
@@ -51,29 +54,29 @@ namespace HighSchool.ViewModel
 
         private IHighSchoolModel Model { get; }
 
-        public HighSchoolSearchCriteria SearchCriteria => Model.SearchCriteria;
+        public ISearchCriteria SearchCriteria => Model.SearchCriteria;
 
         public IHighSchoolEntity SelectedItem
         {
             get
             {
-                return Model?.SelectedHighSchool;
+                return Model?.SelectedItem;
             }
 
             set
             {
                 if (Model != null)
                 {
-                    Model.SelectedHighSchool = value;
+                    Model.SelectedItem = value;
                 }
 
             }
 
         }
 
-        public ObservableCollection<IHighSchoolEntity> HighSchools => Model.HighSchools;
+        public ObservableCollection<IHighSchoolEntity> HighSchools => Model?.Entities;
 
-        public ObservableCollection<DataService.Model.Employee> Employees => Model.Employees;
+        public ObservableCollection<Employee> Employees => Model?.Employees;
 
         public bool HasChanges
         {
@@ -326,7 +329,7 @@ namespace HighSchool.ViewModel
 
         private void OnChangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Model.SelectedHighSchool))
+            if (e.PropertyName == nameof(Model.SelectedItem))
             {
                 if (oldHighSchool != null)
                 {
