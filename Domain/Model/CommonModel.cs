@@ -48,7 +48,7 @@ namespace Domain.Model
                 return selectedItem;
             }
 
-            private set
+            set
             {
                 if (selectedItem != value)
                 {

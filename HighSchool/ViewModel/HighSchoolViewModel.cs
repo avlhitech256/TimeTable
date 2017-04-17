@@ -11,6 +11,7 @@ using Common.Messenger;
 using Common.DomainContext;
 using Common.Event;
 using Common.Messenger.Impl;
+using DataService.Entity;
 using DataService.Entity.HighSchool;
 using DataService.Model;
 using Domain.SearchCriteria;
@@ -24,7 +25,7 @@ namespace HighSchool.ViewModel
     {
         #region Members
 
-        private IHighSchoolEntity oldHighSchool;
+        private IDomainEntity<DataService.Model.HighSchool> oldHighSchool;
         private bool hasChanges;
         private bool readOnly;
         private bool isEditControl;
@@ -56,7 +57,7 @@ namespace HighSchool.ViewModel
 
         public ISearchCriteria SearchCriteria => Model.SearchCriteria;
 
-        public IHighSchoolEntity SelectedItem
+        public IDomainEntity<DataService.Model.HighSchool> SelectedItem
         {
             get
             {
@@ -74,7 +75,7 @@ namespace HighSchool.ViewModel
 
         }
 
-        public ObservableCollection<IHighSchoolEntity> HighSchools => Model?.Entities;
+        public ObservableCollection<IDomainEntity<DataService.Model.HighSchool>> HighSchools => Model?.Entities;
 
         public ObservableCollection<Employee> Employees => Model?.Employees;
 
@@ -158,16 +159,20 @@ namespace HighSchool.ViewModel
         {
             get
             {
-                return SelectedItem?.Rector ?? 0;
+                return ((IHighSchoolEntity)SelectedItem)?.Rector ?? 0;
             }
 
             set
             {
-                if (SelectedItem != null)
+                IHighSchoolEntity selectedItem = SelectedItem as IHighSchoolEntity;
+
+                if (selectedItem != null )
                 {
-                    SelectedItem.Rector = value;
+                    selectedItem.Rector = value;
                 }
+
             }
+
         }
 
         public DateTime Created => SelectedItem?.Created ?? DateTime.MinValue;
@@ -516,7 +521,7 @@ namespace HighSchool.ViewModel
         {
             if (Messenger != null)
             {
-                IHighSchoolEntity oldSelectedItem = SelectedItem;
+                IDomainEntity<DataService.Model.HighSchool> oldSelectedItem = SelectedItem;
                 Model.ApplySearchCriteria();
 
                 if (oldSelectedItem != null && HighSchools.All(x => x.Id != oldSelectedItem.Id))

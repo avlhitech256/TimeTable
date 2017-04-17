@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -10,90 +11,90 @@ using Common.Event;
 using DataService.DataService;
 using DataService.Entity.HighSchool;
 using DataService.Model;
+using Domain.Model;
 using Domain.SearchCriteria;
 using Domain.SearchCriteria.HighSchool;
-using HighSchool.ViewModel;
 
 namespace HighSchool.Model
 {
-    public class HighSchoolModel : Notifier, IHighSchoolModel
+    public class HighSchoolModel : CommonModel<DataService.Model.HighSchool>, IHighSchoolModel, INotifyPropertyChanged
     {
         #region Members
 
-        private IHighSchoolEntity selectedItem;
+        //private IHighSchoolEntity selectedItem;
         private ObservableCollection<Employee> employees;
-        private ObservableCollection<IHighSchoolEntity> entities;
+        //private ObservableCollection<IHighSchoolEntity> entities;
         private bool employeesIsLoaded;
-        private bool entitiesIsLoaded;
+        //private bool entitiesIsLoaded;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolModel(IDomainContext domainContext)
+        public HighSchoolModel(IDomainContext domainContext) : base(domainContext)
         {
-            DomainContext = domainContext;
+            //DomainContext = domainContext;
             employeesIsLoaded = false;
-            entitiesIsLoaded = false;
-            InitializeDataService();
-            InitializeSearchCriteria();
+            //entitiesIsLoaded = false;
+            //InitializeDataService();
+            //InitializeSearchCriteria();
         }
 
         #endregion
 
         #region Properties
 
-        public ISearchCriteria SearchCriteria { get; private set; }
+        //public ISearchCriteria SearchCriteria { get; private set; }
 
-        public IHighSchoolEntity SelectedItem
-        {
-            get
-            {
-                return selectedItem;
-            }
+        //public IHighSchoolEntity SelectedItem
+        //{
+        //    get
+        //    {
+        //        return selectedItem;
+        //    }
 
-            set
-            {
-                if (selectedItem != value)
-                {
-                    selectedItem = value;
-                    OnPropertyChanged();
-                }
+        //    set
+        //    {
+        //        if (selectedItem != value)
+        //        {
+        //            selectedItem = value;
+        //            OnPropertyChanged();
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
-        public ObservableCollection<IHighSchoolEntity> Entities
-        {
-            get
-            {
-                if (!entitiesIsLoaded && entities == null)
-                {
-                    InitializeHighSchools();
-                    entitiesIsLoaded = true;
-                }
+        //public ObservableCollection<IHighSchoolEntity> Entities
+        //{
+        //    get
+        //    {
+        //        if (!entitiesIsLoaded && entities == null)
+        //        {
+        //            InitializeHighSchools();
+        //            entitiesIsLoaded = true;
+        //        }
 
-                return entities;
-            }
+        //        return entities;
+        //    }
 
-            private set
-            {
-                if (entities != value)
-                {
-                    entities = value;
-                    OnPropertyChanged();
-                }
+        //    private set
+        //    {
+        //        if (entities != value)
+        //        {
+        //            entities = value;
+        //            OnPropertyChanged();
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         public ObservableCollection<Employee> Employees
         {
             get
             {
-                if (!employeesIsLoaded && employees == null)
+                if (!employeesIsLoaded)
                 {
                     try
                     {
@@ -116,260 +117,292 @@ namespace HighSchool.Model
 
         }
 
-        public bool HasChanges
-        {
-            get
-            {
-                bool hasChanges = false;
+        //public bool HasChanges
+        //{
+        //    get
+        //    {
+        //        bool hasChanges = false;
 
-                try
-                {
-                    hasChanges = SelectedItem != null && DbContext?.Entry(SelectedItem.Entity)?.State != EntityState.Unchanged;
-                }
-                catch (EntityException e)
-                {
-                    OnEntityException(e);
-                }
+        //        try
+        //        {
+        //            hasChanges = SelectedItem != null && DbContext?.Entry(SelectedItem.Entity)?.State != EntityState.Unchanged;
+        //        }
+        //        catch (EntityException e)
+        //        {
+        //            OnEntityException(e);
+        //        }
 
-                return hasChanges;
-            }
+        //        return hasChanges;
+        //    }
 
-        }
+        //}
 
-        public string DataBaseServer
-        {
-            get
-            {
-                string dataBaseServer = string.Empty;
+        //public string DataBaseServer
+        //{
+        //    get
+        //    {
+        //        string dataBaseServer = string.Empty;
 
-                try
-                {
-                    dataBaseServer = DbContext?.Database?.Connection?.DataSource;
-                }
-                catch (EntityException e)
-                {
-                    OnEntityException(e);
-                }
+        //        try
+        //        {
+        //            dataBaseServer = DbContext?.Database?.Connection?.DataSource;
+        //        }
+        //        catch (EntityException e)
+        //        {
+        //            OnEntityException(e);
+        //        }
 
-                return dataBaseServer;
-            }
+        //        return dataBaseServer;
+        //    }
 
-        }
+        //}
 
-        private IDomainContext DomainContext { get; }
+        //private IDomainContext DomainContext { get; }
 
-        private IDataService DataService { get; set; }
+        //private IDataService DataService { get; set; }
 
-        private TimeTableEntities DbContext => DataService?.DBContext;
+        //private TimeTableEntities DbContext => DataService?.DBContext;
 
         #endregion
 
         #region Methods
 
-        private void InitializeDataService()
+        //private void InitializeDataService()
+        //{
+        //    try
+        //    {
+        //        DataService = new DataService.DataService.DataService
+        //        {
+        //            UserName = DomainContext.UserName
+        //        };
+
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
+
+        //}
+
+        //private void InitializeSearchCriteria()
+        //{
+        //    SearchCriteria = new HighSchoolSearchCriteria
+        //    {
+        //        Code = string.Empty,
+        //        Name = string.Empty,
+        //        Active = true,
+        //        CteatedTo = null,
+        //        CteatedFrom = null,
+        //        LastModifyTo = null,
+        //        LastModifyFrom = null,
+        //        UserModify = string.Empty
+        //    };
+        //}
+
+        //private void InitializeHighSchools()
+        //{
+        //    var tempHighSchools = new ObservableCollection<IHighSchoolEntity>();
+        //    long position = 1;
+
+        //    try
+        //    {
+        //        foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList())
+        //        {
+        //            tempHighSchools.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
+        //        }
+
+        //        Entities = tempHighSchools;
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
+
+        //}
+
+        protected override List<DataService.Model.HighSchool> SelectEntities()
         {
-            try
-            {
-                DataService = new DataService.DataService.DataService
-                {
-                    UserName = DomainContext.UserName
-                };
+            List<DataService.Model.HighSchool> result = base.SelectEntities();
+            HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
 
-            }
-            catch (EntityException e)
+            if (searchCriteria != null)
             {
-                OnEntityException(e);
+                result = base.SelectEntities()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Code) ||
+                                x.Code.ToUpperInvariant()
+                                    .Contains(searchCriteria.Code.ToUpperInvariant())).ToList()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Name) ||
+                                x.Name.ToUpperInvariant()
+                                    .Contains(searchCriteria.Name.ToUpperInvariant())).ToList()
+                    .Where(x => !searchCriteria.Active || x.Active).ToList()
+                    .Where(x => (!searchCriteria.CteatedFrom.HasValue ||
+                                 x.Created >= searchCriteria.CteatedFrom.Value) &&
+                                (!searchCriteria.CteatedTo.HasValue ||
+                                 x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
+                    .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
+                                 x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
+                                (!searchCriteria.LastModifyTo.HasValue ||
+                                 x.LastModify < searchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
+                                x.UserModify.ToUpperInvariant()
+                                    .Contains(searchCriteria.UserModify.ToUpperInvariant())).ToList()
+                    .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
             }
 
+            return result;
         }
 
-        private void InitializeSearchCriteria()
-        {
-            SearchCriteria = new HighSchoolSearchCriteria
-            {
-                Code = string.Empty,
-                Name = string.Empty,
-                Active = true,
-                CteatedTo = null,
-                CteatedFrom = null,
-                LastModifyTo = null,
-                LastModifyFrom = null,
-                UserModify = string.Empty
-            };
-        }
+        //public void ApplySearchCriteria()
+        //{
+        //    Entities.Clear();
+        //    long position = 1;
 
-        private void InitializeHighSchools()
-        {
-            var tempHighSchools = new ObservableCollection<IHighSchoolEntity>();
-            long position = 1;
+        //    try
+        //    {
+        //        HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
 
-            try
-            {
-                foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList())
-                {
-                    tempHighSchools.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
-                }
+        //        if (searchCriteria != null)
+        //        {
+        //            List<DataService.Model.HighSchool> selectedListHighSchool =
+        //                DbContext.HighSchools.ToList()
+        //                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Code) ||
+        //                                x.Code.ToUpperInvariant().Contains(searchCriteria.Code.ToUpperInvariant()))
+        //                    .ToList()
+        //                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Name) ||
+        //                                x.Name.ToUpperInvariant().Contains(searchCriteria.Name.ToUpperInvariant()))
+        //                    .ToList()
+        //                    .Where(x => !searchCriteria.Active || x.Active).ToList()
+        //                    .Where(
+        //                        x =>
+        //                            (!searchCriteria.CteatedFrom.HasValue ||
+        //                             x.Created >= searchCriteria.CteatedFrom.Value) &&
+        //                            (!searchCriteria.CteatedTo.HasValue ||
+        //                             x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
+        //                    .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
+        //                                 x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
+        //                                (!searchCriteria.LastModifyTo.HasValue ||
+        //                                 x.LastModify < searchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
+        //                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
+        //                                x.UserModify.ToUpperInvariant()
+        //                                    .Contains(searchCriteria.UserModify.ToUpperInvariant()))
+        //                    .ToList()
+        //                    .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
 
-                Entities = tempHighSchools;
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
+        //            foreach (DataService.Model.HighSchool item in selectedListHighSchool)
+        //            {
+        //                Entities.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
+        //            }
 
-        }
+        //            OnPropertyChanged(nameof(Entities));
+        //        }
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
 
-        public void ApplySearchCriteria()
-        {
-            Entities.Clear();
-            long position = 1;
+        //}
 
-            try
-            {
-                HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
+        //public void Add()
+        //{
+        //    SelectedItem = new HighSchoolEntity(DataService, DomainContext.Messenger);
+        //}
 
-                if (searchCriteria != null)
-                {
-                    List<DataService.Model.HighSchool> selectedListHighSchool =
-                        DbContext.HighSchools.ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Code) ||
-                                        x.Code.ToUpperInvariant().Contains(searchCriteria.Code.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Name) ||
-                                        x.Name.ToUpperInvariant().Contains(searchCriteria.Name.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => !searchCriteria.Active || x.Active).ToList()
-                            .Where(
-                                x =>
-                                    (!searchCriteria.CteatedFrom.HasValue ||
-                                     x.Created >= searchCriteria.CteatedFrom.Value) &&
-                                    (!searchCriteria.CteatedTo.HasValue ||
-                                     x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
-                            .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
-                                         x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
-                                        (!searchCriteria.LastModifyTo.HasValue ||
-                                         x.LastModify < searchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
-                            .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
-                                        x.UserModify.ToUpperInvariant()
-                                            .Contains(searchCriteria.UserModify.ToUpperInvariant()))
-                            .ToList()
-                            .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
+        //public void Rollback()
+        //{
+        //    try
+        //    {
+        //        if (DbContext != null)
+        //        {
+        //            DbEntityEntry entry = DbContext.Entry(SelectedItem.Entity);
 
-                    foreach (DataService.Model.HighSchool item in selectedListHighSchool)
-                    {
-                        Entities.Add(new HighSchoolEntity(DataService, DomainContext.Messenger, item, position));
-                    }
+        //            if (entry != null)
+        //            {
+        //                switch (entry.State)
+        //                {
+        //                    case EntityState.Modified:
+        //                        entry.State = EntityState.Unchanged;
+        //                        break;
+        //                    case EntityState.Deleted:
+        //                        entry.Reload();
+        //                        break;
+        //                    case EntityState.Added:
+        //                        entry.State = EntityState.Detached;
+        //                        SelectedItem = null;
+        //                        break;
+        //                }
 
-                    OnPropertyChanged(nameof(Entities));
-                }
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
+        //            }
 
-        }
+        //            Save();
+        //        }
 
-        public void Add()
-        {
-            SelectedItem = new HighSchoolEntity(DataService, DomainContext.Messenger);
-        }
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
 
-        public void Rollback()
-        {
-            try
-            {
-                if (DbContext != null)
-                {
-                    DbEntityEntry entry = DbContext.Entry(SelectedItem.Entity);
+        //}
 
-                    if (entry != null)
-                    {
-                        switch (entry.State)
-                        {
-                            case EntityState.Modified:
-                                entry.State = EntityState.Unchanged;
-                                break;
-                            case EntityState.Deleted:
-                                entry.Reload();
-                                break;
-                            case EntityState.Added:
-                                entry.State = EntityState.Detached;
-                                SelectedItem = null;
-                                break;
-                        }
+        //public bool ValidateRequiredCode()
+        //{
+        //    return string.IsNullOrWhiteSpace(SelectedItem.Code);
+        //}
 
-                    }
+        //public bool ValidateUniqueCode()
+        //{
+        //    return DbContext.HighSchools.ToList().All(x => x.Code != SelectedItem.Code);
+        //}
 
-                    Save();
-                }
+        //public void Save()
+        //{
+        //    try
+        //    {
+        //        if (HasChanges)
+        //        {
+        //            DbContext.SaveChanges();
+        //        }
 
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
 
-        }
+        //}
 
-        public bool ValidateRequiredCode()
-        {
-            return string.IsNullOrWhiteSpace(SelectedItem.Code);
-        }
+        //public void Delete()
+        //{
+        //    try
+        //    {
+        //        if (SelectedItem != null)
+        //        {
+        //            DbContext.HighSchools.Remove(SelectedItem.Entity);
+        //            Save();
+        //            SelectedItem = null;
+        //        }
 
-        public bool ValidateUniqueCode()
-        {
-            return DbContext.HighSchools.ToList().All(x => x.Code != SelectedItem.Code);
-        }
+        //    }
+        //    catch (EntityException e)
+        //    {
+        //        OnEntityException(e);
+        //    }
 
-        public void Save()
-        {
-            try
-            {
-                if (HasChanges)
-                {
-                    DbContext.SaveChanges();
-                }
+        //}
 
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
-
-        }
-
-        public void Delete()
-        {
-            try
-            {
-                if (SelectedItem != null)
-                {
-                    DbContext.HighSchools.Remove(SelectedItem.Entity);
-                    Save();
-                    SelectedItem = null;
-                }
-
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
-
-        }
-
-        private void OnEntityException(EntityException e)
-        {
-            EntityException?.Invoke(this, new EntityExceptionEventArgs(e));
-        }
+        //private void OnEntityException(EntityException e)
+        //{
+        //    EntityException?.Invoke(this, new EntityExceptionEventArgs(e));
+        //}
 
         #endregion
 
-        #region Events
+        //#region Events
 
-        public event EntityExceptionEventHandler EntityException = delegate { };
+        //public event EntityExceptionEventHandler EntityException = delegate { };
 
-        #endregion
+        //#endregion
 
     }
 

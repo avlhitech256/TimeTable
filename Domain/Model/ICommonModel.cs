@@ -7,7 +7,7 @@ namespace Domain.Model
     public interface ICommonModel<T> where T : class
     {
         SearchCriteria.ISearchCriteria SearchCriteria { get; }
-        IDomainEntity<T> SelectedItem { get; }
+        IDomainEntity<T> SelectedItem { get; set; }
         ObservableCollection<IDomainEntity<T>> Entities { get; }
         bool HasChanges { get; }
         string DataBaseServer { get; }

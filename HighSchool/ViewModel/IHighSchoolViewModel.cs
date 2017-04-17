@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Common.Messenger;
 using Common.DomainContext;
 using Common.ViewModel;
+using DataService.Entity;
 using DataService.Entity.HighSchool;
 using DataService.Model;
 using Domain.SearchCriteria;
@@ -16,8 +17,8 @@ namespace HighSchool.ViewModel
         IDomainContext DomainContext { get; }
         IMessenger Messenger { get; }
         ISearchCriteria SearchCriteria { get; }
-        IHighSchoolEntity SelectedItem { get; set; }
-        ObservableCollection<IHighSchoolEntity> HighSchools { get; }
+        IDomainEntity<DataService.Model.HighSchool> SelectedItem { get; set; }
+        ObservableCollection<IDomainEntity<DataService.Model.HighSchool>> HighSchools { get; }
         ObservableCollection<Employee> Employees { get; }
         bool HasChanges { get; }
         string Code { get; set; }
