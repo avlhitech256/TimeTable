@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using Common.Event;
 using DataService.Entity;
 
 namespace Domain.Model
 {
-    public interface ICommonModel<T> where T : class
+    public interface IModel<T> where T : class
     {
         SearchCriteria.ISearchCriteria SearchCriteria { get; }
         IDomainEntity<T> SelectedItem { get; set; }
@@ -18,7 +17,5 @@ namespace Domain.Model
         void Rollback();
         bool ValidateRequiredCode();
         bool ValidateUniqueCode();
-
-        event EntityExceptionEventHandler EntityException;
     }
 }

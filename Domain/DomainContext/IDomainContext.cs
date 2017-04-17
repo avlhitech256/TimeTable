@@ -1,6 +1,6 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
-using Common.ViewModel;
+using Domain.ViewModel;
 
 namespace Common.DomainContext
 {
@@ -10,7 +10,7 @@ namespace Common.DomainContext
         IMessenger Messenger { get; }
 
         [CanBeNull]
-        IViewModel ViewModel { get; set; }
+        IControlViewModel ViewModel { get; set; }
 
         [CanBeNull]
         string UserName { get; }

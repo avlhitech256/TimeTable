@@ -13,7 +13,7 @@
 
         public HighSchoolSearchCriteria() : base()
         {
-            RectorId = -1;
+            RectorId = 0;
             RectorName = string.Empty;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
@@ -79,7 +80,7 @@ namespace DataService.Entity.HighSchool
             {
                 if (Entity != null && Entity.Code != value)
                 {
-                    Entity.Code = value.ToUpper();
+                    Entity.Code = value.ToUpper().Trim();
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -235,7 +236,7 @@ namespace DataService.Entity.HighSchool
         {
             try
             {
-                if (DataService != null && DataService.DBContext != null && 
+                if (DataService != null && DataService.DBContext != null &&
                     DataService?.DBContext.HighSchools != null && DataService?.DBContext.Employees != null)
                 {
                     Model.HighSchool newHighSchool = DataService?.DBContext?.HighSchools?.Create();
@@ -260,7 +261,11 @@ namespace DataService.Entity.HighSchool
             }
             catch (EntityException e)
             {
-                Messenger.Send(CommandName.ShowEntityException, e);
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
             }
 
         }
@@ -270,6 +275,16 @@ namespace DataService.Entity.HighSchool
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
+        }
+
+        private void OnEntityException(EntityException e)
+        {
+            Messenger?.Send(CommandName.ShowEntityException, e);
+        }
+
+        private void OnDbEntityValidationException(DbEntityValidationException e)
+        {
+            Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
         }
 
         #endregion

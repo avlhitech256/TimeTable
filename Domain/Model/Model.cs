@@ -3,11 +3,12 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
 using Common.DomainContext;
-using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Impl;
 using DataService.DataService;
 using DataService.Entity;
 using DataService.Model;
@@ -15,7 +16,7 @@ using Domain.SearchCriteria;
 
 namespace Domain.Model
 {
-    public class CommonModel<T> : Notifier, ICommonModel<T> where T : class
+    public class Model<T> : Notifier, IModel<T> where T : class
     {
         #region Members
 
@@ -27,7 +28,7 @@ namespace Domain.Model
 
         #region Constructors
 
-        protected CommonModel(IDomainContext domainContext)
+        protected Model(IDomainContext domainContext)
         {
             DomainContext = domainContext;
             entitiesIsLoaded = false;
@@ -39,7 +40,7 @@ namespace Domain.Model
 
         #region Properties
 
-        public SearchCriteria.ISearchCriteria SearchCriteria { get; private set; }
+        public ISearchCriteria SearchCriteria { get; private set; }
 
         public IDomainEntity<T> SelectedItem
         {
@@ -93,11 +94,16 @@ namespace Domain.Model
 
                 try
                 {
-                    hasChanges = SelectedItem != null && DbContext?.Entry(SelectedItem.Entity)?.State != EntityState.Unchanged;
+                    hasChanges = SelectedItem != null &&
+                                 DbContext?.Entry(SelectedItem.Entity)?.State != EntityState.Unchanged;
                 }
                 catch (EntityException e)
                 {
                     OnEntityException(e);
+                }
+                catch (DbEntityValidationException e)
+                {
+                    OnDbEntityValidationException(e);
                 }
 
                 return hasChanges;
@@ -118,6 +124,10 @@ namespace Domain.Model
                 catch (EntityException e)
                 {
                     OnEntityException(e);
+                }
+                catch (DbEntityValidationException e)
+                {
+                    OnDbEntityValidationException(e);
                 }
 
                 return dataBaseServer;
@@ -151,42 +161,22 @@ namespace Domain.Model
             {
                 OnEntityException(e);
             }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
 
         }
 
         private void InitializeSearchCriteria()
         {
             SearchCriteria = new SearchCriteriaFactory().GetSearchCriteria(typeof(T));
-            SearchCriteria.Code = string.Empty;
-            SearchCriteria.Name = string.Empty;
-            SearchCriteria.Active = true;
-            SearchCriteria.CteatedTo = null;
-            SearchCriteria.CteatedFrom = null;
-            SearchCriteria.LastModifyTo = null;
-            SearchCriteria.LastModifyFrom = null;
-            SearchCriteria.UserModify = string.Empty;
         }
 
         private void InitializeEntities()
         {
-            var domainEntities = new ObservableCollection<IDomainEntity<T>>();
-            long position = 1;
-            IDomainEntityFactory factory = new DomainEntityFactory(DataService, Messenger);
-
-            try
-            {
-                foreach (T item in DbContext.Set<T>().ToList())
-                {
-                    domainEntities.Add(factory.GetDomainEntity(item, position));
-                }
-
-                Entities = domainEntities;
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
-
+            entities = new ObservableCollection<IDomainEntity<T>>();
+            ApplySearchCriteria();
         }
 
         protected virtual List<T> SelectEntities()
@@ -206,7 +196,7 @@ namespace Domain.Model
             {
                 foreach (T item in SelectEntities())
                 {
-                    Entities.Add(factory.GetDomainEntity(item, position));
+                    Entities.Add(factory.GetDomainEntity(item, position++));
                 }
 
                 OnPropertyChanged(nameof(Entities));
@@ -214,6 +204,10 @@ namespace Domain.Model
             catch (EntityException e)
             {
                 OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
             }
 
         }
@@ -258,6 +252,10 @@ namespace Domain.Model
             {
                 OnEntityException(e);
             }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
 
         }
 
@@ -268,7 +266,22 @@ namespace Domain.Model
 
         public bool ValidateUniqueCode()
         {
-            return DbContext.HighSchools.ToList().All(x => x.Code != SelectedItem.Code);
+            bool result = true;
+
+            try
+            {
+                result = DbContext.HighSchools.ToList().All(x => x.Code != SelectedItem.Code);
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+            return result;
         }
 
         public void Save()
@@ -284,6 +297,10 @@ namespace Domain.Model
             catch (EntityException e)
             {
                 OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
             }
 
         }
@@ -304,21 +321,23 @@ namespace Domain.Model
             {
                 OnEntityException(e);
             }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
 
         }
 
         protected void OnEntityException(EntityException e)
         {
-            EntityException?.Invoke(this, new EntityExceptionEventArgs(e));
+            Messenger?.Send(CommandName.ShowEntityException, e);
+        }
+
+        protected void OnDbEntityValidationException(DbEntityValidationException e)
+        {
+            Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
         }
 
         #endregion
-
-        #region Events
-
-        public event EntityExceptionEventHandler EntityException = delegate { };
-
-        #endregion
-
     }
 }

@@ -47,7 +47,7 @@ namespace Domain.SearchCriteria
             {
                 if (code != value)
                 {
-                    code = value.ToUpper();
+                    code = value.ToUpper().Trim();
                     OnPropertyChanged();
                     OnSearchCriteriaChanged();
                 }

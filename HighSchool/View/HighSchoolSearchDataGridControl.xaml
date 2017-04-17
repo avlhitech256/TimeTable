@@ -18,7 +18,7 @@
                   Height="Auto"
                   Margin="2,27,0,3" 
                   Grid.RowSpan="2"
-                  ItemsSource="{Binding HighSchools}"
+                  ItemsSource="{Binding Entities}"
                   SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                   IsReadOnly="True">
             <DataGrid.Columns>

@@ -2,7 +2,7 @@
 using Common.Data.Notifier;
 using Common.Annotations;
 using Common.Messenger;
-using Common.ViewModel;
+using Domain.ViewModel;
 
 
 namespace Common.DomainContext
@@ -11,7 +11,7 @@ namespace Common.DomainContext
     {
         #region Members
 
-        private IViewModel viewModel;
+        private IControlViewModel viewModel;
         private string dataBaseServer;
 
         #endregion
@@ -35,7 +35,7 @@ namespace Common.DomainContext
         public IMessenger Messenger { get; }
 
         [CanBeNull]
-        public IViewModel ViewModel
+        public IControlViewModel ViewModel
         {
             get
             {

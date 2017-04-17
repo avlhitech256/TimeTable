@@ -6,6 +6,12 @@
         SetLeftMenuMouseUpItem,
         SetEntryControl,
         SetViewModel,
-        ShowEntityException
+        ShowEntityException,
+        ShowDbEntityValidationException,
+        ShowInvalidRequiredCodeMessage,
+        ShowInvalidateUniqueCodeMessage,
+        ShowMismatchSearchCriteriaMessage,
+        RequestForBack,
+        RequestForDelete
     }
 }

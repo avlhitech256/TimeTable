@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Entity.Core;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using Common.Data.Notifier;
 using Common.Data.Enum;
@@ -12,10 +10,8 @@ using Common.DomainContext;
 using Common.Event;
 using Common.Messenger.Impl;
 using DataService.Entity;
-using DataService.Entity.HighSchool;
 using DataService.Model;
 using Domain.SearchCriteria;
-using Domain.SearchCriteria.HighSchool;
 using HighSchool.Model;
 using HighSchool.ViewModel.Command;
 
@@ -42,9 +38,10 @@ namespace HighSchool.ViewModel
             DomainContext.DataBaseServer = Model.DataBaseServer;
             oldHighSchool = Model?.SelectedItem;
             SubscribeEvents();
-            SubscribeMessenger();
             ReadOnly = true;
             IsEditControl = false;
+            StartEditToolTip = "Начать редактирование текущей записи";
+            FinishEditToolTip = "Закончить редактирование текущей записи";
             InitializeButtons();
             InitializeProperties();
         }
@@ -75,7 +72,7 @@ namespace HighSchool.ViewModel
 
         }
 
-        public ObservableCollection<IDomainEntity<DataService.Model.HighSchool>> HighSchools => Model?.Entities;
+        public ObservableCollection<IDomainEntity<DataService.Model.HighSchool>> Entities => Model?.Entities;
 
         public ObservableCollection<Employee> Employees => Model?.Employees;
 
@@ -100,86 +97,10 @@ namespace HighSchool.ViewModel
 
         public IDomainContext DomainContext { get; }
 
+        protected string StartEditToolTip { get; }
+        protected string FinishEditToolTip { get; }
+
         public IMessenger Messenger => DomainContext.Messenger;
-
-        public string Code
-        {
-            get
-            {
-                return SelectedItem?.Code;
-            }
-
-            set
-            {
-                if (SelectedItem != null)
-                {
-                    SelectedItem.Code = value;
-                }
-
-            }
-
-        }
-
-        public string Name
-        {
-            get
-            {
-                return SelectedItem?.Name;
-            }
-
-            set
-           {
-                if (SelectedItem != null)
-                {
-                    SelectedItem.Name = value;
-                }
-
-            }
-
-        }
-
-        public bool Active
-        {
-            get
-            {
-                return SelectedItem != null && SelectedItem.Active;
-            }
-
-            set
-            {
-                if (SelectedItem != null)
-                {
-                    SelectedItem.Active = value;
-                }
-
-            }
-
-        }
-        public long Rector
-        {
-            get
-            {
-                return ((IHighSchoolEntity)SelectedItem)?.Rector ?? 0;
-            }
-
-            set
-            {
-                IHighSchoolEntity selectedItem = SelectedItem as IHighSchoolEntity;
-
-                if (selectedItem != null )
-                {
-                    selectedItem.Rector = value;
-                }
-
-            }
-
-        }
-
-        public DateTime Created => SelectedItem?.Created ?? DateTime.MinValue;
-
-        public DateTime LastModify => SelectedItem?.LastModify ?? DateTime.MinValue;
-
-        public string UserModify => SelectedItem?.UserModify;
 
         public ICommand BackToSearchButtonCommand { get; private set; }
 
@@ -250,9 +171,7 @@ namespace HighSchool.ViewModel
                 {
                     enabled = value;
                     ReadOnly = !value;
-                    ToolTipForEditButton = value
-                        ? "Закончить редактирование текущей записи"
-                        : "Редактировать текущую запись";
+                    ToolTipForEditButton = value ? FinishEditToolTip : StartEditToolTip;
                     OnPropertyChanged();
                 }
 
@@ -293,23 +212,16 @@ namespace HighSchool.ViewModel
         {
             if (Model != null)
             {
-                Model.PropertyChanged += OnChangedSelectedHighSchool;
-                Model.EntityException += OnEntityException;
+                Model.PropertyChanged += OnChangedSelectedItem;
+                oldHighSchool = SelectedItem;
 
                 if (SelectedItem != null)
                 {
-                    SelectedItem.PropertyChanged += OnChangedHighSchoolProperties;
+                    SelectedItem.PropertyChanged += OnChangedItemProperties;
                 }
 
             }
 
-        }
-
-        private void SubscribeMessenger()
-        {
-            Messenger.Register<EntityException>(CommandName.ShowEntityException, 
-                                                ShowEntityException, 
-                                                CanShowEntityException);
         }
 
         private void InitializeButtons()
@@ -329,70 +241,33 @@ namespace HighSchool.ViewModel
         {
             ReadOnly = true;
             Enabled = false;
-            ToolTipForEditButton = "Редактировать текущую запись";
+            ToolTipForEditButton = StartEditToolTip;
         }
 
-        private void OnChangedSelectedHighSchool(object sender, PropertyChangedEventArgs e)
+        private void OnChangedSelectedItem(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Model.SelectedItem))
+            if (Model != null && e.PropertyName == nameof(Model.SelectedItem))
             {
                 if (oldHighSchool != null)
                 {
-                    oldHighSchool.PropertyChanged -= OnChangedHighSchoolProperties;
+                    oldHighSchool.PropertyChanged -= OnChangedItemProperties;
                 }
 
                 oldHighSchool = SelectedItem;
 
                 if (oldHighSchool != null)
                 {
-                    oldHighSchool.PropertyChanged += OnChangedHighSchoolProperties;
+                    oldHighSchool.PropertyChanged += OnChangedItemProperties;
                 }
 
-                HasChanges = Model?.HasChanges ?? false;
+                HasChanges = Model.HasChanges;
                 OnPropertyChanged(nameof(SelectedItem));
-                OnPropertyChanged(nameof(Code));
-                OnPropertyChanged(nameof(Name));
-                OnPropertyChanged(nameof(Active));
-                OnPropertyChanged(nameof(Created));
-                OnPropertyChanged(nameof(LastModify));
-                OnPropertyChanged(nameof(UserModify));
             }
 
         }
 
-        private void OnEntityException(object sender, EntityExceptionEventArgs e)
+        private void OnChangedItemProperties(object sender, PropertyChangedEventArgs e)
         {
-            ShowEntityException(e.EntityException);
-        }
-
-        private void ShowEntityException(EntityException exception)
-        {
-            string header = exception.Source +
-                            " - Ошибка соединения с сервером баз данных (" + exception.HResult + ")";
-            string message = exception.Message;
-
-            if (!string.IsNullOrWhiteSpace(exception.HelpLink))
-            {
-                message = message + Environment.NewLine + Environment.NewLine +
-                          "Дополнительную информацию об ошибке можно посмотреть перейдя по нижеприведенной ссылке: " +
-                          Environment.NewLine + exception.HelpLink;
-            }
-
-            message = message + Environment.NewLine + Environment.NewLine +
-                      "Данная ошибка возникла в следующем методе: " + exception.TargetSite +
-                      Environment.NewLine + Environment.NewLine + exception.StackTrace;
-
-            MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Stop, MessageBoxResult.OK);
-        }
-
-        private bool CanShowEntityException(EntityException exception)
-        {
-            return true;
-        }
-
-        private void OnChangedHighSchoolProperties(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(e.PropertyName);
             HasChanges = Model?.HasChanges ?? false;
         }
 
@@ -405,8 +280,8 @@ namespace HighSchool.ViewModel
         {
             ReadOnly = false;
             GoToEditControl();
-            HasChanges = Model.HasChanges;
-            Model.Add();
+            HasChanges = Model?.HasChanges ?? false;
+            Model?.Add();
         }
 
         public void View()
@@ -415,7 +290,7 @@ namespace HighSchool.ViewModel
             {
                 ReadOnly = true;
                 GoToEditControl();
-                HasChanges = Model.HasChanges;
+                HasChanges = Model?.HasChanges ?? false;
             }
 
         }
@@ -428,14 +303,14 @@ namespace HighSchool.ViewModel
                 Save();
                 ReadOnly = !oldReadOnly;
                 GoToEditControl();
-                HasChanges = Model.HasChanges;
+                HasChanges = Model?.HasChanges ?? false;
             }
 
         }
 
         public void Save()
         {
-            if (HasChanges && !ReadOnly && Validate())
+            if (HasChanges && !ReadOnly && Validate() && Model != null)
             {
                 ReadOnly = true;
                 Model.Save();
@@ -456,19 +331,12 @@ namespace HighSchool.ViewModel
 
         public void Delete()
         {
-            if (Model != null && SelectedItem != null &&
-                MessageBox.Show("Текущая запись учебного заведения" +
-                                Environment.NewLine +
-                                "будет удалена без возможности" + 
-                                Environment.NewLine + 
-                                "восстановления!" +
-                                Environment.NewLine + Environment.NewLine +
-                                "Вы уверены, что ходите сделать" + 
-                                Environment.NewLine + "данную операцию?",
-                                "Удаление текущей записи",
-                                MessageBoxButton.YesNo,
-                                MessageBoxImage.Stop,
-                                MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            Messenger?.Send(CommandName.RequestForDelete, new EventArgs());
+        }
+
+        public void SetResponseForDelete(ValueEnum response)
+        {
+            if (response == ValueEnum.Yes && Model != null)
             {
                 Model.Delete();
                 ApplySearchCriteria();
@@ -484,34 +352,30 @@ namespace HighSchool.ViewModel
 
         public void Back()
         {
-            if (Model != null && Model.HasChanges)
+            if (Model != null && Model.HasChanges && Messenger != null)
             {
-                MessageBoxResult result = MessageBox.Show("В текущую запись учебного заведения" + 
-                                                          Environment.NewLine +
-                                                          "были внесены изменения." + 
-                                                          Environment.NewLine + Environment.NewLine +
-                                                          "Сохранить внесенные изменения?",
-                                                          "Сохранение текущей записи",
-                                                          MessageBoxButton.YesNoCancel,
-                                                          MessageBoxImage.Question,
-                                                          MessageBoxResult.Yes);
-                if (result != MessageBoxResult.Cancel)
-                {
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        Model.Save();
-                    }
-                    else
-                    {
-                        Model.Rollback();
-                    }
-
-                    SendBackMessage();
-                }
-
+                Messenger.Send(CommandName.RequestForBack, new EventArgs());
             }
             else
             {
+                SendBackMessage();
+            }
+
+        }
+
+        public void SetResponseForBack(ValueEnum response)
+        {
+            if (response != ValueEnum.Cancel)
+            {
+                if (response == ValueEnum.Yes)
+                {
+                    Model.Save();
+                }
+                else
+                {
+                    Model.Rollback();
+                }
+
                 SendBackMessage();
             }
 
@@ -524,14 +388,9 @@ namespace HighSchool.ViewModel
                 IDomainEntity<DataService.Model.HighSchool> oldSelectedItem = SelectedItem;
                 Model.ApplySearchCriteria();
 
-                if (oldSelectedItem != null && HighSchools.All(x => x.Id != oldSelectedItem.Id))
+                if (oldSelectedItem != null && Entities.All(x => x.Id != oldSelectedItem.Id))
                 {
-                    MessageBox.Show("Критерии поиска не включают" + Environment.NewLine +
-                                    "добавленные или измененные записи" + Environment.NewLine +
-                                    "учебных заведений. Для их отображения" + Environment.NewLine +
-                                    "измените критерии поиска.", 
-                                    "Поиск записей учебных заведений",
-                                    MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+                    Messenger?.Send(CommandName.ShowMismatchSearchCriteriaMessage, new EventArgs());
                 }
 
                 GoToSearchControl();
@@ -565,21 +424,12 @@ namespace HighSchool.ViewModel
 
             if (Model.ValidateRequiredCode())
             {
-                MessageBox.Show("Поле \"Код:\" не заполнено. Данное поле" + Environment.NewLine +
-                                "является обязательным. Заполните это поле" + Environment.NewLine +
-                                "и посторите попытку сохранения снова.",
-                                "Ошибка сохранения!",
-                                MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                Messenger?.Send(CommandName.ShowInvalidRequiredCodeMessage, new EventArgs());
                 result = false;
             }
             else if (Model.ValidateUniqueCode())
             {
-                MessageBox.Show("Поле \"Код:\" является уникальным. Данное поле" + Environment.NewLine +
-                                "содержит данные, которые уже были внесены в одну" + Environment.NewLine + 
-                                "из сохраненных записей. Измените значение этого" + Environment.NewLine +
-                                "поля и посторите попытку сохранения снова.",
-                                "Ошибка сохранения!",
-                                MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+                Messenger?.Send(CommandName.ShowInvalidateUniqueCodeMessage, new EventArgs());
                 result = false;
             }
 

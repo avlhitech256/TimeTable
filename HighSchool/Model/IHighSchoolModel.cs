@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Common.Event;
 using DataService.Entity;
-using DataService.Entity.HighSchool;
 using DataService.Model;
 using Domain.SearchCriteria;
 
@@ -23,7 +21,5 @@ namespace HighSchool.Model
         void Rollback();
         bool ValidateRequiredCode();
         bool ValidateUniqueCode();
-
-        event EntityExceptionEventHandler EntityException;
     }
 }
