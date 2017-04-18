@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    abstract public class CommonCommand
+    abstract public class CommonCommand<T> where T : class
     {
         #region Members
 
@@ -12,7 +12,7 @@ namespace HighSchool.ViewModel.Command
 
         #region Constructors
 
-        protected CommonCommand(IHighSchoolViewModel viewModel)
+        protected CommonCommand(IDataViewModel<T> viewModel)
         {
             ViewModel = viewModel;
             CanExecuteProperty = false;
@@ -22,7 +22,7 @@ namespace HighSchool.ViewModel.Command
 
         #region Properties
 
-        protected IHighSchoolViewModel ViewModel { get; }
+        protected IDataViewModel<T> ViewModel { get; }
 
         protected bool CanExecuteProperty
         {

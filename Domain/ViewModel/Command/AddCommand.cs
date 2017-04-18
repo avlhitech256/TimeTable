@@ -1,17 +1,18 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    internal class SaveAndNewCommand : CommonCommand, ICommand
+    internal class AddCommand<T> : CommonCommand<T>, ICommand where T : class 
     {
         #region Constructors
 
-        public SaveAndNewCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public AddCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
             if (ViewModel != null)
             {
                 ViewModel.PropertyChanged += ChangeCanExecute;
+                CanExecuteProperty = ViewModel.ReadOnly;
             }
 
         }
@@ -22,18 +23,19 @@ namespace HighSchool.ViewModel.Command
 
         private void ChangeCanExecute(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ViewModel.HasChanges))
+            if (e.PropertyName == nameof(ViewModel.ReadOnly))
             {
-                CanExecuteProperty = ViewModel.HasChanges && !ViewModel.ReadOnly;
+                CanExecuteProperty = ViewModel.ReadOnly;
             }
 
         }
 
         public override void Execute(object parameter)
         {
-            ViewModel?.SaveAndAdd();
+            ViewModel?.Add();
         }
 
         #endregion
     }
+
 }

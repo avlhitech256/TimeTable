@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.SearchCriteria
+namespace Domain.Data.SearchCriteria
 {
     public interface ISearchCriteria
     {
@@ -12,7 +12,10 @@ namespace Domain.SearchCriteria
         DateTime? LastModifyFrom { get; set; }
         DateTime? LastModifyTo { get; set; }
         string UserModify { get; set; }
+        bool IsEmpty { get; }
+        void Clear();
 
         event EventHandler SearchCriteriaChanged;
+        event EventHandler SearchCriteriaIsEmpty;
     }
 }

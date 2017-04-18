@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Common.Annotations;
 using DataService.Entity;
-using Domain.SearchCriteria;
+using Domain.Data.SearchCriteria;
 
 namespace Domain.ViewModel
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Data.Enum;
-using Common.DomainContext;
+using Domain.Data.Enum;
+using Domain.DomainContext;
 using HighSchool.ViewModel;
 
 namespace TimeTable.ViewModel.MainWindow

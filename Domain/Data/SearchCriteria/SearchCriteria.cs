@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Data.Notifier;
 
-namespace Domain.SearchCriteria
+namespace Domain.Data.SearchCriteria
 {
     public class SearchCriteria : Notifier, ISearchCriteria
     {
@@ -15,6 +15,7 @@ namespace Domain.SearchCriteria
         private DateTime? lastModifyFrom;
         private DateTime? lastModifyTo;
         private string userModify;
+        private bool isEmpty;
 
         #endregion
 
@@ -30,6 +31,7 @@ namespace Domain.SearchCriteria
             LastModifyFrom = null;
             LastModifyTo = null;
             UserModify = string.Empty;
+            IsEmpty = true;
         }
 
         #endregion
@@ -185,19 +187,70 @@ namespace Domain.SearchCriteria
             }
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return isEmpty;
+            }
+
+            protected set
+            {
+                if (isEmpty != value)
+                {
+                    isEmpty = value;
+                    OnPropertyChanged();
+                    OnSearchCriteriaIsEmpty();
+                }
+            }
+
+        }
+
         #endregion
 
         #region Methods
+
+        protected virtual bool VerifyIsEmpty()
+        {
+            bool result = string.IsNullOrWhiteSpace(Code) &&
+                          string.IsNullOrWhiteSpace(Name) &&
+                          Active &&
+                          (!CteatedFrom.HasValue || CteatedFrom.Value == DateTime.MinValue) &&
+                          (!CteatedTo.HasValue || CteatedTo.Value == DateTime.MinValue) &&
+                          (!LastModifyFrom.HasValue || LastModifyFrom.Value == DateTime.MinValue) &&
+                          (!LastModifyTo.HasValue || LastModifyTo.Value == DateTime.MinValue) &&
+                          string.IsNullOrWhiteSpace(UserModify);
+            return result;
+        }
         protected virtual void OnSearchCriteriaChanged()
         {
             SearchCriteriaChanged?.Invoke(this, new EventArgs());
+            IsEmpty = VerifyIsEmpty();
         }
-        
+
+        protected virtual void OnSearchCriteriaIsEmpty()
+        {
+            SearchCriteriaIsEmpty?.Invoke(this, new EventArgs());
+        }
+
+        public virtual void Clear()
+        {
+            Code = string.Empty;
+            Name = string.Empty;
+            Active = true;
+            CteatedFrom = null;
+            CteatedTo = null;
+            LastModifyFrom = null;
+            LastModifyTo = null;
+            UserModify = string.Empty;
+        }
+
         #endregion
 
         #region Events
 
         public event EventHandler SearchCriteriaChanged = delegate { };
+        public event EventHandler SearchCriteriaIsEmpty = delegate { };
 
         #endregion
 

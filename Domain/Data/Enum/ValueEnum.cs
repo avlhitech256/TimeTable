@@ -1,4 +1,4 @@
-﻿namespace Common.Data.Enum
+﻿namespace Domain.Data.Enum
 {
     public enum ValueEnum
     {

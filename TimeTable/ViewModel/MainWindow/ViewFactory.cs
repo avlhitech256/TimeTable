@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using Common.DomainContext;
 using HighSchool.View;
-using Common.Data.Enum;
+using Domain.Data.Enum;
+using Domain.DomainContext;
 using Domain.ViewModel;
 
 namespace TimeTable.ViewModel.MainWindow

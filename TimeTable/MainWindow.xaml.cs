@@ -5,10 +5,10 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using Common.Data.Enum;
-using Common.DomainContext;
 using Common.Messenger;
 using Common.Messenger.Impl;
+using Domain.Data.Enum;
+using Domain.DomainContext;
 using TimeTable.ViewModel.MainWindow;
 
 namespace TimeTable

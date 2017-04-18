@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    internal class SearchCommand : CommonCommand, ICommand
+    internal class SearchCommand<T> : CommonCommand<T>, ICommand where T : class 
     {
         #region Constructors
 
-        public SearchCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public SearchCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
-            if (ViewModel != null && ViewModel.SearchCriteria != null)
+            if (ViewModel?.SearchCriteria != null)
             {
                 ViewModel.SearchCriteria.SearchCriteriaChanged += ChangeCanExecute;
             }

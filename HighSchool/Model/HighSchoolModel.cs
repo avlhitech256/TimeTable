@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
-using Common.DomainContext;
 using DataService.Model;
+using Domain.DomainContext;
 using Domain.Model;
-using Domain.SearchCriteria.HighSchool;
+using HighSchool.SearchCriteria;
 
 namespace HighSchool.Model
 {
-    public class HighSchoolModel : Model<DataService.Model.HighSchool>, IHighSchoolModel, INotifyPropertyChanged
+    public class HighSchoolModel : Model<DataService.Model.HighSchool>, IHighSchoolModel
     {
         #region Members
 
@@ -22,7 +21,7 @@ namespace HighSchool.Model
 
         #region Constructors
 
-        public HighSchoolModel(IDomainContext domainContext) : base(domainContext)
+        public HighSchoolModel(IDomainContext domainContext) : base(domainContext, new HighSchoolSearchCriteria())
         {
             employeesIsLoaded = false;
         }
@@ -40,7 +39,7 @@ namespace HighSchool.Model
                     try
                     {
                         employees = new ObservableCollection<Employee>();
-                        Employee item0 = new Employee() { Id = 0, Name = "Любой ректор" };
+                        Employee item0 = new Employee { Id = 0, Name = "Любой ректор" };
                         employees.Add(item0);
                         DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
                         OnPropertyChanged();

@@ -6,13 +6,13 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
-using Common.DomainContext;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.DataService;
 using DataService.Entity;
 using DataService.Model;
-using Domain.SearchCriteria;
+using Domain.Data.SearchCriteria;
+using Domain.DomainContext;
 
 namespace Domain.Model
 {
@@ -28,19 +28,19 @@ namespace Domain.Model
 
         #region Constructors
 
-        protected Model(IDomainContext domainContext)
+        protected Model(IDomainContext domainContext, ISearchCriteria searchCriteria)
         {
             DomainContext = domainContext;
+            SearchCriteria = searchCriteria;
             entitiesIsLoaded = false;
             InitializeDataService();
-            InitializeSearchCriteria();
         }
 
         #endregion
 
         #region Properties
 
-        public ISearchCriteria SearchCriteria { get; private set; }
+        public ISearchCriteria SearchCriteria { get; }
 
         public IDomainEntity<T> SelectedItem
         {
@@ -166,11 +166,6 @@ namespace Domain.Model
                 OnDbEntityValidationException(e);
             }
 
-        }
-
-        private void InitializeSearchCriteria()
-        {
-            SearchCriteria = new SearchCriteriaFactory().GetSearchCriteria(typeof(T));
         }
 
         private void InitializeEntities()

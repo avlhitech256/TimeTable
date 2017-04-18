@@ -1,7 +1,7 @@
 ﻿using System;
-using Common.Data.Enum;
+using Domain.Data.Enum;
 
-namespace Common.Event
+namespace Domain.Event
 {
     public class MenuChangedEventArgs : EventArgs
     {

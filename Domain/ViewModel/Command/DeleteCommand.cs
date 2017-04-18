@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    internal class ViewCommand : CommonCommand, ICommand
+    internal class DeleteCommand<T> : CommonCommand<T>, ICommand where T : class 
     {
         #region Constructors
 
-        public ViewCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public DeleteCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
             ViewModel.PropertyChanged += ChangeCanExecute;
         }
@@ -26,9 +26,10 @@ namespace HighSchool.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            ViewModel?.View();
+            ViewModel?.Delete();
         }
 
         #endregion
     }
+
 }

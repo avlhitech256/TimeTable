@@ -1,11 +1,10 @@
 ﻿using System;
-using Common.Data.Notifier;
 using Common.Annotations;
+using Common.Data.Notifier;
 using Common.Messenger;
 using Domain.ViewModel;
 
-
-namespace Common.DomainContext
+namespace Domain.DomainContext
 {
     public class DomainContext : Notifier, IDomainContext
     {

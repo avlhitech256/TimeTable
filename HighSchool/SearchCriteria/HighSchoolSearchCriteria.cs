@@ -1,6 +1,6 @@
-﻿namespace Domain.SearchCriteria.HighSchool
+﻿namespace HighSchool.SearchCriteria
 {
-    public class HighSchoolSearchCriteria : SearchCriteria
+    public class HighSchoolSearchCriteria : Domain.Data.SearchCriteria.SearchCriteria, IHighSchoolSearchCriteria
     {
         #region Members
 
@@ -11,7 +11,7 @@
 
         #region Constructors
 
-        public HighSchoolSearchCriteria() : base()
+        public HighSchoolSearchCriteria()
         {
             RectorId = 0;
             RectorName = string.Empty;
@@ -55,6 +55,25 @@
                     OnSearchCriteriaChanged();
                 }
             }
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void Clear()
+        {
+            base.Clear();
+            RectorId = 0;
+            RectorName = string.Empty;
+        }
+
+        protected override bool VerifyIsEmpty()
+        {
+            bool result = base.VerifyIsEmpty() &&
+                          RectorId <= 0 &&
+                          string.IsNullOrWhiteSpace(RectorName);
+            return result;
         }
 
         #endregion

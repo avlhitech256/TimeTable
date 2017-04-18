@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    class SaveCommand : CommonCommand, ICommand
+    internal class SaveCommand<T> : CommonCommand<T>, ICommand where T : class 
     {
         #region Constructors
 
-        public SaveCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public SaveCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
             if (ViewModel != null)
             {

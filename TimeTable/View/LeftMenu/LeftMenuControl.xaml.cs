@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Common.Data.Enum;
 using Common.Messenger;
 using Common.Messenger.Impl;
-using Common.DomainContext;
-using Common.Event;
+using Domain.Data.Enum;
+using Domain.DomainContext;
+using Domain.Event;
 using TimeTable.ViewModel.LeftMenu;
 
 namespace TimeTable.View.LeftMenu

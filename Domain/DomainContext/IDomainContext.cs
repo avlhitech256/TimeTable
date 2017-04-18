@@ -2,7 +2,7 @@
 using Common.Messenger;
 using Domain.ViewModel;
 
-namespace Common.DomainContext
+namespace Domain.DomainContext
 {
     public interface IDomainContext
     {

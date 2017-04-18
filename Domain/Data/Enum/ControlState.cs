@@ -1,4 +1,4 @@
-﻿namespace Common.ViewModel
+﻿namespace Domain.Data.Enum
 {
     public enum ControlState
     {

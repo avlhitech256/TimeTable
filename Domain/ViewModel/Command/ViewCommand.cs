@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    internal class EditCommand : CommonCommand, ICommand
+    internal class ViewCommand<T> : CommonCommand<T>, ICommand where T : class
     {
         #region Constructors
 
-        public EditCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public ViewCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
             ViewModel.PropertyChanged += ChangeCanExecute;
         }
@@ -26,7 +26,7 @@ namespace HighSchool.ViewModel.Command
 
         public override void Execute(object parameter)
         {
-            ViewModel?.Edit();
+            ViewModel?.View();
         }
 
         #endregion

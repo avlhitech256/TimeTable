@@ -1,25 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using DataService.Entity;
 using DataService.Model;
-using Domain.SearchCriteria;
+using Domain.Model;
 
 namespace HighSchool.Model
 {
-    public interface IHighSchoolModel : INotifyPropertyChanged
+    public interface IHighSchoolModel : IModel<DataService.Model.HighSchool>
     {
-        ISearchCriteria SearchCriteria { get; }
-        IDomainEntity<DataService.Model.HighSchool> SelectedItem { get; set; }
-        ObservableCollection<IDomainEntity<DataService.Model.HighSchool>> Entities { get; }
         ObservableCollection<Employee> Employees { get; }
-        bool HasChanges { get; }
-        string DataBaseServer { get; }
-        void ApplySearchCriteria();
-        void Add();
-        void Save();
-        void Delete();
-        void Rollback();
-        bool ValidateRequiredCode();
-        bool ValidateUniqueCode();
     }
 }

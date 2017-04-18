@@ -1,12 +1,12 @@
 ﻿using System.Windows.Input;
 
-namespace HighSchool.ViewModel.Command
+namespace Domain.ViewModel.Command
 {
-    internal class BackCommand : CommonCommand, ICommand
+    internal class BackCommand<T> : CommonCommand<T>, ICommand where T : class 
     {
         #region Constructors
 
-        public BackCommand(IHighSchoolViewModel viewModel) : base(viewModel)
+        public BackCommand(IDataViewModel<T> viewModel) : base(viewModel)
         {
             CanExecuteProperty = true;
         }

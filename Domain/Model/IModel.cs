@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using DataService.Entity;
+using Domain.Data.SearchCriteria;
 
 namespace Domain.Model
 {
-    public interface IModel<T> where T : class
+    public interface IModel<T> : INotifyPropertyChanged where T : class
     {
-        SearchCriteria.ISearchCriteria SearchCriteria { get; }
+        ISearchCriteria SearchCriteria { get; }
         IDomainEntity<T> SelectedItem { get; set; }
         ObservableCollection<IDomainEntity<T>> Entities { get; }
         bool HasChanges { get; }

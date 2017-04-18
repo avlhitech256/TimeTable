@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 using Common.Annotations;
-using Common.Data.Enum;
-using Common.DomainContext;
 using Common.Messenger;
+using Domain.DomainContext;
+using ValueEnum = Domain.Data.Enum.ValueEnum;
 
 namespace Domain.ViewModel
 {
@@ -40,7 +40,7 @@ namespace Domain.ViewModel
         ICommand SearchButtonCommand { get; }
 
         [CanBeNull]
-        ICommand ChangeEditModeButtonCommand { get; }
+        ICommand ClearButtonCommand { get; }
 
         [CanBeNull]
         string ToolTipForEditButton { get; }
@@ -49,6 +49,7 @@ namespace Domain.ViewModel
         bool IsEditControl { get; set; }
         bool HasChanges { get; }
         void ApplySearchCriteria();
+        void Clear();
         void Add();
         void View();
         void Edit();

@@ -96,7 +96,7 @@
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Cteated}">
+                                    Binding="{Binding Path=Created}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Дата создания" 
