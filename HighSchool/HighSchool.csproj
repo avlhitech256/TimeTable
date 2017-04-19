@@ -124,6 +124,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9211AD9C-2D70-424C-96F5-DD0518985E37}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
       <Name>Common</Name>
