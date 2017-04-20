@@ -29,7 +29,7 @@ namespace CommonControl.ButtonsControl
         {
             InitializeComponent();
             InitializeProperties();
-            SubscribeEventsButton();
+            //SubscribeEventsButton();
         }
 
         #endregion
@@ -388,7 +388,6 @@ namespace CommonControl.ButtonsControl
             backgroundSaveAndNewButton = BackgroundSaveAndNewButton;
             backgroundDeleteButton = BackgroundDeleteButton;
             backgroundBackToSearchButton = BackgroundBackToSearchButton;
-            SaveAndNewButtonTextBlock.Background = BackgroundSaveAndNewButton;
         }
 
         public void SubscribeEventsButton()

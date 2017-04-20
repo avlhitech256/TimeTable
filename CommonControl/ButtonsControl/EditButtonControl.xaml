@@ -54,6 +54,9 @@
                        TextAlignment="Center" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center">
+                <TextBlock.Background>
+                    <SolidColorBrush Color="Transparent"></SolidColorBrush>
+                </TextBlock.Background>
             </TextBlock>
         </Button>
         <Button x:Name="DeleteButton" 
