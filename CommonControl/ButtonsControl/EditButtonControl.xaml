@@ -5,7 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CommonControl.ButtonsControl"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="180">
+             d:DesignHeight="350" d:DesignWidth="180">
+    <UserControl.Resources>
+        <Style x:Key="WrapButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <TextBlock Text="{TemplateBinding Content}" 
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center" 
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions >
             <RowDefinition Height="10"></RowDefinition>
@@ -53,7 +68,8 @@
                        TextWrapping="Wrap" 
                        TextAlignment="Center" 
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center">
+                       HorizontalAlignment="Center"
+                       Foreground="{Binding Path=Foreground, ElementName=SaveAndNewButton}">
                 <TextBlock.Background>
                     <SolidColorBrush Color="Transparent"></SolidColorBrush>
                 </TextBlock.Background>

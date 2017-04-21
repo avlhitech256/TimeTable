@@ -312,23 +312,30 @@ namespace Domain.ViewModel
 
         }
 
-        public void Save()
+        public bool Save()
         {
+            bool result = false;
+
             if (HasChanges && !ReadOnly && Validate() && Model != null)
             {
                 ReadOnly = true;
                 Model.Save();
                 HasChanges = Model.HasChanges;
+                result = true;
             }
 
+            return result;
         }
 
         public void SaveAndAdd()
         {
             if (HasChanges && !ReadOnly)
             {
-                Save();
-                Add();
+                if (Save())
+                {
+                    Add();
+                }
+
             }
 
         }
@@ -426,12 +433,12 @@ namespace Domain.ViewModel
         {
             bool result = true;
 
-            if (Model.ValidateRequiredCode())
+            if (!Model.ValidateRequiredCode())
             {
                 Messenger?.Send(CommandName.ShowInvalidRequiredCodeMessage, new EventArgs());
                 result = false;
             }
-            else if (Model.ValidateUniqueCode())
+            else if (!Model.ValidateUniqueCode())
             {
                 Messenger?.Send(CommandName.ShowInvalidateUniqueCodeMessage, new EventArgs());
                 result = false;

@@ -53,7 +53,7 @@ namespace Domain.ViewModel
         void Add();
         void View();
         void Edit();
-        void Save();
+        bool Save();
         void SaveAndAdd();
         void Delete();
         void SetResponseForDelete(ValueEnum response);

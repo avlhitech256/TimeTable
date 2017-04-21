@@ -256,7 +256,7 @@ namespace Domain.Model
 
         public bool ValidateRequiredCode()
         {
-            return string.IsNullOrWhiteSpace(SelectedItem.Code);
+            return !string.IsNullOrWhiteSpace(SelectedItem.Code);
         }
 
         public bool ValidateUniqueCode()
@@ -265,7 +265,9 @@ namespace Domain.Model
 
             try
             {
-                result = DbContext.HighSchools.ToList().All(x => x.Code != SelectedItem.Code);
+                result = DbContext.Set<T>().ToList()
+                    .Where(x => x != SelectedItem.Entity).ToList()
+                    .All(x => DbContext.Entry(x).Property("Code").CurrentValue.ToString() != SelectedItem.Code);
             }
             catch (EntityException e)
             {
