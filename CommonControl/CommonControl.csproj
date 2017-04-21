@@ -48,10 +48,17 @@
     <Compile Include="ButtonsControl\EditButtonControl.xaml.cs">
       <DependentUpon>EditButtonControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ButtonsControl\SearchButtonControl.xaml.cs">
+      <DependentUpon>SearchButtonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ButtonsControl\EditButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonsControl\SearchButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
