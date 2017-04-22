@@ -6,7 +6,12 @@
              xmlns:buttonsControl="clr-namespace:CommonControl.ButtonsControl;assembly=CommonControl"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="150">
-    <buttonsControl:SearchButtonControl x:Name="SearchButtonControl">
+    <buttonsControl:SearchButtonControl x:Name="SearchButtonControl"
+                                        ToolTipSearchButton="Поиск учебного заведения"
+                                        ToolTipClearButton="Очистить критерии поиска учебных заведений"
+                                        ToolTipAddButton="Создать новое учебное заведение"
+                                        ToolTipViewButton="Просмотр текущей записи учебного заведения"
+                                        ToolTipDeleteButton="Удалить текущую запись учебного заведения">
         
     </buttonsControl:SearchButtonControl>
 </UserControl>

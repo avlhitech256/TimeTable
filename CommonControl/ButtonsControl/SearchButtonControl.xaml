@@ -23,28 +23,28 @@
         <Button x:Name="SearchButton" 
                 Command="{Binding Path=SearchButtonCommand}"
                 Grid.Row="1" 
-                ToolTip="Поиск учебного заведения" 
+                ToolTip="Поиск записи" 
                 Content="Поиск" 
                 Margin="15,5">
         </Button>
         <Button x:Name="ClearButton" 
                 Command="{Binding Path=ClearButtonCommand}"
                 Grid.Row="2" 
-                ToolTip="Очистить критерии поиска учебных заведений" 
+                ToolTip="Очистить критерии поиска" 
                 Content="Очистить" 
                 Margin="15,5">
         </Button>
         <Button x:Name="AddButton" 
                 Command="{Binding Path=NewButtonCommand}"
                 Grid.Row="4" 
-                ToolTip="Создать новое учебное заведение" 
+                ToolTip="Создать новую запись" 
                 Content="Создать" 
                 Margin="15,5">
         </Button>
         <Button x:Name="ViewButton" 
                 Command="{Binding Path=ViewButtonCommand}"
                 Grid.Row="6" 
-                ToolTip="Просмотр записи учебного заведения" 
+                ToolTip="Просмотр текущей записи" 
                 Content="Просмотр" 
                 Margin="15,5">
         </Button>
@@ -58,7 +58,7 @@
         <Button x:Name="DeleteButton" 
                 Command="{Binding Path=DeleteButtonCommand}"
                 Grid.Row="9" 
-                ToolTip="Удалить текущую запись учебного заведения" 
+                ToolTip="Удалить текущую запись" 
                 Content="Удалить" 
                 Margin="15,5">
         </Button>
