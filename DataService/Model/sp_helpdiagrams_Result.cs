@@ -10,19 +10,13 @@
 namespace DataService.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ChairToSpecialization
+    public partial class sp_helpdiagrams_Result
     {
-        public long Id { get; set; }
-        public long ChairId { get; set; }
-        public long SpecializationId { get; set; }
-        public bool Active { get; set; }
-        public System.DateTimeOffset Created { get; set; }
-        public System.DateTimeOffset LastModify { get; set; }
-        public string UserModify { get; set; }
-    
-        public virtual Chair Chair { get; set; }
-        public virtual Specialization Specialization { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
