@@ -130,6 +130,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9211ad9c-2d70-424c-96f5-dd0518985e37}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
       <Name>Common</Name>
@@ -141,6 +145,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{8d72df4e-d904-4353-bbc5-141f3a563c4e}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faculty\Faculty.csproj">
+      <Project>{a41d3e06-2af6-4b2a-816d-31bb79f1d06d}</Project>
+      <Name>Faculty</Name>
     </ProjectReference>
     <ProjectReference Include="..\HighSchool\HighSchool.csproj">
       <Project>{5d2cabcc-7165-4519-adeb-4fc61a835351}</Project>

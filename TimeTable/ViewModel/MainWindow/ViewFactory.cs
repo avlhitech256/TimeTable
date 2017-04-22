@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using CommonControl.EditControl;
+using CommonControl.SearchControl;
 using HighSchool.View;
 using Domain.Data.Enum;
 using Domain.DomainContext;
@@ -80,6 +82,27 @@ namespace TimeTable.ViewModel.MainWindow
                     if (viewWithInterface != null)
                     {
                         viewWithInterface.DataContext = viewModel;
+                    }
+
+                    if (viewModelWithInterface.IsEditControl)
+                    {
+                        EditControl editView = view as EditControl;
+
+                        if (editView != null)
+                        {
+                            editView.DomainContext = domainContext;
+                        }
+
+                    }
+                    else
+                    {
+                        SearchControl searchView = view as SearchControl;
+
+                        if (searchView != null)
+                        {
+                            searchView.DomainContext = domainContext;
+                        }
+
                     }
 
                 }

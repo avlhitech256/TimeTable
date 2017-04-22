@@ -51,7 +51,9 @@
     <Compile Include="ButtonsControl\SearchButtonControl.xaml.cs">
       <DependentUpon>SearchButtonControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditControl\EditControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchControl\SearchControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ButtonsControl\EditButtonControl.xaml">
@@ -67,6 +69,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{356921DE-116D-48DB-9613-5D0395420897}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8d72df4e-d904-4353-bbc5-141f3a563c4e}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
