@@ -7,44 +7,44 @@ using DataService.Model;
 using Domain.Data.Constant;
 using Domain.DomainContext;
 using Domain.Model;
-using HighSchool.SearchCriteria;
+using Faculty.SearchCriteria;
 
-namespace HighSchool.Model
+namespace Faculty.Model
 {
-    public class HighSchoolModel : Model<DataService.Model.HighSchool>, IHighSchoolModel
+    public class FacultyModel : Model<DataService.Model.Faculty>, IFacultyModel
     {
         #region Members
 
-        private ObservableCollection<Employee> employees;
-        private bool employeesIsLoaded;
+        private ObservableCollection<HighSchool> highSchools;
+        private bool highSchoolsIsLoaded;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolModel(IDomainContext domainContext) : base(domainContext, new HighSchoolSearchCriteria())
+        public FacultyModel(IDomainContext domainContext) : base(domainContext, new FacultySearchCriteria())
         {
-            employeesIsLoaded = false;
+            highSchoolsIsLoaded = false;
         }
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<Employee> Employees
+        public ObservableCollection<HighSchool> HighSchools
         {
             get
             {
-                if (!employeesIsLoaded)
+                if (!highSchoolsIsLoaded)
                 {
                     try
                     {
-                        employees = new ObservableCollection<Employee>();
-                        Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
-                        employees.Add(item0);
-                        DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
+                        highSchools = new ObservableCollection<HighSchool>();
+                        HighSchool item0 = new HighSchool { Id = 0, Name = DafaultConstant.DefaultHighSchool };
+                        highSchools.Add(item0);
+                        DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
                         OnPropertyChanged();
-                        employeesIsLoaded = true;
+                        highSchoolsIsLoaded = true;
                     }
                     catch (EntityException e)
                     {
@@ -57,7 +57,7 @@ namespace HighSchool.Model
 
                 }
 
-                return employees;
+                return highSchools;
             }
 
         }
@@ -66,10 +66,10 @@ namespace HighSchool.Model
 
         #region Methods
 
-        protected override List<DataService.Model.HighSchool> SelectEntities()
+        protected override List<DataService.Model.Faculty> SelectEntities()
         {
-            List<DataService.Model.HighSchool> result = base.SelectEntities();
-            HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
+            List<DataService.Model.Faculty> result = base.SelectEntities();
+            FacultySearchCriteria searchCriteria = SearchCriteria as FacultySearchCriteria;
 
             if (searchCriteria != null)
             {
@@ -92,7 +92,7 @@ namespace HighSchool.Model
                     .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
                                 x.UserModify.ToUpperInvariant()
                                     .Contains(searchCriteria.UserModify.ToUpperInvariant())).ToList()
-                    .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
+                    .Where(x => searchCriteria.HighSchoolId <= 0L || x.HighSchoolId == searchCriteria.HighSchoolId).ToList();
             }
 
             return result;

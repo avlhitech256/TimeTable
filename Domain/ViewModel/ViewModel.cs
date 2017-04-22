@@ -7,6 +7,7 @@ using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.Entity;
+using DataService.Model;
 using Domain.Data.Enum;
 using Domain.Data.SearchCriteria;
 using Domain.DomainContext;
@@ -198,6 +199,38 @@ namespace Domain.ViewModel
 
                 }
 
+            }
+
+        }
+
+        private MenuItemName MenuItemName
+        {
+            get
+            {
+                MenuItemName result = MenuItemName.None;
+
+                if (typeof(T) == typeof(HighSchool))
+                {
+                    result = MenuItemName.HighSchool;
+                }
+                else if (typeof(T) == typeof(Faculty))
+                {
+                    result = MenuItemName.Faculty;
+                }
+                else if (typeof(T) == typeof(Chair))
+                {
+                    result = MenuItemName.Chair;
+                }
+                else if (typeof(T) == typeof(Specialty))
+                {
+                    result = MenuItemName.Specialty;
+                }
+                else if (typeof(T) == typeof(Specialization))
+                {
+                    result = MenuItemName.Specialization;
+                }
+
+                return result;
             }
 
         }
@@ -414,7 +447,7 @@ namespace Domain.ViewModel
             if (Messenger != null && !IsEditControl)
             {
                 IsEditControl = true;
-                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName));
             }
 
         }
@@ -424,7 +457,7 @@ namespace Domain.ViewModel
             if (Messenger != null && IsEditControl)
             {
                 IsEditControl = false;
-                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
+                Messenger.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName));
             }
 
         }

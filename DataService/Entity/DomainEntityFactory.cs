@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common.Messenger;
 using DataService.DataService;
+using DataService.Entity.Faculty;
 using DataService.Entity.HighSchool;
 
 namespace DataService.Entity
@@ -25,12 +26,14 @@ namespace DataService.Entity
             this.messenger = messenger;
             mapEntity = new Dictionary<Type, Func<object, long, object>>
             {
-                {typeof(Model.HighSchool), (entity, position) => new HighSchoolEntity(dataService, messenger, entity as Model.HighSchool, position)}
+                {typeof(Model.HighSchool), (entity, position) => new HighSchoolEntity(dataService, messenger, entity as Model.HighSchool, position)},
+                {typeof(Model.Faculty), (entity, position) => new FacultyEntity(dataService, messenger, entity as Model.Faculty, position)}
             };
 
             mapCreatorEntity = new Dictionary<Type, Func<object>>
             {
-                {typeof(Model.HighSchool), () => new HighSchoolEntity(dataService, messenger)}
+                {typeof(Model.HighSchool), () => new HighSchoolEntity(dataService, messenger)},
+                {typeof(Model.Faculty), () => new FacultyEntity(dataService, messenger)}
             };
         }
 

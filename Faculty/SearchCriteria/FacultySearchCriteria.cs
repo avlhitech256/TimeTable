@@ -1,58 +1,58 @@
 ﻿using Domain.Data.Constant;
 
-namespace HighSchool.SearchCriteria
+namespace Faculty.SearchCriteria
 {
-    public class HighSchoolSearchCriteria : Domain.Data.SearchCriteria.SearchCriteria, IHighSchoolSearchCriteria
+    public class FacultySearchCriteria : Domain.Data.SearchCriteria.SearchCriteria, IFacultySearchCriteria
     {
         #region Members
 
-        private long rectorId;
-        private string rectorName;
+        private long highSchoolId;
+        private string highSchoolName;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolSearchCriteria()
+        public FacultySearchCriteria()
         {
-            RectorId = 0;
-            RectorName = string.Empty;
+            HighSchoolId = 0;
+            HighSchoolName = string.Empty;
         }
 
         #endregion
 
         #region Properties
 
-        public long RectorId
+        public long HighSchoolId
         {
             get
             {
-                return rectorId;
+                return highSchoolId;
             }
 
             set
             {
-                if (rectorId != value)
+                if (highSchoolId != value)
                 {
-                    rectorId = value;
+                    highSchoolId = value;
                     OnPropertyChanged();
                     OnSearchCriteriaChanged();
                 }
             }
         }
 
-        public string RectorName
+        public string HighSchoolName
         {
             get
             {
-                return rectorName;
+                return highSchoolName;
             }
 
             set
             {
-                if (rectorName != value)
+                if (highSchoolName != value)
                 {
-                    rectorName = value;
+                    highSchoolName = value;
                     OnPropertyChanged();
                     OnSearchCriteriaChanged();
                 }
@@ -66,16 +66,16 @@ namespace HighSchool.SearchCriteria
         public override void Clear()
         {
             base.Clear();
-            RectorId = 0;
-            RectorName = string.Empty;
+            HighSchoolId = 0;
+            HighSchoolName = string.Empty;
         }
 
         protected override bool VerifyIsEmpty()
         {
             bool result = base.VerifyIsEmpty() &&
-                          RectorId <= 0 &&
-                          (string.IsNullOrWhiteSpace(RectorName) ||
-                           RectorName == DafaultConstant.DefaultRector);
+                          HighSchoolId <= 0 &&
+                          (string.IsNullOrWhiteSpace(HighSchoolName) ||
+                           HighSchoolName == DafaultConstant.DefaultHighSchool);
             return result;
         }
 

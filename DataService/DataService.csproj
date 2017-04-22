@@ -54,6 +54,8 @@
     <Compile Include="DataService\DataService.cs" />
     <Compile Include="DataService\IDataService.cs" />
     <Compile Include="Entity\DomainEntityFactory.cs" />
+    <Compile Include="Entity\Faculty\FacultyEntity.cs" />
+    <Compile Include="Entity\Faculty\IFacultyEntity.cs" />
     <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
     <Compile Include="Entity\HighSchool\IHighSchoolEntity.cs" />
     <Compile Include="Entity\IDomainEntity.cs" />

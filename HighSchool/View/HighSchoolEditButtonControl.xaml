@@ -8,10 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="180">
     <buttonsControl1:EditButtonControl x:Name="ButtonControl" 
-                                       ToolTipAddButton="Создать новое учебное заведение"
-                                       ToolTipSaveButton="Сохранить текущие изменения"
-                                       ToolTipSaveAndNewButton="Сохранить текущую запись учебного заведения и создать новую"
-                                       ToolTipDeleteButton="Удалить текущую запись учебного заведения"
-                                       ToolTipBackToSearchButton="Вернуться назад к поиску">
+                                       ToolTipAddButton="Создать новую запись учебного заведения"
+                                       ToolTipSaveButton="Сохранить изменения внесенные в текущюю запись учебного заведения"
+                                       ToolTipSaveAndNewButton="Сохранить изменения внесенные в текущюю запись учебного заведения и создать новую запись"
+                                       ToolTipDeleteButton="Удалить текущую запись учебного заведения">
     </buttonsControl1:EditButtonControl>
 </UserControl>

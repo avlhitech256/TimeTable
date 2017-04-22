@@ -34,6 +34,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="15"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Button  x:Name="AddButton" 

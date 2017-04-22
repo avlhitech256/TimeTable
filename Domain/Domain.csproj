@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Constant\DafaultConstant.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Enum\ValueEnum.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />

@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="Faculty.View.FacultyEditFieldsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Faculty.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Код:" 
+               ToolTip="Код факультета"
+               Grid.Row="1" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Наименование:" 
+               ToolTip="Наименование факультета"
+               Grid.Row="3" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="ВУЗ:" 
+               ToolTip="Наименование высшего учебного заведения"
+               Grid.Row="5" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата создания:" 
+               ToolTip="Дата создания записи факультета"
+               Grid.Row="9" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Активная запись:" 
+               ToolTip="Пользователь, который последним внес изменения"
+               Grid.Row="7" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <TextBox Name="HighSchoolEditCode" 
+                 Text="{Binding Path=SelectedItem.Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
+                 ToolTip="Код факультета"
+                 Grid.Row="1" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <TextBox Name="HighSchoolEditName" 
+                 Text="{Binding Path=SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
+                 ToolTip="Наименование факультета"
+                 Grid.Row="3" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <ComboBox x:Name="HighSchoolEditRector"
+                  SelectedValue="{Binding Path=SelectedItem.HighSchool, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  ItemsSource="{Binding Path=HighSchools}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  IsReadOnly="{Binding Path=ReadOnly}"
+                  Grid.Row="5"
+                  Grid.Column="1" Margin="3"/>
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Name="HighSchoolEditActive" 
+                  IsChecked="{Binding Path=SelectedItem.Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  IsEnabled="{Binding Path=Enabled}"
+                  ToolTip="Активная запись"
+                  Grid.Row="0" 
+                  Grid.Column="0" 
+                  Margin="3" 
+                  VerticalAlignment="Center"/>
+            <Label Content="Пользователь:" 
+                   ToolTip="Пользователь, который осуществил последнею модификацию записи факультета"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <TextBox Name="HighSchoolEditUser" 
+                     Text="{Binding Path=SelectedItem.UserModify, Mode=OneWay}"
+                     ToolTip="Пользователь, который осуществил последнею модификацию записи факультета"
+                     Grid.Row="0" 
+                     Grid.Column="2" 
+                     Margin="3"
+                     IsReadOnly="True" 
+                     IsReadOnlyCaretVisible="True"/>
+        </Grid>
+        <Grid Grid.Row="9" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="Дата модификации:" 
+               ToolTip="Дата последней модификации записи факультета"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="HighSchoolEditCreated" 
+                        SelectedDate="{Binding Path=SelectedItem.Created, Mode=OneWay}"
+                        ToolTip="Дата создания записи факультета"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"
+                        IsEnabled="False"/>
+            <DatePicker Name="HighSchoolEditLastModify" 
+                        SelectedDate="{Binding Path=SelectedItem.LastModify, Mode=OneWay}"
+                        ToolTip="Дата последней модификации записи факультета"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"
+                        IsEnabled="False"/>
+        </Grid>
+    </Grid>
+</UserControl>

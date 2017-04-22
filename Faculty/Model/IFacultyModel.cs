@@ -6,6 +6,6 @@ namespace Faculty.Model
 {
     public interface IFacultyModel : IModel<DataService.Model.Faculty>
     {
-        ObservableCollection<Chair> Chair { get; }
+        ObservableCollection<HighSchool> HighSchools { get; }
     }
 }

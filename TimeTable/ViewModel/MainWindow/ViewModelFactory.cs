@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Domain.Data.Enum;
 using Domain.DomainContext;
+using Faculty.ViewModel;
 using HighSchool.ViewModel;
 
 namespace TimeTable.ViewModel.MainWindow
@@ -11,7 +12,7 @@ namespace TimeTable.ViewModel.MainWindow
         #region Members
 
         private readonly Dictionary<MenuItemName, Func<IDomainContext, object>> mapCreators;
-        private IDomainContext context;
+        private readonly IDomainContext context;
 
         #endregion
 
@@ -23,6 +24,7 @@ namespace TimeTable.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<IDomainContext, object>>
                 {
                     { MenuItemName.HighSchool, (x) => new HighSchoolViewModel(x)},
+                    { MenuItemName.Faculty, (x) => new FacultyViewModel(x)}
                 };
             this.context = context;
         }
