@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
 
 namespace Common.Messenger.Impl
 {

@@ -2,36 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HighSchool.View"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:buttonsControl="clr-namespace:CommonControl.ButtonsControl;assembly=CommonControl"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="150">
-    <Grid>
-        <Grid.RowDefinitions >
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button x:Name="SearchButton" 
-                Command="{Binding Path=SearchButtonCommand}"
-                Grid.Row="1" 
-                ToolTip="Поиск учебного заведения" 
-                Content="Поиск" 
-                Margin="15,5">
-        </Button>
-        <Button x:Name="AddButton" Grid.Row="3" ToolTip="Создать новое учебное заведение" Content="Создать" Margin="15,5"></Button>
-        <Button x:Name="ViewButton" Grid.Row="5" ToolTip="Просмотр записи учебного заведения" Content="Просмотр" Margin="15,5"></Button>
-        <Button x:Name="EditButton" 
-                Command="{Binding Path=EditButtonCommand}"
-                Grid.Row="6" 
-                ToolTip="Редактирование записи учебного заведения" 
-                Content="Редактировать" 
-                Margin="15,5"
-                ></Button>
-    </Grid>
+             d:DesignHeight="250" d:DesignWidth="150">
+    <buttonsControl:SearchButtonControl x:Name="SearchButtonControl"
+                                        ToolTipSearchButton="Поиск учебного заведения"
+                                        ToolTipClearButton="Очистить критерии поиска учебных заведений"
+                                        ToolTipAddButton="Создать новое учебное заведение"
+                                        ToolTipViewButton="Просмотр текущей записи учебного заведения"
+                                        ToolTipDeleteButton="Удалить текущую запись учебного заведения">
+        
+    </buttonsControl:SearchButtonControl>
 </UserControl>

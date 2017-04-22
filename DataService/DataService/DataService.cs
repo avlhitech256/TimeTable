@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common.Data.Notifier;
+﻿using Common.Data.Notifier;
 using DataService.Model;
 
 namespace DataService.DataService
@@ -9,7 +7,6 @@ namespace DataService.DataService
     {
         #region Members
 
-        private TimeTableEntities dbContext;
         private string userName;
 
         #endregion
@@ -18,7 +15,7 @@ namespace DataService.DataService
 
         public DataService()
         {
-            dbContext = new TimeTableEntities();
+            DBContext = new TimeTableEntities();
             userName = string.Empty;
         }
 
@@ -26,7 +23,7 @@ namespace DataService.DataService
 
         #region Properties
 
-        public TimeTableEntities DBContext => dbContext;
+        public TimeTableEntities DBContext { get; }
 
         public string UserName
         {

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
+using Common.Messenger;
+using Common.Messenger.Impl;
 using Domain.Data.Enum;
 using Domain.DomainContext;
 using Domain.Event;

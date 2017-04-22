@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using HighSchool.View;
 using Domain.Data.Enum;
 using Domain.DomainContext;
-using Domain.Entry;
-using HighSchool.View;
+using Domain.ViewModel;
 
 namespace TimeTable.ViewModel.MainWindow
 {
@@ -48,7 +48,7 @@ namespace TimeTable.ViewModel.MainWindow
         {
             object view = null;
             object viewModel = viewModelRouter.GetViewModel(menuItemName);
-            IViewModel viewModelWithInterface = viewModel as IViewModel;
+            IControlViewModel viewModelWithInterface = viewModel as IControlViewModel;
             Func<object> factory = null;
 
             if (viewModelWithInterface != null)

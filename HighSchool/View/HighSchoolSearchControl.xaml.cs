@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using HighSchool.ViewModel;
 
 namespace HighSchool.View
 {

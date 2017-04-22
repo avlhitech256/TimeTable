@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Domain.Annotations;
+using Common.Annotations;
 
 namespace Common.Data.Notifier
 {

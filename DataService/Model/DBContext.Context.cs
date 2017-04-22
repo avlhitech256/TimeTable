@@ -34,7 +34,6 @@ namespace DataService.Model
         public virtual DbSet<HighSchool> HighSchools { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<Specialty> Specialties { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

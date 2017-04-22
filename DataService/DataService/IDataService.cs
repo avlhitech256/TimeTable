@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DataService.Model;
+﻿using DataService.Model;
 
 namespace DataService.DataService
 {

@@ -56,14 +56,8 @@
     <Compile Include="Model\HighSchoolModel.cs" />
     <Compile Include="Model\IHighSchoolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Command\AddCommand.cs" />
-    <Compile Include="ViewModel\Command\BackCommand.cs" />
-    <Compile Include="ViewModel\Command\CommonCommand.cs" />
-    <Compile Include="ViewModel\Command\DeleteCommand.cs" />
-    <Compile Include="ViewModel\Command\EditCommand.cs" />
-    <Compile Include="ViewModel\Command\SaveCommand.cs" />
-    <Compile Include="ViewModel\Command\SearchCommand.cs" />
-    <Compile Include="ViewModel\HighSchoolSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\HighSchoolSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\IHighSchoolSearchCriteria.cs" />
     <Compile Include="ViewModel\HighSchoolViewModel.cs" />
     <Compile Include="ViewModel\IHighSchoolViewModel.cs" />
     <Compile Include="View\HighSchoolEditButtonControl.xaml.cs">
@@ -130,6 +124,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9211AD9C-2D70-424C-96F5-DD0518985E37}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
       <Name>Common</Name>

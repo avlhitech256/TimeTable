@@ -4,68 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HighSchool.View"
+             xmlns:buttonsControl1="clr-namespace:CommonControl.ButtonsControl;assembly=CommonControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="180">
-    <Grid>
-        <Grid.RowDefinitions >
-            <RowDefinition Height="10"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="15"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button x:Name="AddButton" 
-                Command="{Binding Path=NewButtonCommand}"
-                Grid.Row="1" 
-                ToolTip="Создать новое учебное заведение" 
-                Content="Создать" 
-                Margin="15,5">
-        </Button>
-        <Button x:Name="EditButton" 
-                Command="{Binding Path=ChangeEditModeButtonCommand}"
-                Grid.Row="3" 
-                ToolTip="Редактировать текущую запись учебного заведения" 
-                Content="Редактировать" 
-                Margin="15,5">
-        </Button>
-        <Button x:Name="SaveButton" 
-                Command="{Binding Path=SaveButtonCommand}"
-                Grid.Row="5" 
-                ToolTip="Сохранить текущие изменения" 
-                Content="Сохранить" 
-                Margin="15,5">
-        </Button>
-        <Button x:Name="SaveAndNewButton" 
-                Grid.Row="6" 
-                ToolTip="Просмотр записи учебного заведения" 
-                Margin="15,5">
-            <TextBlock Text="Сохранить текущую и создать новую запись" 
-                       TextWrapping="Wrap" 
-                       TextAlignment="Center" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center">
-            </TextBlock>
-        </Button>
-        <Button x:Name="DeleteButton" 
-                Command="{Binding Path=DeleteButtonCommand}"
-                Grid.Row="8" 
-                ToolTip="Удалить текущую запись учебного заведения" 
-                Content="Удалить" 
-                Margin="15,5">
-        </Button>
-        <Button x:Name="BackToSearchButton" 
-                Command="{Binding Path=BackToSearchButtonCommand}"
-                Grid.Row="10" 
-                ToolTip="Вернуться назад к поиску" 
-                Content="Назад" 
-                Margin="15,5">
-        </Button>
-    </Grid>
+    <buttonsControl1:EditButtonControl x:Name="ButtonControl" 
+                                       ToolTipAddButton="Создать новое учебное заведение"
+                                       ToolTipSaveButton="Сохранить текущие изменения"
+                                       ToolTipSaveAndNewButton="Сохранить текущую запись учебного заведения и создать новую"
+                                       ToolTipDeleteButton="Удалить текущую запись учебного заведения"
+                                       ToolTipBackToSearchButton="Вернуться назад к поиску">
+    </buttonsControl1:EditButtonControl>
 </UserControl>

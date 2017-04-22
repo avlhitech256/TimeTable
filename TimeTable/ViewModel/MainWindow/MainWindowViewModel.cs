@@ -1,6 +1,6 @@
 ﻿using Common.Data.Notifier;
-using Domain.Messenger;
-using Domain.Messenger.Impl;
+using Common.Messenger;
+using Common.Messenger.Impl;
 using Domain.DomainContext;
 using Domain.Event;
 

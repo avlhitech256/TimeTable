@@ -1,178 +1,103 @@
-﻿using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Core;
+using System.Data.Entity.Validation;
 using System.Linq;
-using Common.Data.Notifier;
-using DataService.DataService;
 using DataService.Model;
 using Domain.DomainContext;
-using Domain.Entity.HighSchool;
-using HighSchool.ViewModel;
+using Domain.Model;
+using HighSchool.SearchCriteria;
 
 namespace HighSchool.Model
 {
-    public class HighSchoolModel : Notifier, IHighSchoolModel
+    public class HighSchoolModel : Model<DataService.Model.HighSchool>, IHighSchoolModel
     {
         #region Members
 
-        private IHighSchoolEntity selectedHighSchool;
+        private ObservableCollection<Employee> employees;
+        private bool employeesIsLoaded;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolModel(IDomainContext domainContext)
+        public HighSchoolModel(IDomainContext domainContext) : base(domainContext, new HighSchoolSearchCriteria())
         {
-            DomainContext = domainContext;
-
-            DataService = new DataService.DataService.DataService()
-            {
-                UserName = DomainContext.UserName
-            };
-
-            InitializeSearchCriteria();
-            InitializeHighSchools();
+            employeesIsLoaded = false;
         }
 
         #endregion
 
         #region Properties
 
-        public HighSchoolSearchCriteria SearchCriteria { get; private set; }
-
-        public IHighSchoolEntity SelectedHighSchool
+        public ObservableCollection<Employee> Employees
         {
             get
             {
-                return selectedHighSchool;
-            }
-
-            set
-            {
-                if (selectedHighSchool != value)
+                if (!employeesIsLoaded)
                 {
-                    selectedHighSchool = value;
-                    OnPropertyChanged();
+                    try
+                    {
+                        employees = new ObservableCollection<Employee>();
+                        Employee item0 = new Employee { Id = 0, Name = "Любой ректор" };
+                        employees.Add(item0);
+                        DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
+                        OnPropertyChanged();
+                        employeesIsLoaded = true;
+                    }
+                    catch (EntityException e)
+                    {
+                        OnEntityException(e);
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        OnDbEntityValidationException(e);
+                    }
+
                 }
 
+                return employees;
             }
 
         }
-
-        public ObservableCollection<IHighSchoolEntity> HighSchools { get; private set; }
-
-        public ObservableCollection<Employee> Employees => DbContext.Employees.Local;
-        public bool HasChanges => SelectedHighSchool != null && DbContext?.Entry(SelectedHighSchool.HighSchool)?.State != EntityState.Unchanged;
-        public string DataBaseServer => DbContext?.Database?.Connection?.DataSource;
-
-        private IDomainContext DomainContext { get; }
-
-        private IDataService DataService { get; }
-
-        private TimeTableEntities DbContext => DataService?.DBContext;
 
         #endregion
 
         #region Methods
 
-        private void InitializeSearchCriteria()
+        protected override List<DataService.Model.HighSchool> SelectEntities()
         {
-            SearchCriteria = new HighSchoolSearchCriteria
-            {
-                Code = string.Empty,
-                Name = string.Empty,
-                Active = true,
-                CteatedTo = null,
-                CteatedFrom = null,
-                LastModifyTo = null,
-                LastModifyFrom = null,
-                UserModify = string.Empty
-            };
-        }
+            List<DataService.Model.HighSchool> result = base.SelectEntities();
+            HighSchoolSearchCriteria searchCriteria = SearchCriteria as HighSchoolSearchCriteria;
 
-        private void InitializeHighSchools()
-        {
-            HighSchools = new ObservableCollection<IHighSchoolEntity>();
-            long position = 1;
-
-            foreach (DataService.Model.HighSchool item in DbContext.HighSchools)
+            if (searchCriteria != null)
             {
-                HighSchools.Add(new HighSchoolEntity(DataService
-                    , item, position));
+                result = base.SelectEntities()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Code) ||
+                                x.Code.ToUpperInvariant()
+                                    .Contains(searchCriteria.Code.ToUpperInvariant())).ToList()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.Name) ||
+                                x.Name.ToUpperInvariant()
+                                    .Contains(searchCriteria.Name.ToUpperInvariant())).ToList()
+                    .Where(x => !searchCriteria.Active || x.Active).ToList()
+                    .Where(x => (!searchCriteria.CteatedFrom.HasValue ||
+                                 x.Created >= searchCriteria.CteatedFrom.Value) &&
+                                (!searchCriteria.CteatedTo.HasValue ||
+                                 x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
+                    .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
+                                 x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
+                                (!searchCriteria.LastModifyTo.HasValue ||
+                                 x.LastModify < searchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
+                    .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
+                                x.UserModify.ToUpperInvariant()
+                                    .Contains(searchCriteria.UserModify.ToUpperInvariant())).ToList()
+                    .Where(x => searchCriteria.RectorId <= 0L || x.Rector == searchCriteria.RectorId).ToList();
             }
 
-        }
-
-        public void ApplySearchCriteria()
-        {
-            HighSchools.Clear();
-            long position = 1;
-
-            foreach (DataService.Model.HighSchool item in DbContext.HighSchools.ToList()
-                .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.Code) || 
-                            x.Code.ToUpperInvariant().Contains(SearchCriteria.Code.ToUpperInvariant())).ToList()
-                .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.Name) || 
-                            x.Name.ToUpperInvariant().Contains(SearchCriteria.Name.ToUpperInvariant())).ToList()
-                .Where(x => !SearchCriteria.Active || x.Active).ToList()
-                .Where(x => (!SearchCriteria.CteatedFrom.HasValue || x.Created >= SearchCriteria.CteatedFrom.Value) && 
-                            (!SearchCriteria.CteatedTo.HasValue || x.Created < SearchCriteria.CteatedTo.Value.AddDays(1))).ToList()
-                .Where(x => (!SearchCriteria.LastModifyFrom.HasValue || x.LastModify >= SearchCriteria.LastModifyFrom.Value) &&
-                            (!SearchCriteria.LastModifyTo.HasValue || x.LastModify < SearchCriteria.LastModifyTo.Value.AddDays(1))).ToList()
-                .Where(x => string.IsNullOrWhiteSpace(SearchCriteria.UserModify) || 
-                            x.UserModify.ToUpperInvariant().Contains(SearchCriteria.UserModify.ToUpperInvariant())).ToList()
-                .Where(x => SearchCriteria.RectorId <= 0L || x.Id == SearchCriteria.RectorId))
-            {
-                HighSchools.Add(new HighSchoolEntity(DataService, item, position));
-            }
-
-            OnPropertyChanged(nameof(HighSchools));
-        }
-
-        public void Add()
-        {
-            SelectedHighSchool = new HighSchoolEntity(DataService);
-        }
-
-        public void Rollback()
-        {
-            DbEntityEntry entry = DbContext.Entry(SelectedHighSchool.HighSchool);
-            if (entry != null)
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Modified:
-                        entry.State = EntityState.Unchanged;
-                        break;
-                    case EntityState.Deleted:
-                        entry.Reload();
-                        break;
-                    case EntityState.Added:
-                        entry.State = EntityState.Detached;
-                        break;
-                }
-
-            }
-
-        }
-
-        public void Save()
-        {
-            DbContext.SaveChanges();
-        }
-
-        public void Delete()
-        {
-            if (SelectedHighSchool != null)
-            {
-                DbContext.HighSchools.Remove(SelectedHighSchool.HighSchool);
-                DbContext.SaveChanges();
-                SelectedHighSchool = null;
-            }
-
+            return result;
         }
 
         #endregion
-
     }
 
 }
