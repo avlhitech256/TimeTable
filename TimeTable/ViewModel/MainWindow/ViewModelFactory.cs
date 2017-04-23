@@ -4,6 +4,7 @@ using Domain.Data.Enum;
 using Domain.DomainContext;
 using Faculty.ViewModel;
 using HighSchool.ViewModel;
+using Specialty.ViewModel;
 
 namespace TimeTable.ViewModel.MainWindow
 {
@@ -24,7 +25,8 @@ namespace TimeTable.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<IDomainContext, object>>
                 {
                     { MenuItemName.HighSchool, (x) => new HighSchoolViewModel(x)},
-                    { MenuItemName.Faculty, (x) => new FacultyViewModel(x)}
+                    { MenuItemName.Faculty, (x) => new FacultyViewModel(x)},
+                    {MenuItemName.Specialty, (x) => new SpecialtyViewModel(x) }
                 };
             this.context = context;
         }

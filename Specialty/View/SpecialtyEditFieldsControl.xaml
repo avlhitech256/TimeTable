@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="Specialty.View.SpecialtyEditFieldsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Specialty.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style TargetType="TextBox" x:Key="EnabledText">
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="False">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Black"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="#FF838383"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Код:" 
+               ToolTip="Код специальности"
+               Grid.Row="1" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Наименование:" 
+               ToolTip="Наименование специальности"
+               Grid.Row="3" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Активная запись:" 
+               ToolTip="Пользователь, который последним внес изменения"
+               Grid.Row="5" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата создания:" 
+               ToolTip="Дата создания записи специальности"
+               Grid.Row="7" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <TextBox Name="HighSchoolEditCode" 
+                 Text="{Binding Path=SelectedItem.Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
+                 ToolTip="Код специальности"
+                 Grid.Row="1" 
+                 Grid.Column="1" 
+                 Margin="3"
+                 Style="{DynamicResource EnabledText}"/>
+        <TextBox Name="HighSchoolEditName" 
+                 Text="{Binding Path=SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 IsReadOnly="{Binding Path=ReadOnly}"
+                 IsReadOnlyCaretVisible="True"
+                 ToolTip="Наименование специальности"
+                 Grid.Row="3" 
+                 Grid.Column="1" 
+                 Margin="3"
+                 Style="{DynamicResource EnabledText}"/>
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <CheckBox Name="HighSchoolEditActive" 
+                  IsChecked="{Binding Path=SelectedItem.Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  IsEnabled="{Binding Path=Enabled}"
+                  ToolTip="Активная запись"
+                  Grid.Row="0" 
+                  Grid.Column="0" 
+                  Margin="3" 
+                  VerticalAlignment="Center"/>
+            <Label Content="Пользователь:" 
+                   ToolTip="Пользователь, который осуществил последнею модификацию записи специальности"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <TextBox Name="HighSchoolEditUser" 
+                     Text="{Binding Path=SelectedItem.UserModify, Mode=OneWay}"
+                     ToolTip="Пользователь, который осуществил последнею модификацию записи специальности"
+                     Grid.Row="0" 
+                     Grid.Column="2" 
+                     Margin="3"
+                     IsReadOnly="True" 
+                     IsReadOnlyCaretVisible="True"
+                     Style="{DynamicResource EnabledText}"/>
+        </Grid>
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="Дата модификации:" 
+               ToolTip="Дата последней модификации записи специальности"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="HighSchoolEditCreated" 
+                        SelectedDate="{Binding Path=SelectedItem.Created, Mode=OneWay}"
+                        ToolTip="Дата создания записи специальности"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"
+                        IsEnabled="False"/>
+            <DatePicker Name="HighSchoolEditLastModify" 
+                        SelectedDate="{Binding Path=SelectedItem.LastModify, Mode=OneWay}"
+                        ToolTip="Дата последней модификации записи специальности"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"
+                        IsEnabled="False"/>
+        </Grid>
+    </Grid>
+</UserControl>

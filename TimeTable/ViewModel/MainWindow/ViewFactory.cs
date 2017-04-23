@@ -8,6 +8,7 @@ using Domain.Data.Enum;
 using Domain.DomainContext;
 using Domain.ViewModel;
 using Faculty.View;
+using Specialty.View;
 
 namespace TimeTable.ViewModel.MainWindow
 {
@@ -33,14 +34,16 @@ namespace TimeTable.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.HighSchool, () => new HighSchoolSearchControl()},
-                    {MenuItemName.Faculty, () => new FacultySearchControl()}
+                    {MenuItemName.Faculty, () => new FacultySearchControl()},
+                    {MenuItemName.Specialty, () => new SpecialtySearchControl() }
                 };
 
             mapEditControlFactories =
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.HighSchool, () => new HighSchoolEditControl()},
-                    {MenuItemName.Faculty, () => new FacultyEditControl()}
+                    {MenuItemName.Faculty, () => new FacultyEditControl()},
+                    {MenuItemName.Specialty, () => new SpecialtyEditControl() }
                 };
 
         }

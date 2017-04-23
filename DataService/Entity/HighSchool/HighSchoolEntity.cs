@@ -26,7 +26,7 @@ namespace DataService.Entity.HighSchool
             DataService = dataService;
             Messenger = messanger;
             position = 0;
-            CreateHighSchool();
+            CreateEntity();
         }
 
         public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity) 
@@ -232,19 +232,19 @@ namespace DataService.Entity.HighSchool
 
         #region Methods
 
-        private void CreateHighSchool()
+        private void CreateEntity()
         {
             try
             {
                 if (DataService != null && DataService.DBContext != null &&
                     DataService?.DBContext.HighSchools != null && DataService?.DBContext.Employees != null)
                 {
-                    Model.HighSchool newHighSchool = DataService?.DBContext?.HighSchools?.Create();
+                    Model.HighSchool newEntity = DataService?.DBContext?.HighSchools?.Create();
 
-                    if (newHighSchool != null)
+                    if (newEntity != null)
                     {
-                        DataService?.DBContext?.HighSchools?.Add(newHighSchool);
-                        Entity = newHighSchool;
+                        DataService?.DBContext?.HighSchools?.Add(newEntity);
+                        Entity = newEntity;
                         Active = true;
                         Employee employee = DataService.DBContext.Employees.FirstOrDefault();
                         Rector = employee?.Id ?? 0;

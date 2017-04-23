@@ -1,0 +1,34 @@
+﻿<editControl:EditControl x:Class="Specialty.View.SpecialtyEditControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Specialty.View"
+             xmlns:editControl="clr-namespace:CommonControl.EditControl;assembly=CommonControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="700">
+    <Grid x:Name="MainGridControl">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="TitleResult" 
+               Content="Редактирование учебного заведения" 
+               Grid.Row="0" 
+               Margin="1" 
+               HorizontalAlignment="Stretch" 
+               Background="#FF1700A8" 
+               FontWeight="Bold" 
+               Foreground="White" 
+               HorizontalContentAlignment="Center">
+        </Label>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <local:SpecialtyEditFieldsControl Grid.Column="0"></local:SpecialtyEditFieldsControl>
+            <local:SpecialtyEditButtonControl Grid.Column="1" Margin="20,0,0,0"></local:SpecialtyEditButtonControl>
+        </Grid>
+    </Grid>
+</editControl:EditControl>

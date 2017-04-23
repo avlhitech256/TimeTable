@@ -154,6 +154,10 @@
       <Project>{5d2cabcc-7165-4519-adeb-4fc61a835351}</Project>
       <Name>HighSchool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Specialty\Specialty.csproj">
+      <Project>{7d82e9b0-79a5-4584-941e-104cd0217473}</Project>
+      <Name>Specialty</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\ipsa0.gif">
