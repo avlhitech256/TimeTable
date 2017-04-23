@@ -6,6 +6,26 @@
              xmlns:local="clr-namespace:HighSchool.View"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style TargetType="TextBox" x:Key="EnabledText">
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="False">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Black"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="#FF838383"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"></RowDefinition>
@@ -61,7 +81,8 @@
                  ToolTip="Код учебного заведения"
                  Grid.Row="1" 
                  Grid.Column="1" 
-                 Margin="3"/>
+                 Margin="3"
+                 Style="{DynamicResource EnabledText}"/>
         <TextBox Name="HighSchoolEditName" 
                  Text="{Binding Path=SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                  IsReadOnly="{Binding Path=ReadOnly}"
@@ -69,11 +90,13 @@
                  ToolTip="Наименование учебного заведения"
                  Grid.Row="3" 
                  Grid.Column="1" 
-                 Margin="3"/>
+                 Margin="3"
+                 Style="{DynamicResource EnabledText}"/>
         <ComboBox x:Name="HighSchoolEditRector"
                   SelectedValue="{Binding Path=SelectedItem.Rector, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
                   IsReadOnly="{Binding Path=ReadOnly}"
+                  IsEnabled="{Binding Path=Enabled}"
                   Grid.Row="5"
                   Grid.Column="1" Margin="3"/>
         <Grid Grid.Row="7" Grid.Column="1">
@@ -103,7 +126,8 @@
                      Grid.Column="2" 
                      Margin="3"
                      IsReadOnly="True" 
-                     IsReadOnlyCaretVisible="True"/>
+                     IsReadOnlyCaretVisible="True"
+                     Style="{DynamicResource EnabledText}"/>
         </Grid>
         <Grid Grid.Row="9" Grid.Column="1">
             <Grid.ColumnDefinitions>
