@@ -14,5 +14,6 @@ namespace DataService.Entity
         DateTime LastModify { get; }
         string UserModify { get; }
         T Entity { get; }
+        bool HasChanges { get; }
     }
 }

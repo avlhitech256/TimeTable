@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace DataService.Entity.Faculty
 
         private long position;
         private Model.Faculty entity;
+        private bool hasChanges;
 
         #endregion
 
@@ -27,6 +29,7 @@ namespace DataService.Entity.Faculty
             Messenger = messanger;
             position = 0;
             CreateEntity();
+            SetHasChanges();
         }
 
         public FacultyEntity(IDataService dataService, IMessenger messanger, Model.Faculty entity) 
@@ -38,6 +41,7 @@ namespace DataService.Entity.Faculty
             Messenger = messanger;
             this.entity = entity;
             this.position = position;
+            SetHasChanges();
         }
 
         #endregion
@@ -230,9 +234,45 @@ namespace DataService.Entity.Faculty
 
         }
 
+        public bool HasChanges
+        {
+            get
+            {
+                return hasChanges;
+            }
+
+            private set
+            {
+                if (hasChanges != value)
+                {
+                    hasChanges = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+
         #endregion
 
         #region Methods
+
+        private void SetHasChanges()
+        {
+            try
+            {
+                HasChanges = DataService?.DBContext?.Entry(Entity) != null &&
+                             DataService.DBContext.Entry(Entity).State != EntityState.Unchanged;
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
 
         private void CreateEntity()
         {
@@ -277,6 +317,7 @@ namespace DataService.Entity.Faculty
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
+            SetHasChanges();
         }
 
         private void OnEntityException(EntityException e)

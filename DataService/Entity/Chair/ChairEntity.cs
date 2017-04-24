@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
@@ -21,6 +21,7 @@ namespace DataService.Entity.Chair
         private long position;
         private Model.Chair entity;
         private ObservableCollection<Specialization> specializations;
+        private bool hasChanges;
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace DataService.Entity.Chair
             Messenger = messanger;
             position = 0;
             CreateEntity();
+            SetHasChanges();
         }
 
         public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity) 
@@ -43,6 +45,7 @@ namespace DataService.Entity.Chair
             Messenger = messanger;
             this.entity = entity;
             this.position = position;
+            SetHasChanges();
         }
 
         #endregion
@@ -134,24 +137,7 @@ namespace DataService.Entity.Chair
 
         }
 
-        public DateTime Created
-        {
-            get
-            {
-                return Entity?.Created.DateTime ?? DateTime.Now;
-            }
-
-            private set
-            {
-                if (Entity != null && Entity.Created != value)
-                {
-                    Entity.Created = value;
-                    OnPropertyChanged();
-                }
-
-            }
-
-        }
+        public DateTime Created => Entity?.Created.DateTime ?? DateTime.Now;
 
         public DateTime LastModify => Entity?.LastModify.DateTime ?? DateTime.Now;
 
@@ -314,6 +300,7 @@ namespace DataService.Entity.Chair
 
             }
 
+            SetHasChanges();
         }
 
         public Model.Chair Entity
@@ -335,9 +322,51 @@ namespace DataService.Entity.Chair
 
         }
 
+        public bool HasChanges
+        {
+            get
+            {
+                return hasChanges;
+            }
+
+            private set
+            {
+                if (hasChanges != value)
+                {
+                    hasChanges = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+
+
+
         #endregion
 
         #region Methods
+
+        private void SetHasChanges()
+        {
+            try
+            {
+                Func<object, bool> validRelation =
+                    (x) => DataService?.DBContext?.Entry(x) != null &&
+                           DataService.DBContext.Entry(x).State != EntityState.Unchanged; 
+                
+                HasChanges = validRelation(Entity) || (Entity?.ChairToSpecializations?.Any(validRelation) ?? false);
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
 
         private void CreateEntity()
         {
@@ -382,6 +411,7 @@ namespace DataService.Entity.Chair
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
+            SetHasChanges();
         }
 
         private void OnEntityException(EntityException e)
