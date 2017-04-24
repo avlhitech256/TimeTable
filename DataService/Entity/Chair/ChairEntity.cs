@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.DataService;
+using DataService.Model;
 
-namespace DataService.Entity.Faculty
+namespace DataService.Entity.Chair
 {
-    public class FacultyEntity : Notifier, IFacultyEntity
+    public class ChairEntity : Notifier, IChairEntity
     {
         #region Members
 
         private long position;
-        private Model.Faculty entity;
+        private Model.Chair entity;
+        private ObservableCollection<Specialization> specializations;
 
         #endregion
 
         #region Constructors
 
-        public FacultyEntity(IDataService dataService, IMessenger messanger)
+        public ChairEntity(IDataService dataService, IMessenger messanger)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -29,10 +34,10 @@ namespace DataService.Entity.Faculty
             CreateEntity();
         }
 
-        public FacultyEntity(IDataService dataService, IMessenger messanger, Model.Faculty entity) 
+        public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity) 
             : this(dataService, messanger, entity, 0) { }
 
-        public FacultyEntity(IDataService dataService, IMessenger messanger, Model.Faculty entity, long position)
+        public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity, long position)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -169,18 +174,18 @@ namespace DataService.Entity.Faculty
 
         }
 
-        public long HighSchoolId
+        public long FacultyId
         {
             get
             {
-                return Entity?.HighSchoolId ?? 0L;
+                return Entity?.FacultyId ?? 0L;
             }
 
             set
             {
-                if (Entity != null && Entity.HighSchoolId != value)
+                if (Entity != null && Entity.FacultyId != value)
                 {
-                    Entity.HighSchoolId = value;
+                    Entity.FacultyId = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -189,18 +194,18 @@ namespace DataService.Entity.Faculty
 
         }
 
-        public Model.HighSchool HighSchool
+        public Model.Faculty Faculty
         {
             get
             {
-                return Entity?.HighSchool;
+                return Entity?.Faculty;
             }
 
             set
             {
-                if (Entity != null && Entity.HighSchool != value)
+                if (Entity != null && Entity.Faculty != value)
                 {
-                    Entity.HighSchool = value;
+                    Entity.Faculty = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -209,9 +214,109 @@ namespace DataService.Entity.Faculty
 
         }
 
-        public ICollection<Model.Chair> Chairs => Entity.Chairs;
+        public ICollection<Model.Specialization> Specializations
+        {
+            get
+            {
+                if (specializations == null)
+                {
+                    specializations = new ObservableCollection<Specialization>();
+                    Entity.ChairToSpecializations.Select(x => x.Specialization).ToList().ForEach(x => specializations.Add(x));
+                    specializations.CollectionChanged += Specializations_CollectionChanged;
+                }
 
-        public Model.Faculty Entity
+                return specializations;
+            }
+        }
+
+        private void Specializations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (DataService != null && DataService.DBContext != null &&
+                DataService.DBContext.ChairToSpecializations != null)
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+
+                        foreach (var item in e.NewItems)
+                        {
+                            Specialization spec = item as Specialization;
+
+                            if (spec != null)
+                            {
+                                ChairToSpecialization relation = DataService.DBContext.ChairToSpecializations.Create();
+                                relation.Specialization = spec;
+                                relation.SpecializationId = spec.Id;
+                                relation.Chair = Entity;
+                                relation.ChairId = Entity.Id;
+                                relation.Active = true;
+                                DateTimeOffset now = DateTimeOffset.Now;
+                                relation.Created = now;
+                                relation.LastModify = now;
+                                relation.UserModify = DataService?.UserName;
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+
+                        foreach (var item in e.OldItems)
+                        {
+                            Specialization spec = item as Specialization;
+
+                            if (spec != null)
+                            {
+                                ChairToSpecialization removedItem =
+                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Specialization == spec);
+
+                                if (removedItem != null)
+                                {
+                                    Entity.ChairToSpecializations.Remove(removedItem);
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Replace:
+
+                        for(int index = 0; index < e.NewItems.Count; index++)
+                        {
+                            Specialization oldSpec = e.OldItems[index] as Specialization;
+                            Specialization newSpec = e.NewItems[index] as Specialization;
+
+                            if (oldSpec != null && newSpec != null)
+                            {
+                                ChairToSpecialization replacedItem =
+                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Specialization == oldSpec);
+                                if (replacedItem != null)
+                                {
+                                    replacedItem.Specialization = newSpec;
+                                    replacedItem.SpecializationId = newSpec.Id;
+                                    replacedItem.LastModify = DateTimeOffset.Now;
+                                    replacedItem.UserModify = DataService?.UserName;
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Reset:
+                        Entity.ChairToSpecializations.Clear();
+                        break;
+                }
+
+            }
+
+        }
+
+        public Model.Chair Entity
         {
             get
             {
@@ -239,17 +344,17 @@ namespace DataService.Entity.Faculty
             try
             {
                 if (DataService != null && DataService.DBContext != null &&
-                    DataService?.DBContext.Faculties != null && DataService?.DBContext.HighSchools != null)
+                    DataService?.DBContext.Chairs != null && DataService?.DBContext.Faculties != null)
                 {
-                    Model.Faculty newEntity = DataService?.DBContext?.Faculties?.Create();
+                    Model.Chair newEntity = DataService?.DBContext?.Chairs?.Create();
 
                     if (newEntity != null)
                     {
-                        DataService?.DBContext?.Faculties?.Add(newEntity);
+                        DataService?.DBContext?.Chairs?.Add(newEntity);
                         Entity = newEntity;
                         Active = true;
-                        Model.HighSchool highSchool = DataService.DBContext.HighSchools.FirstOrDefault();
-                        HighSchoolId = highSchool?.Id ?? 0;
+                        Model.Faculty faculty = DataService.DBContext.Faculties.FirstOrDefault();
+                        FacultyId = faculty?.Id ?? 0;
                         UserModify = DataService?.UserName;
                         DateTimeOffset now = DateTimeOffset.Now;
                         Entity.Created = now;
@@ -291,4 +396,5 @@ namespace DataService.Entity.Faculty
 
         #endregion
     }
+
 }

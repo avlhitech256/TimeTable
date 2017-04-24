@@ -195,7 +195,7 @@ namespace DataService.Entity.Specialty
             try
             {
                 if (DataService != null && DataService.DBContext != null &&
-                    DataService?.DBContext.HighSchools != null && DataService?.DBContext.Employees != null)
+                    DataService?.DBContext.Specialties != null)
                 {
                     Model.Specialty newEntity = DataService?.DBContext?.Specialties?.Create();
 

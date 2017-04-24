@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="DataService\DataService.cs" />
     <Compile Include="DataService\IDataService.cs" />
+    <Compile Include="Entity\Chair\ChairEntity.cs" />
+    <Compile Include="Entity\Chair\IChairEntity.cs" />
     <Compile Include="Entity\DomainEntityFactory.cs" />
     <Compile Include="Entity\Faculty\FacultyEntity.cs" />
     <Compile Include="Entity\Faculty\IFacultyEntity.cs" />
@@ -96,12 +98,6 @@
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Specialty.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagrams_Result.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

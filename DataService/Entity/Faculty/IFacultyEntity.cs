@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DataService.Model;
 
 namespace DataService.Entity.Faculty
 {
@@ -7,7 +6,7 @@ namespace DataService.Entity.Faculty
     {
         long HighSchoolId { get; set; }
         Model.HighSchool HighSchool { get; set; }
-        ICollection<Chair> Chairs { get; }
+        ICollection<Model.Chair> Chairs { get; }
     }
 
 }
