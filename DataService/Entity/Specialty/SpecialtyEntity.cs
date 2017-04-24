@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
-using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.DataService;
-using DataService.Model;
 
 namespace DataService.Entity.Specialty
 {

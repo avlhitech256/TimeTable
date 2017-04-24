@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows.Input;
 
 namespace Domain.ViewModel.Command
 {
-    internal class SearchCommand<T> : CommonCommand<T>, ICommand where T : class 
+    internal class SearchCommand<T> : CommonCommand<T> where T : class 
     {
         #region Constructors
 

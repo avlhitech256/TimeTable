@@ -1,8 +1,6 @@
-﻿using System.Windows.Input;
-
-namespace Domain.ViewModel.Command
+﻿namespace Domain.ViewModel.Command
 {
-    internal class BackCommand<T> : CommonCommand<T>, ICommand where T : class 
+    internal class BackCommand<T> : CommonCommand<T> where T : class 
     {
         #region Constructors
 

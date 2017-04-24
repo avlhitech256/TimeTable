@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
-using System.Windows.Input;
 
 namespace Domain.ViewModel.Command
 {
-    internal class EditCommand<T> : CommonCommand<T>, ICommand where T : class 
+    internal class EditCommand<T> : CommonCommand<T> where T : class 
     {
         #region Constructors
 

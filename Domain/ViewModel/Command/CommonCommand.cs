@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace Domain.ViewModel.Command
 {
-    abstract public class CommonCommand<T> where T : class
+    abstract public class CommonCommand<T> : ICommand where T : class
     {
         #region Members
 
