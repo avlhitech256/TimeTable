@@ -22,7 +22,6 @@ namespace Domain.ViewModel
     {
         #region Members
 
-        private IDomainEntity<T> oldSelectedItem;
         private bool hasChanges;
         private bool readOnly;
         private bool isEditControl;
@@ -37,7 +36,6 @@ namespace Domain.ViewModel
             DomainContext = context;
             Model = model;
             DomainContext.DataBaseServer = Model.DataBaseServer;
-            oldSelectedItem = Model?.SelectedItem;
             SubscribeEvents();
             ReadOnly = true;
             IsEditControl = false;
@@ -75,28 +73,12 @@ namespace Domain.ViewModel
 
         public ObservableCollection<IDomainEntity<T>> Entities => Model?.Entities;
 
-        public bool HasChanges
-        {
-            get
-            {
-                return Model?.HasChanges ?? false;
-            }
-
-            set
-            {
-                if (hasChanges != value)
-                {
-                    hasChanges = value;
-                    OnPropertyChanged();
-                }
-
-            }
-
-        }
+        public bool HasChanges => Model?.HasChanges ?? false;
 
         public IDomainContext DomainContext { get; }
 
         protected string StartEditToolTip { get; }
+
         protected string FinishEditToolTip { get; }
 
         public IMessenger Messenger => DomainContext.Messenger;
@@ -244,13 +226,6 @@ namespace Domain.ViewModel
             if (Model != null)
             {
                 Model.PropertyChanged += OnChangedSelectedItem;
-                oldSelectedItem = SelectedItem;
-
-                if (SelectedItem != null)
-                {
-                    SelectedItem.PropertyChanged += OnChangedItemProperties;
-                }
-
             }
 
         }
@@ -277,29 +252,23 @@ namespace Domain.ViewModel
 
         private void OnChangedSelectedItem(object sender, PropertyChangedEventArgs e)
         {
-            if (Model != null && e.PropertyName == nameof(Model.SelectedItem))
+            if (Model != null)
             {
-                if (oldSelectedItem != null)
+                switch (e.PropertyName)
                 {
-                    oldSelectedItem.PropertyChanged -= OnChangedItemProperties;
+                    case nameof(Model.SelectedItem):
+                        OnPropertyChanged(nameof(SelectedItem));
+                        break;
+                    case nameof(Model.HasChanges):
+                        OnPropertyChanged(nameof(HasChanges));
+                        break;
+                    case nameof(Model.Entities):
+                        OnPropertyChanged(nameof(Entities));
+                        break;
                 }
 
-                oldSelectedItem = SelectedItem;
-
-                if (oldSelectedItem != null)
-                {
-                    oldSelectedItem.PropertyChanged += OnChangedItemProperties;
-                }
-
-                HasChanges = Model.HasChanges;
-                OnPropertyChanged(nameof(SelectedItem));
             }
 
-        }
-
-        private void OnChangedItemProperties(object sender, PropertyChangedEventArgs e)
-        {
-            HasChanges = Model?.HasChanges ?? false;
         }
 
         public void ApplySearchCriteria()
@@ -317,7 +286,6 @@ namespace Domain.ViewModel
         {
             ReadOnly = false;
             GoToEditControl();
-            HasChanges = Model?.HasChanges ?? false;
             Model?.Add();
         }
 
@@ -327,7 +295,6 @@ namespace Domain.ViewModel
             {
                 ReadOnly = true;
                 GoToEditControl();
-                HasChanges = Model?.HasChanges ?? false;
             }
 
         }
@@ -340,7 +307,6 @@ namespace Domain.ViewModel
                 Save();
                 ReadOnly = !oldReadOnly;
                 GoToEditControl();
-                HasChanges = Model?.HasChanges ?? false;
             }
 
         }
@@ -353,7 +319,6 @@ namespace Domain.ViewModel
             {
                 ReadOnly = true;
                 Model.Save();
-                HasChanges = Model.HasChanges;
                 result = true;
             }
 
@@ -396,7 +361,7 @@ namespace Domain.ViewModel
 
         public void Back()
         {
-            if (Model != null && Model.HasChanges && Messenger != null)
+            if (HasChanges && Messenger != null)
             {
                 Messenger.Send(CommandName.RequestForBack, new EventArgs());
             }

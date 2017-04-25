@@ -8,6 +8,7 @@ using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
+using DataService.Constant;
 using DataService.DataService;
 using DataService.Entity;
 using DataService.Model;
@@ -21,6 +22,7 @@ namespace Domain.Model
         #region Members
 
         private IDomainEntity<T> selectedItem;
+        private IDomainEntity<T> oldSelectedItem;
         private ObservableCollection<IDomainEntity<T>> entities;
         private bool entitiesIsLoaded;
 
@@ -53,7 +55,9 @@ namespace Domain.Model
             {
                 if (selectedItem != value)
                 {
+                    UnsubscribeSelectedItem(value);
                     selectedItem = value;
+                    SubscribeSelectedItem();
                     OnPropertyChanged();
                 }
 
@@ -67,8 +71,8 @@ namespace Domain.Model
             {
                 if (!entitiesIsLoaded && entities == null)
                 {
-                    InitializeEntities();
                     entitiesIsLoaded = true;
+                    InitializeEntities();
                 }
 
                 return entities;
@@ -86,30 +90,7 @@ namespace Domain.Model
 
         }
 
-        public bool HasChanges
-        {
-            get
-            {
-                bool hasChanges = false;
-
-                try
-                {
-                    hasChanges = SelectedItem != null &&
-                                 DbContext?.Entry(SelectedItem.Entity)?.State != EntityState.Unchanged;
-                }
-                catch (EntityException e)
-                {
-                    OnEntityException(e);
-                }
-                catch (DbEntityValidationException e)
-                {
-                    OnDbEntityValidationException(e);
-                }
-
-                return hasChanges;
-            }
-
-        }
+        public bool HasChanges => SelectedItem != null && SelectedItem.HasChanges;
 
         public string DataBaseServer
         {
@@ -128,6 +109,10 @@ namespace Domain.Model
                 catch (DbEntityValidationException e)
                 {
                     OnDbEntityValidationException(e);
+                }
+                catch (DbUpdateException e)
+                {
+                    OnDbUpdateException(e);
                 }
 
                 return dataBaseServer;
@@ -165,12 +150,16 @@ namespace Domain.Model
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
         private void InitializeEntities()
         {
-            entities = new ObservableCollection<IDomainEntity<T>>();
+            Entities = new ObservableCollection<IDomainEntity<T>>();
             ApplySearchCriteria();
         }
 
@@ -204,13 +193,27 @@ namespace Domain.Model
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
         public void Add()
         {
+            bool oldHasChanges = HasChanges;
             IDomainEntityFactory factory = new DomainEntityFactory(DataService, Messenger);
             SelectedItem = factory.GetDomainEntity<T>();
+            if (oldHasChanges != HasChanges)
+            {
+                OnPropertyChanged(nameof(HasChanges));
+            }
+            else
+            {
+                SelectedItem?.UpdateHasChanges();
+            }
+
         }
 
         public void Rollback()
@@ -227,13 +230,16 @@ namespace Domain.Model
                         {
                             case EntityState.Modified:
                                 entry.State = EntityState.Unchanged;
+                                SelectedItem?.UpdateHasChanges();
                                 break;
                             case EntityState.Deleted:
                                 entry.Reload();
+                                SelectedItem?.UpdateHasChanges();
                                 break;
                             case EntityState.Added:
                                 entry.State = EntityState.Detached;
                                 SelectedItem = null;
+                                OnPropertyChanged(nameof(HasChanges));
                                 break;
                         }
 
@@ -251,6 +257,10 @@ namespace Domain.Model
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
@@ -267,7 +277,7 @@ namespace Domain.Model
             {
                 result = DbContext.Set<T>().ToList()
                     .Where(x => x != SelectedItem.Entity).ToList()
-                    .All(x => DbContext.Entry(x).Property("Code").CurrentValue.ToString() != SelectedItem.Code);
+                    .All(x => DbContext.Entry(x).Property(FieldName.Code).CurrentValue.ToString() != SelectedItem.Code);
             }
             catch (EntityException e)
             {
@@ -276,6 +286,10 @@ namespace Domain.Model
             catch (DbEntityValidationException e)
             {
                 OnDbEntityValidationException(e);
+            }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
             }
 
             return result;
@@ -288,6 +302,7 @@ namespace Domain.Model
                 if (HasChanges)
                 {
                     DbContext.SaveChanges();
+                    SelectedItem?.UpdateHasChanges();
                 }
 
             }
@@ -298,6 +313,10 @@ namespace Domain.Model
             catch (DbEntityValidationException e)
             {
                 OnDbEntityValidationException(e);
+            }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
             }
 
         }
@@ -311,6 +330,7 @@ namespace Domain.Model
                     DbContext.Set<T>().Remove(SelectedItem.Entity);
                     Save();
                     SelectedItem = null;
+                    OnPropertyChanged(nameof(HasChanges));
                 }
 
             }
@@ -321,6 +341,10 @@ namespace Domain.Model
             catch (DbEntityValidationException e)
             {
                 OnDbEntityValidationException(e);
+            }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
             }
 
         }
@@ -333,6 +357,39 @@ namespace Domain.Model
         protected void OnDbEntityValidationException(DbEntityValidationException e)
         {
             Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
+        }
+
+        protected void OnDbUpdateException(DbUpdateException e)
+        {
+            Messenger?.Send(CommandName.ShowDbUpdateException, e);
+        }
+
+        private void SubscribeSelectedItem()
+        {
+            if (SelectedItem != null)
+            {
+                SelectedItem.PropertyChanged += SelectedItem_PropertyChanged;
+            }
+
+        }
+
+        private void UnsubscribeSelectedItem(IDomainEntity<T> newValue)
+        {
+            if (oldSelectedItem != null)
+            {
+                oldSelectedItem.PropertyChanged -= SelectedItem_PropertyChanged;
+            }
+
+            oldSelectedItem = newValue;
+        }
+
+        private void SelectedItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedItem.HasChanges))
+            {
+                OnPropertyChanged(nameof(HasChanges));
+            }
+
         }
 
         #endregion

@@ -8,6 +8,8 @@
         SetViewModel,
         ShowEntityException,
         ShowDbEntityValidationException,
+        ShowDbUpdateException,
+        ShowBusinessLogicException,
         ShowInvalidRequiredCodeMessage,
         ShowInvalidateUniqueCodeMessage,
         ShowMismatchSearchCriteriaMessage,

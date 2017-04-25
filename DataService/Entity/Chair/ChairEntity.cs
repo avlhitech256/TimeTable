@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
@@ -32,8 +33,9 @@ namespace DataService.Entity.Chair
             DataService = dataService;
             Messenger = messanger;
             position = 0;
+            hasChanges = false;
             CreateEntity();
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
         public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity) 
@@ -45,7 +47,8 @@ namespace DataService.Entity.Chair
             Messenger = messanger;
             this.entity = entity;
             this.position = position;
-            SetHasChanges();
+            hasChanges = false;
+            UpdateHasChanges();
         }
 
         #endregion
@@ -215,7 +218,7 @@ namespace DataService.Entity.Chair
             }
         }
 
-        private void Specializations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Specializations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (DataService != null && DataService.DBContext != null &&
                 DataService.DBContext.ChairToSpecializations != null)
@@ -300,7 +303,7 @@ namespace DataService.Entity.Chair
 
             }
 
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
         public Model.Chair Entity
@@ -347,15 +350,15 @@ namespace DataService.Entity.Chair
 
         #region Methods
 
-        private void SetHasChanges()
+        public void UpdateHasChanges()
         {
             try
             {
-                Func<object, bool> validRelation =
+                Func<object, bool> statusHasChanges =
                     (x) => DataService?.DBContext?.Entry(x) != null &&
                            DataService.DBContext.Entry(x).State != EntityState.Unchanged; 
                 
-                HasChanges = validRelation(Entity) || (Entity?.ChairToSpecializations?.Any(validRelation) ?? false);
+                HasChanges = statusHasChanges(Entity) || (Entity?.ChairToSpecializations?.Any(statusHasChanges) ?? false);
             }
             catch (EntityException e)
             {
@@ -365,6 +368,10 @@ namespace DataService.Entity.Chair
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
@@ -372,8 +379,7 @@ namespace DataService.Entity.Chair
         {
             try
             {
-                if (DataService != null && DataService.DBContext != null &&
-                    DataService?.DBContext.Chairs != null && DataService?.DBContext.Faculties != null)
+                if (DataService?.DBContext?.Chairs != null && DataService?.DBContext.Faculties != null)
                 {
                     Model.Chair newEntity = DataService?.DBContext?.Chairs?.Create();
 
@@ -403,6 +409,10 @@ namespace DataService.Entity.Chair
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
@@ -411,17 +421,22 @@ namespace DataService.Entity.Chair
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
-        private void OnEntityException(EntityException e)
+        protected void OnEntityException(EntityException e)
         {
             Messenger?.Send(CommandName.ShowEntityException, e);
         }
 
-        private void OnDbEntityValidationException(DbEntityValidationException e)
+        protected void OnDbEntityValidationException(DbEntityValidationException e)
         {
             Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
+        }
+
+        protected void OnDbUpdateException(DbUpdateException e)
+        {
+            Messenger?.Send(CommandName.ShowDbUpdateException, e);
         }
 
         #endregion

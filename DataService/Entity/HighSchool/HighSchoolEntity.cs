@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
+using DataService.Constant;
 using DataService.DataService;
+using DataService.Exception;
 using DataService.Model;
 
 namespace DataService.Entity.HighSchool
@@ -28,8 +31,9 @@ namespace DataService.Entity.HighSchool
             DataService = dataService;
             Messenger = messanger;
             position = 0;
+            hasChanges = false;
             CreateEntity();
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
         public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity) 
@@ -41,7 +45,8 @@ namespace DataService.Entity.HighSchool
             Messenger = messanger;
             this.entity = entity;
             this.position = position;
-            SetHasChanges();
+            hasChanges = false;
+            UpdateHasChanges();
         }
 
         #endregion
@@ -182,11 +187,28 @@ namespace DataService.Entity.HighSchool
 
             set
             {
-                if (Entity != null && Entity.Rector != value)
+                try
                 {
-                    Entity.Rector = value;
-                    SetInfoAboutModify();
-                    OnPropertyChanged();
+                    if (Entity != null && Entity.Rector != value)
+                    {
+                        if (value <= 0 || (DataService?.DBContext?.Employees?.ToList().All(x => x.Id != value) ?? true))
+                        {
+                            throw new BusinessLogicException()
+                            {
+                                FieldName = "Ректор",
+                                Code = value.ToString(),
+                                Value = value <= 0 ? DafaultConstant.DefaultRector : string.Empty,
+                                Entity = "HighSchool"
+                            };
+                        }
+                        Entity.Rector = value;
+                        SetInfoAboutModify();
+                        OnPropertyChanged();
+                    }
+                }
+                catch (BusinessLogicException e)
+                {
+                    OnBusinessLogicException(e);
                 }
 
             }
@@ -254,7 +276,7 @@ namespace DataService.Entity.HighSchool
 
         #region Methods
 
-        private void SetHasChanges()
+        public void UpdateHasChanges()
         {
             try
             {
@@ -268,6 +290,10 @@ namespace DataService.Entity.HighSchool
             catch (DbEntityValidationException e)
             {
                 OnDbEntityValidationException(e);
+            }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
             }
 
         }
@@ -307,6 +333,10 @@ namespace DataService.Entity.HighSchool
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
@@ -315,17 +345,27 @@ namespace DataService.Entity.HighSchool
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
-        private void OnEntityException(EntityException e)
+        protected void OnEntityException(EntityException e)
         {
             Messenger?.Send(CommandName.ShowEntityException, e);
         }
 
-        private void OnDbEntityValidationException(DbEntityValidationException e)
+        protected void OnDbEntityValidationException(DbEntityValidationException e)
         {
             Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
+        }
+
+        protected void OnDbUpdateException(DbUpdateException e)
+        {
+            Messenger?.Send(CommandName.ShowDbUpdateException, e);
+        }
+
+        protected void OnBusinessLogicException(BusinessLogicException e)
+        {
+            Messenger.Send(CommandName.ShowBusinessLogicException, e);
         }
 
         #endregion

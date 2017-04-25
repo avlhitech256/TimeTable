@@ -15,5 +15,6 @@ namespace DataService.Entity
         string UserModify { get; }
         T Entity { get; }
         bool HasChanges { get; }
+        void UpdateHasChanges();
     }
 }

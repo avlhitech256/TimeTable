@@ -1,6 +1,6 @@
-﻿namespace Domain.Data.Constant
+﻿namespace DataService.Constant
 {
-    public static class DafaultConstant
+    public class DafaultConstant
     {
         public static string DefaultRector = "Любой ректор";
         public static string DefaultHighSchool = "Любой ВУЗ";

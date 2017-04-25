@@ -1,4 +1,4 @@
-﻿using Domain.Data.Constant;
+﻿using DataService.Constant;
 
 namespace Faculty.SearchCriteria
 {

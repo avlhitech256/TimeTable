@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Common.Data.Notifier;
@@ -28,8 +29,9 @@ namespace DataService.Entity.Faculty
             DataService = dataService;
             Messenger = messanger;
             position = 0;
+            hasChanges = false;
             CreateEntity();
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
         public FacultyEntity(IDataService dataService, IMessenger messanger, Model.Faculty entity) 
@@ -41,7 +43,8 @@ namespace DataService.Entity.Faculty
             Messenger = messanger;
             this.entity = entity;
             this.position = position;
-            SetHasChanges();
+            hasChanges = false;
+            UpdateHasChanges();
         }
 
         #endregion
@@ -256,7 +259,7 @@ namespace DataService.Entity.Faculty
 
         #region Methods
 
-        private void SetHasChanges()
+        public void UpdateHasChanges()
         {
             try
             {
@@ -270,6 +273,10 @@ namespace DataService.Entity.Faculty
             catch (DbEntityValidationException e)
             {
                 OnDbEntityValidationException(e);
+            }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
             }
 
         }
@@ -309,6 +316,10 @@ namespace DataService.Entity.Faculty
             {
                 OnDbEntityValidationException(e);
             }
+            catch (DbUpdateException e)
+            {
+                OnDbUpdateException(e);
+            }
 
         }
 
@@ -317,17 +328,22 @@ namespace DataService.Entity.Faculty
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
-            SetHasChanges();
+            UpdateHasChanges();
         }
 
-        private void OnEntityException(EntityException e)
+        protected void OnEntityException(EntityException e)
         {
             Messenger?.Send(CommandName.ShowEntityException, e);
         }
 
-        private void OnDbEntityValidationException(DbEntityValidationException e)
+        protected void OnDbEntityValidationException(DbEntityValidationException e)
         {
             Messenger?.Send(CommandName.ShowDbEntityValidationException, e);
+        }
+
+        protected void OnDbUpdateException(DbUpdateException e)
+        {
+            Messenger?.Send(CommandName.ShowDbUpdateException, e);
         }
 
         #endregion
