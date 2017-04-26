@@ -205,10 +205,10 @@ namespace DataService.Entity.HighSchool
                         if (DataService?.DBContext?.Employees?.ToList().All(x => x.Id != value) ?? true)
                         {
                             StringBuilder message = new StringBuilder();
-                            message.Append("Поле  [ Ректор ]  не может содержать ссылку насотрудника ");
+                            message.Append("Поле  [ Ректор ]  не может содержать ссылку на сотрудника ");
                             message.AppendFormat("со значением Id = {0}.", value);
                             message.AppendLine("Записи сотрудника с этим Id не существует в базе данных.");
-                            message.AppendLine("Возможно, данный сотрудник уже был удалениз базы данных");
+                            message.AppendLine("Возможно, данный сотрудник уже был удален из базы данных");
                             message.AppendLine(" с момента последнего обновления данных.");
                             message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
                             throw new BusinessLogicException(message.ToString());
@@ -237,11 +237,32 @@ namespace DataService.Entity.HighSchool
 
             set
             {
-                if (Entity != null && Entity.Employee != value)
+                try
                 {
-                    Entity.Employee = value;
-                    SetInfoAboutModify();
-                    OnPropertyChanged();
+                    if (Entity != null && Entity.Employee != value)
+                    {
+                        if (DataService?.DBContext?.Employees?.ToList().All(x => x != value) ?? true)
+                        {
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ Ректор ]  не может содержать ссылку на сотрудника ");
+                            message.AppendFormat("со значением Id = {0}, Code = \"{1}\" и Name = \"{2}\".",
+                                value.Id, value.Code, value.Name);
+                            message.AppendLine("Записи сотрудника с этими данными не существует в базе данных.");
+                            message.AppendLine("Возможно, данный сотрудник уже был удален из базы данных");
+                            message.AppendLine(" с момента последнего обновления данных.");
+                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
+                            throw new BusinessLogicException(message.ToString());
+                        }
+
+                        Entity.Employee = value;
+                        SetInfoAboutModify();
+                        OnPropertyChanged();
+                    }
+
+                }
+                catch (BusinessLogicException e)
+                {
+                    OnBusinessLogicException(e);
                 }
 
             }
@@ -260,6 +281,7 @@ namespace DataService.Entity.HighSchool
                 if (entity != value)
                 {
                     entity = value;
+                    UpdateHasChanges();
                     OnPropertyChanged();
                 }
 

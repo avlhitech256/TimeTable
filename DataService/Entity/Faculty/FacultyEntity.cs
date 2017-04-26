@@ -5,10 +5,13 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
+using DataService.Constant;
 using DataService.DataService;
+using DataService.Exception;
 
 namespace DataService.Entity.Faculty
 {
@@ -185,11 +188,41 @@ namespace DataService.Entity.Faculty
 
             set
             {
-                if (Entity != null && Entity.HighSchoolId != value)
+                try
                 {
-                    Entity.HighSchoolId = value;
-                    SetInfoAboutModify();
-                    OnPropertyChanged();
+                    if (Entity != null && Entity.HighSchoolId != value)
+                    {
+                        if (value <= 0)
+                        {
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ ВУЗ ]  не может содержать значение \"");
+                            message.Append(DafaultConstant.DefaultHighSchool);
+                            message.AppendFormat("\" со значением Id = {0}.", value);
+                            message.AppendLine("Пожалуйста, выберите из списка действующих учебных заведений.");
+                            throw new BusinessLogicException(message.ToString());
+                        }
+
+                        if (DataService?.DBContext?.HighSchools?.ToList().All(x => x.Id != value) ?? true)
+                        {
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ ВУЗ ]  не может содержать ссылку на учебное заведение ");
+                            message.AppendFormat("со значением Id = {0}.", value);
+                            message.AppendLine("Записи ВУЗа с этим Id не существует в базе данных.");
+                            message.AppendLine("Возможно, данное учебное заведение уже было удалено из базы данных");
+                            message.AppendLine(" с момента последнего обновления данных.");
+                            message.AppendLine("Пожалуйста, выберите из списка действующий ВУЗ.");
+                            throw new BusinessLogicException(message.ToString());
+                        }
+
+                        Entity.HighSchoolId = value;
+                        SetInfoAboutModify();
+                        OnPropertyChanged();
+                    }
+
+                }
+                catch (BusinessLogicException e)
+                {
+                    OnBusinessLogicException(e);
                 }
 
             }
@@ -205,11 +238,32 @@ namespace DataService.Entity.Faculty
 
             set
             {
-                if (Entity != null && Entity.HighSchool != value)
+                try
                 {
-                    Entity.HighSchool = value;
-                    SetInfoAboutModify();
-                    OnPropertyChanged();
+                    if (Entity != null && Entity.HighSchool != value)
+                    {
+                        if (DataService?.DBContext?.HighSchools?.ToList().All(x => x != value) ?? true)
+                        {
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ ВУЗ ]  не может содержать ссылку на учебное заведение ");
+                            message.AppendFormat("со значением Id = {0}, Code = \"{1}\" и Name = \"{2}\".",
+                                value.Id, value.Code, value.Name);
+                            message.AppendLine("Записи ВУЗа с этими данными не существует в базе данных.");
+                            message.AppendLine("Возможно, данное учебное заведение уже было удалено из базы данных");
+                            message.AppendLine(" с момента последнего обновления данных.");
+                            message.AppendLine("Пожалуйста, выберите из списка действующий ВУЗ.");
+                            throw new BusinessLogicException(message.ToString());
+                        }
+
+                        Entity.HighSchool = value;
+                        SetInfoAboutModify();
+                        OnPropertyChanged();
+                    }
+
+                }
+                catch (BusinessLogicException e)
+                {
+                    OnBusinessLogicException(e);
                 }
 
             }
@@ -230,6 +284,7 @@ namespace DataService.Entity.Faculty
                 if (entity != value)
                 {
                     entity = value;
+                    UpdateHasChanges();
                     OnPropertyChanged();
                 }
 
@@ -344,6 +399,11 @@ namespace DataService.Entity.Faculty
         protected void OnDbUpdateException(DbUpdateException e)
         {
             Messenger?.Send(CommandName.ShowDbUpdateException, e);
+        }
+
+        protected void OnBusinessLogicException(BusinessLogicException e)
+        {
+            Messenger.Send(CommandName.ShowBusinessLogicException, e);
         }
 
         #endregion

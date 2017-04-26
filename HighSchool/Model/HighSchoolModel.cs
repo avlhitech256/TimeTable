@@ -40,25 +40,21 @@ namespace HighSchool.Model
             {
                 if (!employeesIsLoaded)
                 {
-                    try
-                    {
-                        employeesIsLoaded = true;
-                        employees = new ObservableCollection<Employee>();
-                        DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
-                        OnPropertyChanged();
-                    }
-                    catch (EntityException e)
-                    {
-                        OnEntityException(e);
-                    }
-                    catch (DbEntityValidationException e)
-                    {
-                        OnDbEntityValidationException(e);
-                    }
-
+                    employeesIsLoaded = true;
+                    CreateEmployees();
                 }
 
                 return employees;
+            }
+
+            private set
+            {
+                if (employees != value)
+                {
+                    employees = value;
+                    OnPropertyChanged();
+                }
+
             }
 
         }
@@ -69,27 +65,20 @@ namespace HighSchool.Model
             {
                 if (!employeesForSearchIsLoaded)
                 {
-                    try
-                    {
-                        employeesForSearchIsLoaded = true;
-                        employeesForSearch = new ObservableCollection<Employee>();
-                        Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
-                        employeesForSearch.Add(item0);
-                        Employees.ToList().ForEach(x => employeesForSearch.Add(x));
-                        OnPropertyChanged();
-                    }
-                    catch (EntityException e)
-                    {
-                        OnEntityException(e);
-                    }
-                    catch (DbEntityValidationException e)
-                    {
-                        OnDbEntityValidationException(e);
-                    }
-
+                    employeesForSearchIsLoaded = true;
+                    CreateEmployeesForSearch();
                 }
 
                 return employeesForSearch;
+            }
+
+            private set
+            {
+                if (employeesForSearch != value)
+                {
+                    employeesForSearch = value;
+                    OnPropertyChanged();
+                }
             }
 
         }
@@ -97,6 +86,65 @@ namespace HighSchool.Model
         #endregion
 
         #region Methods
+
+        public void UpdateEmployees()
+        {
+            RefreshEmployees();
+            RefreshEmployeesForSearch();
+        }
+
+        private void CreateEmployees()
+        {
+            Employees = new ObservableCollection<Employee>();
+            RefreshEmployees();
+        }
+        private void RefreshEmployees()
+        {
+            Employees.Clear();
+
+            try
+            {
+                DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => Employees.Add(x));
+                OnPropertyChanged();
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
+
+        private void CreateEmployeesForSearch()
+        {
+            EmployeesForSearch = new ObservableCollection<Employee>();
+            RefreshEmployeesForSearch();
+        }
+
+        private void RefreshEmployeesForSearch()
+        {
+            EmployeesForSearch.Clear();
+
+            try
+            {
+                Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
+                employeesForSearch.Add(item0);
+                Employees.ToList().ForEach(x => employeesForSearch.Add(x));
+                OnPropertyChanged();
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
 
         protected override List<DataService.Model.HighSchool> SelectEntities()
         {

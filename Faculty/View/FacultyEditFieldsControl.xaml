@@ -93,7 +93,7 @@
                  Margin="3"
                  Style="{DynamicResource EnabledText}"/>
         <ComboBox x:Name="HighSchoolEditRector"
-                  SelectedValue="{Binding Path=SelectedItem.HighSchool, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  SelectedValue="{Binding Path=SelectedItem.HighSchoolId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ItemsSource="{Binding Path=HighSchools}" DisplayMemberPath="Name" SelectedValuePath="Id"
                   IsReadOnly="{Binding Path=ReadOnly}"
                   IsEnabled="{Binding Path=Enabled}"
