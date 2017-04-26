@@ -16,7 +16,9 @@ namespace HighSchool.Model
         #region Members
 
         private ObservableCollection<Employee> employees;
+        private ObservableCollection<Employee> employeesForSearch;
         private bool employeesIsLoaded;
+        private bool employeesForSearchIsLoaded;
 
         #endregion
 
@@ -25,6 +27,7 @@ namespace HighSchool.Model
         public HighSchoolModel(IDomainContext domainContext) : base(domainContext, new HighSchoolSearchCriteria())
         {
             employeesIsLoaded = false;
+            employeesForSearchIsLoaded = false;
         }
 
         #endregion
@@ -39,12 +42,10 @@ namespace HighSchool.Model
                 {
                     try
                     {
+                        employeesIsLoaded = true;
                         employees = new ObservableCollection<Employee>();
-                        Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
-                        employees.Add(item0);
                         DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => employees.Add(x));
                         OnPropertyChanged();
-                        employeesIsLoaded = true;
                     }
                     catch (EntityException e)
                     {
@@ -58,6 +59,37 @@ namespace HighSchool.Model
                 }
 
                 return employees;
+            }
+
+        }
+
+        public ObservableCollection<Employee> EmployeesForSearch
+        {
+            get
+            {
+                if (!employeesForSearchIsLoaded)
+                {
+                    try
+                    {
+                        employeesForSearchIsLoaded = true;
+                        employeesForSearch = new ObservableCollection<Employee>();
+                        Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
+                        employeesForSearch.Add(item0);
+                        Employees.ToList().ForEach(x => employeesForSearch.Add(x));
+                        OnPropertyChanged();
+                    }
+                    catch (EntityException e)
+                    {
+                        OnEntityException(e);
+                    }
+                    catch (DbEntityValidationException e)
+                    {
+                        OnDbEntityValidationException(e);
+                    }
+
+                }
+
+                return employeesForSearch;
             }
 
         }

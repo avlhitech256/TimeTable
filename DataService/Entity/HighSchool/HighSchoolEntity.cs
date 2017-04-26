@@ -4,6 +4,7 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
@@ -191,16 +192,28 @@ namespace DataService.Entity.HighSchool
                 {
                     if (Entity != null && Entity.Rector != value)
                     {
-                        if (value <= 0 || (DataService?.DBContext?.Employees?.ToList().All(x => x.Id != value) ?? true))
+                        if (value <= 0)
                         {
-                            throw new BusinessLogicException()
-                            {
-                                FieldName = "Ректор",
-                                Code = value.ToString(),
-                                Value = value <= 0 ? DafaultConstant.DefaultRector : string.Empty,
-                                Entity = "HighSchool"
-                            };
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ Ректор ]  не может содержать значение \"");
+                            message.Append(DafaultConstant.DefaultRector);
+                            message.AppendFormat("\" со значением Id = {0}.", value);
+                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
+                            throw new BusinessLogicException(message.ToString());
                         }
+
+                        if (DataService?.DBContext?.Employees?.ToList().All(x => x.Id != value) ?? true)
+                        {
+                            StringBuilder message = new StringBuilder();
+                            message.Append("Поле  [ Ректор ]  не может содержать ссылку насотрудника ");
+                            message.AppendFormat("со значением Id = {0}.", value);
+                            message.AppendLine("Записи сотрудника с этим Id не существует в базе данных.");
+                            message.AppendLine("Возможно, данный сотрудник уже был удалениз базы данных");
+                            message.AppendLine(" с момента последнего обновления данных.");
+                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
+                            throw new BusinessLogicException(message.ToString());
+                        }
+
                         Entity.Rector = value;
                         SetInfoAboutModify();
                         OnPropertyChanged();

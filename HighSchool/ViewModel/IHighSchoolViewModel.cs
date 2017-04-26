@@ -9,5 +9,8 @@ namespace HighSchool.ViewModel
     {
         [CanBeNull]
         ObservableCollection<Employee> Employees { get; }
+
+        [CanBeNull]
+        ObservableCollection<Employee> EmployeesForSearch { get; }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using Common.Messenger;
 using Common.Messenger.Impl;
+using DataService.Exception;
 using Domain.DomainContext;
 using TimeTable.ViewModel.MainWindow;
 
@@ -73,6 +75,12 @@ namespace TimeTable
                 Messenger.Register<DbEntityValidationException>(CommandName.ShowDbEntityValidationException,
                                                                 ShowDbEntityValidationException,
                                                                 CanShowDbEntityValidationException);
+                Messenger.Register<DbUpdateException>(CommandName.ShowDbUpdateException,
+                                                      ShowDbUpdateException,
+                                                      CanShowDbUpdateException);
+                Messenger.Register<BusinessLogicException>(CommandName.ShowBusinessLogicException,
+                                                           ShowBusinessLogicException,
+                                                           CanShowBusinessLogicException);
             }
 
         }
@@ -149,9 +157,10 @@ namespace TimeTable
                         message.AppendLine(secondIndentation + "Значение поля до изменения: " + originalValue);
                         message.AppendLine(secondIndentation + "Значение после изменений: " + currentValue);
                         message.AppendLine(secondIndentation +
-                                           "Значение после, которое сейчас находится в базе данных: " +
+                                           "Значение поля, которое сейчас находится в базе данных: " +
                                            dbValue);
                         message.AppendLine(secondIndentation + "Ошибка: " + validationError.ErrorMessage);
+                        message.AppendLine("------------------------------------------");
                     }
                 }
                 catch (EntityException e)
@@ -165,6 +174,100 @@ namespace TimeTable
         }
 
         private bool CanShowDbEntityValidationException(DbEntityValidationException exception)
+        {
+            return exception != null;
+        }
+
+        #endregion
+
+        #region DbUpdateException
+
+        private void ShowDbUpdateException(DbUpdateException exception)
+        {
+            string header = exception.Source +
+                            " - Ошибка, возникшая при сохранении сущности баз данных (" + exception.HResult + ")";
+            StringBuilder message = new StringBuilder();
+            message.AppendFormat(exception.Message);
+            message.AppendLine(" ");
+
+            if (!string.IsNullOrWhiteSpace(exception.HelpLink))
+            {
+                message.AppendLine("Дополнительную информацию об ошибке можно посмотреть перейдя по нижеприведенной ссылке: ");
+                message.AppendLine(exception.HelpLink);
+                message.AppendLine(" ");
+            }
+
+            message.AppendLine("Данная ошибка возникла в следующем методе: " + exception.TargetSite);
+            message.AppendLine(" ");
+            message.AppendLine(exception.StackTrace);
+            message.AppendLine(" ");
+            message.AppendLine("==========================================");
+            message.AppendLine("Список ошибок, которые возникли в момент");
+            message.AppendLine("обновления данных в базе данных:");
+            message.AppendLine("------------------------------------------");
+            string firstIndentation = "    ";
+            string secondIndentation = "        ";
+
+            foreach (var entity in exception.Entries)
+            {
+                try
+                {
+                    message.AppendLine("Сущность: " + nameof(entity.Entity));
+
+                    foreach (string propertyName in entity.CurrentValues.PropertyNames)
+                    {
+                        string originalValue = entity.CurrentValues[propertyName].ToString();
+                        string currentValue = entity.CurrentValues[propertyName].ToString();
+                        string dbValue = entity.GetDatabaseValues()[propertyName].ToString();
+                        message.AppendLine(firstIndentation + "Поле [" + propertyName + "]:");
+                        message.AppendLine(secondIndentation + "Значение поля до изменения: " + originalValue);
+                        message.AppendLine(secondIndentation + "Значение после изменений: " + currentValue);
+                        message.AppendLine(secondIndentation +
+                                           "Значение поля, которое сейчас находится в базе данных: " +
+                                           dbValue);
+                        message.AppendLine("------------------------------------------");
+                    }
+                }
+                catch (EntityException e)
+                {
+                    ShowEntityException(e);
+                }
+
+            }
+
+            MessageBox.Show(message.ToString(), header, MessageBoxButton.OK, MessageBoxImage.Stop, MessageBoxResult.OK);
+        }
+
+        private bool CanShowDbUpdateException(DbUpdateException exception)
+        {
+            return exception != null;
+        }
+
+        #endregion
+
+        #region EntityException
+        private void ShowBusinessLogicException(BusinessLogicException exception)
+        {
+            string header = exception.Source +
+                            " - Ошибка вследситвии нарушения работы алгоритмов бизнес-логики (" + exception.HResult + ")";
+            StringBuilder message = new StringBuilder();
+            message.AppendLine(exception.Message);
+            message.AppendLine(" ");
+
+            if (!string.IsNullOrWhiteSpace(exception.HelpLink))
+            {
+                message.AppendLine("Дополнительную информацию об ошибке можно посмотреть перейдя по нижеприведенной ссылке: ");
+                message.AppendLine(exception.HelpLink);
+                message.AppendLine(" ");
+            }
+
+            message.AppendLine("Данная ошибка возникла в следующем методе: " + exception.TargetSite);
+            message.AppendLine(exception.StackTrace);
+
+            MessageBox.Show(message.ToString(), header, MessageBoxButton.OK, MessageBoxImage.Stop, MessageBoxResult.OK);
+        }
+
+        private bool CanShowBusinessLogicException(BusinessLogicException exception)
         {
             return exception != null;
         }

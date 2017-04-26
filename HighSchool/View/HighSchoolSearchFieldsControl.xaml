@@ -77,7 +77,7 @@
                  Margin="3"/>
         <ComboBox x:Name="HighSchoolSearchRector"
                   SelectedValue="{Binding Path=SearchCriteria.RectorId}"
-                  ItemsSource="{Binding Path=Employees}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  ItemsSource="{Binding Path=EmployeesForSearch}" DisplayMemberPath="Name" SelectedValuePath="Id"
                   Text="{Binding Path=SearchCriteria.RectorName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                   Grid.Row="5"
                   Grid.Column="1" Margin="3"/>

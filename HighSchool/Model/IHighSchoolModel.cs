@@ -7,5 +7,6 @@ namespace HighSchool.Model
     public interface IHighSchoolModel : IModel<DataService.Model.HighSchool>
     {
         ObservableCollection<Employee> Employees { get; }
+        ObservableCollection<Employee> EmployeesForSearch { get; }
     }
 }

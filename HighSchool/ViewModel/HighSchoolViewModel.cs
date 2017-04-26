@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Common.Annotations;
 using DataService.Model;
 using Domain.DomainContext;
 using Domain.ViewModel;
@@ -10,13 +11,17 @@ namespace HighSchool.ViewModel
     {
         #region Constructors
 
-        public HighSchoolViewModel(IDomainContext context) : base(context, new HighSchoolModel(context)) {}
+        public HighSchoolViewModel(IDomainContext context) : base(context, new HighSchoolModel(context)) { }
 
         #endregion
 
         #region Properties
 
+        [CanBeNull]
         public ObservableCollection<Employee> Employees => (Model as IHighSchoolModel)?.Employees;
+
+        [CanBeNull]
+        public ObservableCollection<Employee> EmployeesForSearch => (Model as IHighSchoolModel)?.EmployeesForSearch;
 
         #endregion
     }
