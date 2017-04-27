@@ -37,7 +37,6 @@ namespace TimeTable.View.LeftMenu
                     { SpecialtyButton, MenuItemName.Specialty },
                     { SpecializationButton, MenuItemName.Specialization }
                 };
-            InitializeDataContext();
         }
 
         #endregion
@@ -56,6 +55,7 @@ namespace TimeTable.View.LeftMenu
                 if (context == null || context != value)
                 {
                     context = value;
+                    InitializeDataContext();
                 }
             }
 
@@ -69,7 +69,7 @@ namespace TimeTable.View.LeftMenu
 
         private void InitializeDataContext()
         {
-            ViewModel = new LeftMenuViewModel();
+            ViewModel = new LeftMenuViewModel(DomainContext);
             SubscribeLeftMenu();
             DataContext = ViewModel;
         }

@@ -9,10 +9,24 @@
         <MenuItem Header="Файл">
             <MenuItem Header="Выход" Click="MenuItem_Click_Close"/>
         </MenuItem>
-        <MenuItem Header="Производство">
-            <MenuItem Header="Производственная линия"/>
-            <MenuItem Header="Рабочее место"/>
+        <MenuItem Header="Расписание">
+            <MenuItem Header="Учебный план" IsEnabled="False"/>
+            <MenuItem Header="Предметы" IsEnabled="False"/>
+            <MenuItem Header="Графики рабочего времени" IsEnabled="False"/>
+            <MenuItem Header="Расписание" IsEnabled="False"/>
         </MenuItem>
-        <MenuItem Header="Настройки"/>
+        <MenuItem Header="Структура">
+            <MenuItem Header="Учебные заведение" Command="{Binding Path=HighSchoolCommand}"/>
+            <MenuItem Header="Факультеты" Command="{Binding Path=FacultyCommand}"/>
+            <MenuItem Header="Кафедры" Command="{Binding Path=ChairCommand}"/>
+            <MenuItem Header="Специальности" Command="{Binding Path=SpecialtyCommand}"/>
+            <MenuItem Header="Специализации" Command="{Binding Path=SpecializationCommand}"/>
+            <MenuItem Header="Аудитории" IsEnabled="False"/>
+            <MenuItem Header="Сотрудники" Command="{Binding Path=EmployeeCommand}"/>
+            <MenuItem Header="Потоки" IsEnabled="False"/>
+            <MenuItem Header="Группировка групп" IsEnabled="False"/>
+            <MenuItem Header="Группы" IsEnabled="False"/>
+        </MenuItem>
+        <MenuItem Header="Настройки" IsEnabled="False"/>
     </Menu>
 </UserControl>

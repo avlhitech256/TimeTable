@@ -2,6 +2,7 @@
 {
     public enum CommandName
     {
+        SelectLeftMenu,
         SetLeftMenuMouseOverItem,
         SetLeftMenuMouseUpItem,
         SetEntryControl,

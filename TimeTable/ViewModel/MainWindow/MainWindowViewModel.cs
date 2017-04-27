@@ -61,8 +61,6 @@ namespace TimeTable.ViewModel.MainWindow
             Messenger?.Register<MenuChangedEventArgs>(CommandName.SetEntryControl, SetEntryControl, CanSetEntryControl);
         }
 
-
-
         public void SetEntryControl(MenuChangedEventArgs args)
         {
             var viewFactory = new ViewFactory(DomainContext, ViewModelRouter);

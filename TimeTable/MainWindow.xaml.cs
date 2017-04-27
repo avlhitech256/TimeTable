@@ -62,6 +62,7 @@ namespace TimeTable
         private void SetDomainContext()
         {
             LeftMenuControl.DomainContext = DomainContext;
+            TopMenuControl.DomainContext = DomainContext;
             FooterBarControl.DomainContext = DomainContext;
         }
 

@@ -14,7 +14,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="TitleResult" 
-               Content="Поиск учебного заведения" 
+               Content="Поиск специальности" 
                Grid.Row="0" 
                Margin="1" 
                HorizontalAlignment="Stretch" 

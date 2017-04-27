@@ -7,6 +7,7 @@
         Chair,
         Specialty,
         Specialization,
+        Employee,
         None
     }
 }
