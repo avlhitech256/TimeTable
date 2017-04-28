@@ -12,6 +12,7 @@
         <MenuItem Header="Расписание">
             <MenuItem Header="Учебный план" IsEnabled="False"/>
             <MenuItem Header="Предметы" IsEnabled="False"/>
+            <MenuItem Header="Приоритезация предметов" IsEnabled="False"/>
             <MenuItem Header="Графики рабочего времени" IsEnabled="False"/>
             <MenuItem Header="Расписание" IsEnabled="False"/>
         </MenuItem>
