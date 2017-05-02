@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Chair.ViewModel;
 using Domain.Data.Enum;
 using Domain.DomainContext;
 using Faculty.ViewModel;
@@ -26,7 +27,8 @@ namespace TimeTable.ViewModel.MainWindow
                 {
                     { MenuItemName.HighSchool, (x) => new HighSchoolViewModel(x)},
                     { MenuItemName.Faculty, (x) => new FacultyViewModel(x)},
-                    {MenuItemName.Specialty, (x) => new SpecialtyViewModel(x) }
+                    {MenuItemName.Specialty, (x) => new SpecialtyViewModel(x)},
+                    {MenuItemName.Chair, (x) => new ChairViewModel(x)}
                 };
             this.context = context;
         }

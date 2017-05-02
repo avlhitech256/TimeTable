@@ -10,7 +10,7 @@
     <buttonsControl:SearchButtonControl x:Name="SearchButtonControl"
                                         ToolTipSearchButton="Поиск факультета"
                                         ToolTipClearButton="Очистить критерии поиска факультетов"
-                                        ToolTipAddButton="Создать новое факультет"
+                                        ToolTipAddButton="Создать новый факультет"
                                         ToolTipViewButton="Просмотр текущей записи факультета"
                                         ToolTipDeleteButton="Удалить текущую запись факультета">
 

@@ -139,6 +139,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chair\Chair.csproj">
+      <Project>{6b5076e9-a097-4132-acfe-589eba03f5bb}</Project>
+      <Name>Chair</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonControl\CommonControl.csproj">
       <Project>{9211ad9c-2d70-424c-96f5-dd0518985e37}</Project>
       <Name>CommonControl</Name>

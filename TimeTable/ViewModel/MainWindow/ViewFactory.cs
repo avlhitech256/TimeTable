@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using Chair.View;
 using CommonControl.EditControl;
 using CommonControl.SearchControl;
 using HighSchool.View;
@@ -35,7 +36,8 @@ namespace TimeTable.ViewModel.MainWindow
                 {
                     {MenuItemName.HighSchool, () => new HighSchoolSearchControl()},
                     {MenuItemName.Faculty, () => new FacultySearchControl()},
-                    {MenuItemName.Specialty, () => new SpecialtySearchControl() }
+                    {MenuItemName.Specialty, () => new SpecialtySearchControl()},
+                    {MenuItemName.Chair, () => new ChairSearchControl()}
                 };
 
             mapEditControlFactories =
@@ -43,7 +45,8 @@ namespace TimeTable.ViewModel.MainWindow
                 {
                     {MenuItemName.HighSchool, () => new HighSchoolEditControl()},
                     {MenuItemName.Faculty, () => new FacultyEditControl()},
-                    {MenuItemName.Specialty, () => new SpecialtyEditControl() }
+                    {MenuItemName.Specialty, () => new SpecialtyEditControl()},
+                    {MenuItemName.Chair, () => new ChairEditControl()}
                 };
 
         }

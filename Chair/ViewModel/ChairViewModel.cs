@@ -10,7 +10,12 @@ namespace Chair.ViewModel
     {
         #region Constructors
 
-        public ChairViewModel(IDomainContext context) : base(context, new ChairModel(context)) { }
+        public ChairViewModel(IDomainContext context) : base(context, new ChairModel(context))
+        {
+            EditModeHeader = "Редактирование записи кафедры";
+            ReadOnlyHeader = "Просмотр записи кафедры";
+            EditLabel = ReadOnlyHeader;
+        }
 
         #endregion
 

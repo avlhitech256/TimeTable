@@ -12,8 +12,8 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Name="TitleResult" 
-               Content="Редактирование специальности" 
+        <Label Name="TitleEdit" 
+               Content="{Binding Path=EditLabel}" 
                Grid.Row="0" 
                Margin="1" 
                HorizontalAlignment="Stretch" 

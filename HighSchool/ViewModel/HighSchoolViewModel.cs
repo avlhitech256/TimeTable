@@ -11,7 +11,12 @@ namespace HighSchool.ViewModel
     {
         #region Constructors
 
-        public HighSchoolViewModel(IDomainContext context) : base(context, new HighSchoolModel(context)) { }
+        public HighSchoolViewModel(IDomainContext context) : base(context, new HighSchoolModel(context))
+        {
+            EditModeHeader = "Редактирование записи учебного заведения";
+            ReadOnlyHeader = "Просмотр записи учебного заведения";
+            EditLabel = ReadOnlyHeader;
+        }
 
         #endregion
 

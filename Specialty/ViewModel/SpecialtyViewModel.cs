@@ -8,7 +8,13 @@ namespace Specialty.ViewModel
     {
         #region Constructors
 
-        public SpecialtyViewModel(IDomainContext context) : base(context, new SpecialtyModel(context)) { }
+        public SpecialtyViewModel(IDomainContext context) : base(context, new SpecialtyModel(context))
+        {
+            EditModeHeader = "Редактирование записи специальности";
+            ReadOnlyHeader = "Просмотр записи специальности";
+            EditLabel = ReadOnlyHeader;
+
+        }
 
         #endregion
     }

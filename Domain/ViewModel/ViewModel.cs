@@ -26,6 +26,7 @@ namespace Domain.ViewModel
         private bool isEditControl;
         private string toolTipForEditButton;
         private bool enabled;
+        private string editLabel;
 
         #endregion
 
@@ -40,6 +41,8 @@ namespace Domain.ViewModel
             IsEditControl = false;
             StartEditToolTip = "Начать редактирование текущей записи";
             FinishEditToolTip = "Закончить редактирование текущей записи";
+            ReadOnlyHeader = "Редактирование текущей записи";
+            EditModeHeader = "Просмотр текущей записи";
             InitializeButtons();
             InitializeProperties();
         }
@@ -80,6 +83,10 @@ namespace Domain.ViewModel
 
         protected string FinishEditToolTip { get; }
 
+        protected string ReadOnlyHeader { get; set; }
+
+        protected string EditModeHeader { get; set; }
+
         public IMessenger Messenger => DomainContext.Messenger;
 
         public ICommand BackToSearchButtonCommand { get; private set; }
@@ -99,6 +106,24 @@ namespace Domain.ViewModel
         public ICommand SearchButtonCommand { get; private set; }
 
         public ICommand ClearButtonCommand { get; private set; }
+
+        public string EditLabel
+        {
+            get
+            {
+                return editLabel;
+            }
+
+            protected set
+            {
+                if (editLabel != value)
+                {
+                    editLabel = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
 
         public string ToolTipForEditButton
         {
@@ -152,6 +177,7 @@ namespace Domain.ViewModel
                     enabled = value;
                     ReadOnly = !value;
                     ToolTipForEditButton = value ? FinishEditToolTip : StartEditToolTip;
+                    EditLabel = value ? EditModeHeader : ReadOnlyHeader;
                     OnPropertyChanged();
                 }
 
@@ -244,9 +270,10 @@ namespace Domain.ViewModel
 
         private void InitializeProperties()
         {
+            ToolTipForEditButton = StartEditToolTip;
+            EditLabel = ReadOnlyHeader;
             ReadOnly = true;
             Enabled = false;
-            ToolTipForEditButton = StartEditToolTip;
         }
 
         private void OnChangedSelectedItem(object sender, PropertyChangedEventArgs e)

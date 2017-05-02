@@ -43,21 +43,39 @@ namespace Domain.ViewModel
         ICommand ClearButtonCommand { get; }
 
         [CanBeNull]
+        string EditLabel { get; }
+
+        [CanBeNull]
         string ToolTipForEditButton { get; }
+
         bool ReadOnly { get; set; }
+
         bool Enabled { get; set; }
+
         bool IsEditControl { get; set; }
+
         bool HasChanges { get; }
+
         void ApplySearchCriteria();
+
         void Clear();
+
         void Add();
+
         void View();
+
         void Edit();
+
         bool Save();
+
         void SaveAndAdd();
+
         void Delete();
+
         void SetResponseForDelete(ValueEnum response);
+
         void Back();
+
         void SetResponseForBack(ValueEnum response);
     }
 }
