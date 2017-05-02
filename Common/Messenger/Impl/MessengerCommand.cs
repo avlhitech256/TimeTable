@@ -54,6 +54,35 @@ namespace Common.Messenger.Impl
             }
         }
 
+        public bool Equals(MessengerCommand<T> other)
+        {
+            bool result = execute == other.execute && 
+                          canExecute == other.canExecute;
+
+            return result;
+        }
+
+        public override bool Equals(object other)
+        {
+            MessengerCommand<T> messengerCommand = other as MessengerCommand<T>;
+            bool result = false;
+
+            if (messengerCommand != null)
+            {
+                result = this.Equals(messengerCommand);
+            }
+
+            return result;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((execute?.GetHashCode() ?? 0)*397) ^ (canExecute?.GetHashCode() ?? 0);
+            }
+        }
+
         #endregion
 
         #region Events

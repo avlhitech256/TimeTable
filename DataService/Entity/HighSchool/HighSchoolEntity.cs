@@ -6,11 +6,11 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using Common.Data.Notifier;
+using Common.Exception;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.Constant;
 using DataService.DataService;
-using DataService.Exception;
 using DataService.Model;
 
 namespace DataService.Entity.HighSchool
@@ -331,6 +331,11 @@ namespace DataService.Entity.HighSchool
                 OnDbUpdateException(e);
             }
 
+        }
+
+        public void RefreshChildItems()
+        {
+            throw new NotImplementedException();
         }
 
         private void CreateEntity()

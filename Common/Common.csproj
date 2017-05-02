@@ -44,6 +44,7 @@
     <Compile Include="Data\Convert\Convert.cs" />
     <Compile Include="Data\Enum\StringEnum.cs" />
     <Compile Include="Data\Notifier\Notifier.cs" />
+    <Compile Include="Exception\BusinessLogicException.cs" />
     <Compile Include="Messenger\IMessenger.cs" />
     <Compile Include="Messenger\Impl\CommandName.cs" />
     <Compile Include="Messenger\Impl\Messenger.cs" />

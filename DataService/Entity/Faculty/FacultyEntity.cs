@@ -7,11 +7,11 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using Common.Data.Notifier;
+using Common.Exception;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.Constant;
 using DataService.DataService;
-using DataService.Exception;
 
 namespace DataService.Entity.Faculty
 {
@@ -334,6 +334,11 @@ namespace DataService.Entity.Faculty
                 OnDbUpdateException(e);
             }
 
+        }
+
+        public void RefreshChildItems()
+        {
+            throw new NotImplementedException();
         }
 
         private void CreateEntity()

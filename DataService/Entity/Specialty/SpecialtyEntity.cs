@@ -237,6 +237,11 @@ namespace DataService.Entity.Specialty
 
         }
 
+        public void RefreshChildItems()
+        {
+            throw new NotImplementedException();
+        }
+
         private void CreateEntity()
         {
             try

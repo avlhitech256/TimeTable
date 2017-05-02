@@ -87,25 +87,25 @@ namespace HighSchool.Model
 
         #region Methods
 
-        public void UpdateEmployees()
+        public void RefreshEmployees()
         {
-            RefreshEmployees();
-            RefreshEmployeesForSearch();
+            RefreshEmployeesProperty();
+            RefreshEmployeesForSearchProperty();
         }
 
         private void CreateEmployees()
         {
             Employees = new ObservableCollection<Employee>();
-            RefreshEmployees();
+            RefreshEmployeesProperty();
         }
-        private void RefreshEmployees()
+        private void RefreshEmployeesProperty()
         {
             Employees.Clear();
 
             try
             {
                 DbContext.Employees.OrderBy(x => x.Name).ToList().ForEach(x => Employees.Add(x));
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Employees));
             }
             catch (EntityException e)
             {
@@ -121,19 +121,19 @@ namespace HighSchool.Model
         private void CreateEmployeesForSearch()
         {
             EmployeesForSearch = new ObservableCollection<Employee>();
-            RefreshEmployeesForSearch();
+            RefreshEmployeesForSearchProperty();
         }
 
-        private void RefreshEmployeesForSearch()
+        private void RefreshEmployeesForSearchProperty()
         {
             EmployeesForSearch.Clear();
 
             try
             {
                 Employee item0 = new Employee { Id = 0, Name = DafaultConstant.DefaultRector };
-                employeesForSearch.Add(item0);
-                Employees.ToList().ForEach(x => employeesForSearch.Add(x));
-                OnPropertyChanged();
+                EmployeesForSearch.Add(item0);
+                Employees.ToList().ForEach(x => EmployeesForSearch.Add(x));
+                OnPropertyChanged(nameof(EmployeesForSearch));
             }
             catch (EntityException e)
             {

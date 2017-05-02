@@ -6,9 +6,9 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Common.Exception;
 using Common.Messenger;
 using Common.Messenger.Impl;
-using DataService.Exception;
 using Domain.DomainContext;
 using TimeTable.ViewModel.MainWindow;
 

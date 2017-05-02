@@ -8,6 +8,6 @@ namespace HighSchool.Model
     {
         ObservableCollection<Employee> Employees { get; }
         ObservableCollection<Employee> EmployeesForSearch { get; }
-        void UpdateEmployees();
+        void RefreshEmployees();
     }
 }

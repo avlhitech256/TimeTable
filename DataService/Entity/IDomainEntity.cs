@@ -16,5 +16,6 @@ namespace DataService.Entity
         T Entity { get; }
         bool HasChanges { get; }
         void UpdateHasChanges();
+        void RefreshChildItems();
     }
 }

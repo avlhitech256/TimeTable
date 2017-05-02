@@ -210,8 +210,8 @@ namespace DataService.Entity.Chair
                 if (specializations == null)
                 {
                     specializations = new ObservableCollection<Specialization>();
-                    Entity.ChairToSpecializations.Select(x => x.Specialization).ToList().ForEach(x => specializations.Add(x));
                     specializations.CollectionChanged += Specializations_CollectionChanged;
+                    RefreshChildItems();
                 }
 
                 return specializations;
@@ -373,6 +373,12 @@ namespace DataService.Entity.Chair
                 OnDbUpdateException(e);
             }
 
+        }
+
+        public void RefreshChildItems()
+        {
+            Specializations.Clear();
+            Entity.ChairToSpecializations.Select(x => x.Specialization).ToList().ForEach(x => Specializations.Add(x));
         }
 
         private void CreateEntity()

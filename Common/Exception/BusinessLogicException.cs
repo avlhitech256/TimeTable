@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DataService.Exception
+namespace Common.Exception
 {
     [Serializable]
     public class BusinessLogicException : System.Exception
     {
-        #region Members
-
-        private string fieldName;
-        private string code;
-        private string value;
-        private string entity;
-        private string _message;
-
-        #endregion
-
         #region Constructors
         public BusinessLogicException() { }
 

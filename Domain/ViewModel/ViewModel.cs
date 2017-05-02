@@ -22,7 +22,6 @@ namespace Domain.ViewModel
     {
         #region Members
 
-        private bool hasChanges;
         private bool readOnly;
         private bool isEditControl;
         private string toolTipForEditButton;
