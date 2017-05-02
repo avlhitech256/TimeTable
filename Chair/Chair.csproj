@@ -54,9 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCriteria\ChairSearchCriteria.cs" />
     <Compile Include="SearchCriteria\IChairSearchCriteria.cs" />
+    <Compile Include="ViewModel\ChairViewModel.cs" />
+    <Compile Include="ViewModel\IChairViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
