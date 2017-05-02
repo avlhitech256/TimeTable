@@ -70,18 +70,7 @@ namespace TimeTable.View.LeftMenu
         private void InitializeDataContext()
         {
             ViewModel = new LeftMenuViewModel(DomainContext);
-            SubscribeLeftMenu();
             DataContext = ViewModel;
-        }
-
-        private void SubscribeLeftMenu()
-        {
-            ViewModel.MenuItemsStyle.MenuChanged += OnChangedLeftMenu;
-        }
-
-        private void OnChangedLeftMenu(object sender, MenuChangedEventArgs args)
-        {
-            Messenger?.Send(CommandName.SetEntryControl, args);
         }
 
         private LeftMenuMouseOverEventArgs CreateLeftMenuMouseOverEventArgs(Border border, bool isMouseOver)
@@ -163,7 +152,7 @@ namespace TimeTable.View.LeftMenu
 
             if (args != null)
             {
-                ViewModel.MenuItemsStyle.SetMouseUpMenuItems(args);
+                Messenger?.Send(CommandName.SetEntryControl, args);
             }
 
         }
@@ -175,7 +164,6 @@ namespace TimeTable.View.LeftMenu
 
         public void Dispose()
         {
-            ViewModel.MenuItemsStyle.MenuChanged -= OnChangedLeftMenu;
             borderMap.Clear();
         }
 

@@ -12,6 +12,7 @@ namespace Domain.DomainContext
 
         private IControlViewModel viewModel;
         private string dataBaseServer;
+        private bool isEditControl;
 
         #endregion
 
@@ -50,6 +51,23 @@ namespace Domain.DomainContext
                 }
             }
 
+        }
+
+        public bool IsEditControl
+        {
+            get
+            {
+                return isEditControl;
+            }
+
+            set
+            {
+                if (isEditControl != value)
+                {
+                    isEditControl = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         [CanBeNull]

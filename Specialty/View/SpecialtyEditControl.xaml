@@ -13,7 +13,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="TitleResult" 
-               Content="Редактирование учебного заведения" 
+               Content="Редактирование специальности" 
                Grid.Row="0" 
                Margin="1" 
                HorizontalAlignment="Stretch" 

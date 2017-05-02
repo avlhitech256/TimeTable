@@ -12,6 +12,8 @@ namespace Domain.DomainContext
         [CanBeNull]
         IControlViewModel ViewModel { get; set; }
 
+        bool IsEditControl { get; set; }
+
         [CanBeNull]
         string UserName { get; }
 

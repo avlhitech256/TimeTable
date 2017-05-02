@@ -64,7 +64,8 @@ namespace TimeTable.ViewModel.MainWindow
         public void SetEntryControl(MenuChangedEventArgs args)
         {
             var viewFactory = new ViewFactory(DomainContext, ViewModelRouter);
-            View = viewFactory.GetView(args.MenuItemName);
+            View = viewFactory.GetView(args.MenuItemName, View);
+            Messenger?.Send(CommandName.SelectLeftMenu, args);
         }
 
         private bool CanSetEntryControl(MenuChangedEventArgs args)

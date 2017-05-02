@@ -39,28 +39,28 @@ namespace TimeTable.ViewModel.TopMenu
 
         public void SelectHighSchoolMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.HighSchool));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.HighSchool));
         }
 
         public void SelectFacultyMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.Faculty));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.Faculty));
         }
         public void SelectChairMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.Chair));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.Chair));
         }
         public void SelectSpecialtyMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.Specialty));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.Specialty));
         }
         public void SelectSpecializationMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.Specialization));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.Specialization));
         }
         public void SelectEmployeeMenu()
         {
-            Messenger?.Send(CommandName.SelectLeftMenu, new MenuChangedEventArgs(MenuItemName.Employee));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.Employee));
         }
 
     }

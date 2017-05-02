@@ -52,7 +52,7 @@ namespace TimeTable.ViewModel.MainWindow
 
         #region Methods
 
-        public object GetView(MenuItemName menuItemName)
+        public object GetView(MenuItemName menuItemName, object oldView)
         {
             object view = null;
             object viewModel = viewModelRouter.GetViewModel(menuItemName);
@@ -61,58 +61,73 @@ namespace TimeTable.ViewModel.MainWindow
 
             if (viewModelWithInterface != null)
             {
-                domainContext.ViewModel = viewModelWithInterface;
-
-                if (viewModelWithInterface.IsEditControl)
+                if ((domainContext.ViewModel != viewModelWithInterface) ||
+                    (domainContext.IsEditControl != viewModelWithInterface.IsEditControl))
                 {
-                    if (mapEditControlFactories != null && mapEditControlFactories.ContainsKey(menuItemName))
-                    {
-                        factory = mapEditControlFactories[menuItemName];
-                    }
-
-                }
-                else
-                {
-                    if (mapSearchControlFactories != null && mapSearchControlFactories.ContainsKey(menuItemName))
-                    {
-                        factory = mapSearchControlFactories[menuItemName];
-                    }
-
-                }
-
-                if (factory != null)
-                {
-                    view = factory.Invoke();
-                    UserControl viewWithInterface = view as UserControl;
-
-                    if (viewWithInterface != null)
-                    {
-                        viewWithInterface.DataContext = viewModel;
-                    }
+                    domainContext.ViewModel = viewModelWithInterface;
+                    domainContext.IsEditControl = viewModelWithInterface.IsEditControl;
 
                     if (viewModelWithInterface.IsEditControl)
                     {
-                        EditControl editView = view as EditControl;
-
-                        if (editView != null)
+                        if (mapEditControlFactories != null && mapEditControlFactories.ContainsKey(menuItemName))
                         {
-                            editView.DomainContext = domainContext;
+                            factory = mapEditControlFactories[menuItemName];
                         }
 
                     }
                     else
                     {
-                        SearchControl searchView = view as SearchControl;
-
-                        if (searchView != null)
+                        if (mapSearchControlFactories != null && mapSearchControlFactories.ContainsKey(menuItemName))
                         {
-                            searchView.DomainContext = domainContext;
+                            factory = mapSearchControlFactories[menuItemName];
+                        }
+
+                    }
+
+                    if (factory != null)
+                    {
+                        view = factory.Invoke();
+                        UserControl viewWithInterface = view as UserControl;
+
+                        if (viewWithInterface != null)
+                        {
+                            viewWithInterface.DataContext = viewModel;
+                        }
+
+                        if (viewModelWithInterface.IsEditControl)
+                        {
+                            EditControl editView = view as EditControl;
+
+                            if (editView != null)
+                            {
+                                editView.DomainContext = domainContext;
+                            }
+
+                        }
+                        else
+                        {
+                            SearchControl searchView = view as SearchControl;
+
+                            if (searchView != null)
+                            {
+                                searchView.DomainContext = domainContext;
+                            }
+
                         }
 
                     }
 
                 }
+                else
+                {
+                    view = oldView;
+                }
 
+            }
+            else
+            {
+                domainContext.ViewModel = null;
+                domainContext.IsEditControl = false;
             }
 
             return view;

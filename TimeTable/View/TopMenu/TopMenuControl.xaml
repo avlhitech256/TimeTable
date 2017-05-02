@@ -4,30 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="19" d:DesignWidth="300">
+             d:DesignHeight="19" d:DesignWidth="400">
     <Menu x:Name="menu" DockPanel.Dock="Top">
         <MenuItem Header="Файл">
             <MenuItem Header="Выход" Click="MenuItem_Click_Close"/>
         </MenuItem>
         <MenuItem Header="Расписание">
             <MenuItem Header="Учебный план" IsEnabled="False"/>
+            <Separator></Separator>
             <MenuItem Header="Предметы" IsEnabled="False"/>
             <MenuItem Header="Приоритезация предметов" IsEnabled="False"/>
+            <Separator></Separator>
             <MenuItem Header="Графики рабочего времени" IsEnabled="False"/>
+            <Separator></Separator>
+            <MenuItem Header="График пар" IsEnabled="False"/>
             <MenuItem Header="Расписание" IsEnabled="False"/>
         </MenuItem>
         <MenuItem Header="Структура">
             <MenuItem Header="Учебные заведение" Command="{Binding Path=HighSchoolCommand}"/>
             <MenuItem Header="Факультеты" Command="{Binding Path=FacultyCommand}"/>
             <MenuItem Header="Кафедры" Command="{Binding Path=ChairCommand}"/>
+            <Separator></Separator>
             <MenuItem Header="Специальности" Command="{Binding Path=SpecialtyCommand}"/>
             <MenuItem Header="Специализации" Command="{Binding Path=SpecializationCommand}"/>
+            <Separator></Separator>
             <MenuItem Header="Аудитории" IsEnabled="False"/>
+            <Separator></Separator>
             <MenuItem Header="Сотрудники" Command="{Binding Path=EmployeeCommand}"/>
+            <Separator></Separator>
             <MenuItem Header="Потоки" IsEnabled="False"/>
             <MenuItem Header="Группировка групп" IsEnabled="False"/>
             <MenuItem Header="Группы" IsEnabled="False"/>
         </MenuItem>
-        <MenuItem Header="Настройки" IsEnabled="False"/>
+        <MenuItem Header="Сервис">
+            <MenuItem Header="Настройка..." IsEnabled="False"/>
+            <MenuItem Header="Параметры..." IsEnabled="False"/>
+        </MenuItem>
+        <MenuItem Header="Справка">
+            <MenuItem Header="Просмотр справки" IsEnabled="False"/>
+            <Separator></Separator>
+            <MenuItem Header="О программе TimeTable" IsEnabled="False"/>
+        </MenuItem>
     </Menu>
 </UserControl>
