@@ -58,6 +58,7 @@ namespace Domain.Model
                     UnsubscribeSelectedItem(value);
                     selectedItem = value;
                     SubscribeSelectedItem();
+                    OnSelectedItemChanged();
                     OnPropertyChanged();
                 }
 
@@ -348,6 +349,8 @@ namespace Domain.Model
             }
 
         }
+
+        protected virtual void OnSelectedItemChanged() { }
 
         protected void OnEntityException(EntityException e)
         {

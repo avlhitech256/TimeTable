@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Data.Entity;
@@ -203,7 +202,7 @@ namespace DataService.Entity.Chair
 
         }
 
-        public ICollection<Model.Specialization> Specializations
+        public ObservableCollection<Model.Specialization> Specializations
         {
             get
             {

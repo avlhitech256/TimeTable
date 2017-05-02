@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 
 namespace DataService.Entity.Chair
 {
@@ -6,7 +6,7 @@ namespace DataService.Entity.Chair
     {
         long FacultyId { get; set; }
         Model.Faculty Faculty { get; set; }
-        ICollection<Model.Specialization> Specializations { get; }
+        ObservableCollection<Model.Specialization> Specializations { get; }
 
     }
 }

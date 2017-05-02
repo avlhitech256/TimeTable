@@ -4,26 +4,24 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using Chair.SearchCriteria;
 using DataService.Constant;
+using DataService.Entity.Chair;
 using DataService.Model;
 using Domain.DomainContext;
 using Domain.Model;
 
 namespace Chair.Model
 {
-    public class ChairModel :  Model<DataService.Model.Chair>, IChairModel
+    public class ChairModel : Model<DataService.Model.Chair>, IChairModel
     {
         private ObservableCollection<Faculty> faculties;
         private ObservableCollection<Faculty> facultiesForSearch;
-        private ObservableCollection<Specialization> specializations;
         private bool facultiesIsLoaded;
         private bool facultiesForSearchIsLoaded;
-        private bool specializationsIsLoaded;
 
         public ChairModel(IDomainContext domainContext) : base(domainContext, new ChairSearchCriteria())
         {
             facultiesIsLoaded = false;
             facultiesForSearchIsLoaded = false;
-            specializationsIsLoaded = false;
         }
 
         #region Properties
@@ -78,14 +76,16 @@ namespace Chair.Model
 
         }
 
-        public ObservableCollection<Specialization> Specializations
-        {
-            get { return specializations; }
-        }
+        public ObservableCollection<Specialization> Specializations => ((IChairEntity) SelectedItem).Specializations;
 
         #endregion
 
         #region Methods
+
+        protected override void OnSelectedItemChanged()
+        {
+            OnPropertyChanged(nameof(Specializations));
+        }
         private void CreateFaculties()
         {
             Faculties = new ObservableCollection<Faculty>();
@@ -148,7 +148,7 @@ namespace Chair.Model
 
         public void RefreshSpecializations()
         {
-            throw new System.NotImplementedException();
+            SelectedItem.RefreshChildItems();
         }
 
         #endregion
