@@ -77,7 +77,7 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="SpecialtyId" Type="bigint" Nullable="false" />
-          <Property Name="Active" Type="bigint" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -270,7 +270,6 @@
           <EntitySet Name="Employees" EntityType="TimeTableModel.Employee" />
           <EntitySet Name="Faculties" EntityType="TimeTableModel.Faculty" />
           <EntitySet Name="HighSchools" EntityType="TimeTableModel.HighSchool" />
-          <EntitySet Name="Specializations" EntityType="TimeTableModel.Specialization" />
           <EntitySet Name="Specialties" EntityType="TimeTableModel.Specialty" />
           <AssociationSet Name="FK_Chair_Faculty" Association="TimeTableModel.FK_Chair_Faculty">
             <End Role="Faculty" EntitySet="Faculties" />
@@ -280,10 +279,6 @@
             <End Role="Chair" EntitySet="Chairs" />
             <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
           </AssociationSet>
-          <AssociationSet Name="FK_ChairToSpecialization_Specialization" Association="TimeTableModel.FK_ChairToSpecialization_Specialization">
-            <End Role="Specialization" EntitySet="Specializations" />
-            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
-          </AssociationSet>
           <AssociationSet Name="FK_HighSchool_Employee" Association="TimeTableModel.FK_HighSchool_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="HighSchool" EntitySet="HighSchools" />
@@ -291,6 +286,11 @@
           <AssociationSet Name="FK_Faculty_HighSchool" Association="TimeTableModel.FK_Faculty_HighSchool">
             <End Role="HighSchool" EntitySet="HighSchools" />
             <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <EntitySet Name="Specializations" EntityType="TimeTableModel.Specialization" />
+          <AssociationSet Name="FK_ChairToSpecialization_Specialization" Association="TimeTableModel.FK_ChairToSpecialization_Specialization">
+            <End Role="Specialization" EntitySet="Specializations" />
+            <End Role="ChairToSpecialization" EntitySet="ChairToSpecializations" />
           </AssociationSet>
           <AssociationSet Name="FK_Specialization_Specialty" Association="TimeTableModel.FK_Specialization_Specialty">
             <End Role="Specialty" EntitySet="Specialties" />
@@ -381,21 +381,6 @@
           <NavigationProperty Name="Employee" Relationship="TimeTableModel.FK_HighSchool_Employee" FromRole="HighSchool" ToRole="Employee" />
           <NavigationProperty Name="Faculties" Relationship="TimeTableModel.FK_Faculty_HighSchool" FromRole="HighSchool" ToRole="Faculty" />
         </EntityType>
-        <EntityType Name="Specialization">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="SpecialtyId" Type="Int64" Nullable="false" />
-          <Property Name="Active" Type="Int64" Nullable="false" />
-          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
-          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ChairToSpecializations" Relationship="TimeTableModel.FK_ChairToSpecialization_Specialization" FromRole="Specialization" ToRole="ChairToSpecialization" />
-          <NavigationProperty Name="Specialty" Relationship="TimeTableModel.FK_Specialization_Specialty" FromRole="Specialization" ToRole="Specialty" />
-        </EntityType>
         <EntityType Name="Specialty">
           <Key>
             <PropertyRef Name="Id" />
@@ -433,18 +418,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ChairToSpecialization_Specialization">
-          <End Type="TimeTableModel.Specialization" Role="Specialization" Multiplicity="1" />
-          <End Type="TimeTableModel.ChairToSpecialization" Role="ChairToSpecialization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Specialization">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ChairToSpecialization">
-              <PropertyRef Name="SpecializationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_HighSchool_Employee">
           <End Type="TimeTableModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="TimeTableModel.HighSchool" Role="HighSchool" Multiplicity="*" />
@@ -466,6 +439,33 @@
             </Principal>
             <Dependent Role="Faculty">
               <PropertyRef Name="HighSchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Specialization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialtyId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChairToSpecializations" Relationship="TimeTableModel.FK_ChairToSpecialization_Specialization" FromRole="Specialization" ToRole="ChairToSpecialization" />
+          <NavigationProperty Name="Specialty" Relationship="TimeTableModel.FK_Specialization_Specialty" FromRole="Specialization" ToRole="Specialty" />
+        </EntityType>
+        <Association Name="FK_ChairToSpecialization_Specialization">
+          <End Type="TimeTableModel.Specialization" Role="Specialization" Multiplicity="1" />
+          <End Type="TimeTableModel.ChairToSpecialization" Role="ChairToSpecialization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ChairToSpecialization">
+              <PropertyRef Name="SpecializationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -580,6 +580,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Specialties">
+            <EntityTypeMapping TypeName="TimeTableModel.Specialty">
+              <MappingFragment StoreEntitySet="Specialty">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Specializations">
             <EntityTypeMapping TypeName="TimeTableModel.Specialization">
               <MappingFragment StoreEntitySet="Specialization">
@@ -588,19 +601,6 @@
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="SpecialtyId" ColumnName="SpecialtyId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Specialties">
-            <EntityTypeMapping TypeName="TimeTableModel.Specialty">
-              <MappingFragment StoreEntitySet="Specialty">
-                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
-                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
-                <ScalarProperty Name="Created" ColumnName="Created" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

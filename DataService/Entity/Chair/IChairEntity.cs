@@ -7,6 +7,6 @@ namespace DataService.Entity.Chair
         long FacultyId { get; set; }
         Model.Faculty Faculty { get; set; }
         ObservableCollection<Model.Specialization> Specializations { get; }
-
     }
+
 }

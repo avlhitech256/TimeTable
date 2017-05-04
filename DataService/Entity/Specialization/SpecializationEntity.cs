@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -10,24 +9,23 @@ using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.DataService;
-using DataService.Model;
 
-namespace DataService.Entity.Chair
+namespace DataService.Entity.Specialization
 {
-    public class ChairEntity : Notifier, IChairEntity
+    public class SpecializationEntity : Notifier, ISpecializationEntity
     {
         #region Members
 
         private long position;
-        private Model.Chair entity;
-        private ObservableCollection<Model.Specialization> specializations;
+        private Model.Specialization entity;
+        private ObservableCollection<Model.Chair> chairs;
         private bool hasChanges;
 
         #endregion
 
         #region Constructors
 
-        public ChairEntity(IDataService dataService, IMessenger messanger)
+        public SpecializationEntity(IDataService dataService, IMessenger messanger)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -37,10 +35,10 @@ namespace DataService.Entity.Chair
             UpdateHasChanges();
         }
 
-        public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity) 
+        public SpecializationEntity(IDataService dataService, IMessenger messanger, Model.Specialization entity) 
             : this(dataService, messanger, entity, 0) { }
 
-        public ChairEntity(IDataService dataService, IMessenger messanger, Model.Chair entity, long position)
+        public SpecializationEntity(IDataService dataService, IMessenger messanger, Model.Specialization entity, long position)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -57,6 +55,11 @@ namespace DataService.Entity.Chair
         private IDataService DataService { get; }
 
         private IMessenger Messenger { get; }
+
+        public ObservableCollection<Model.Chair> Chairs
+        {
+            get { return chairs; }
+        }
 
         public long Position
         {
@@ -162,18 +165,18 @@ namespace DataService.Entity.Chair
 
         }
 
-        public long FacultyId
+        public long SpecialtyId
         {
             get
             {
-                return Entity?.FacultyId ?? 0L;
+                return Entity?.SpecialtyId ?? 0L;
             }
 
             set
             {
-                if (Entity != null && Entity.FacultyId != value)
+                if (Entity != null && Entity.SpecialtyId != value)
                 {
-                    Entity.FacultyId = value;
+                    Entity.SpecialtyId = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -182,18 +185,18 @@ namespace DataService.Entity.Chair
 
         }
 
-        public Model.Faculty Faculty
+        public Model.Specialty Specialty
         {
             get
             {
-                return Entity?.Faculty;
+                return Entity?.Specialty;
             }
 
             set
             {
-                if (Entity != null && Entity.Faculty != value)
+                if (Entity != null && Entity.Specialty != value)
                 {
-                    Entity.Faculty = value;
+                    Entity.Specialty = value;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -202,22 +205,7 @@ namespace DataService.Entity.Chair
 
         }
 
-        public ObservableCollection<Model.Specialization> Specializations
-        {
-            get
-            {
-                if (specializations == null)
-                {
-                    specializations = new ObservableCollection<Model.Specialization>();
-                    specializations.CollectionChanged += Specializations_CollectionChanged;
-                    RefreshChildItems();
-                }
-
-                return specializations;
-            }
-        }
-
-        public Model.Chair Entity
+        public Model.Specialization Entity
         {
             get
             {
@@ -265,8 +253,8 @@ namespace DataService.Entity.Chair
             {
                 Func<object, bool> statusHasChanges =
                     (x) => DataService?.DBContext?.Entry(x) != null &&
-                           DataService.DBContext.Entry(x).State != EntityState.Unchanged; 
-                
+                           DataService.DBContext.Entry(x).State != EntityState.Unchanged;
+
                 HasChanges = statusHasChanges(Entity) || (Entity?.ChairToSpecializations?.Any(statusHasChanges) ?? false);
             }
             catch (EntityException e)
@@ -286,25 +274,24 @@ namespace DataService.Entity.Chair
 
         public void RefreshChildItems()
         {
-            Specializations.Clear();
-            Entity.ChairToSpecializations.Select(x => x.Specialization).ToList().ForEach(x => Specializations.Add(x));
+            throw new NotImplementedException();
         }
 
         private void CreateEntity()
         {
             try
             {
-                if (DataService?.DBContext?.Chairs != null && DataService?.DBContext.Faculties != null)
+                if (DataService?.DBContext?.Specializations != null && DataService?.DBContext.Specialties != null)
                 {
-                    Model.Chair newEntity = DataService?.DBContext?.Chairs?.Create();
+                    Model.Specialization newEntity = DataService?.DBContext?.Specializations?.Create();
 
                     if (newEntity != null)
                     {
-                        DataService?.DBContext?.Chairs?.Add(newEntity);
+                        DataService?.DBContext?.Specializations?.Add(newEntity);
                         Entity = newEntity;
                         Active = true;
-                        Model.Faculty faculty = DataService.DBContext.Faculties.FirstOrDefault();
-                        FacultyId = faculty?.Id ?? 0;
+                        Model.Specialty specialty = DataService.DBContext.Specialties.FirstOrDefault();
+                        SpecialtyId = specialty?.Id ?? 0;
                         UserModify = DataService?.UserName;
                         DateTimeOffset now = DateTimeOffset.Now;
                         Entity.Created = now;
@@ -336,94 +323,6 @@ namespace DataService.Entity.Chair
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
-            UpdateHasChanges();
-        }
-
-        private void Specializations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (DataService != null && DataService.DBContext != null &&
-                DataService.DBContext.ChairToSpecializations != null)
-            {
-                switch (e.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-
-                        foreach (var item in e.NewItems)
-                        {
-                            Model.Specialization spec = item as Model.Specialization;
-
-                            if (spec != null)
-                            {
-                                ChairToSpecialization relation = DataService.DBContext.ChairToSpecializations.Create();
-                                relation.Specialization = spec;
-                                relation.SpecializationId = spec.Id;
-                                relation.Chair = Entity;
-                                relation.ChairId = Entity.Id;
-                                relation.Active = true;
-                                DateTimeOffset now = DateTimeOffset.Now;
-                                relation.Created = now;
-                                relation.LastModify = now;
-                                relation.UserModify = DataService?.UserName;
-                            }
-
-                        }
-
-                        break;
-
-                    case NotifyCollectionChangedAction.Remove:
-
-                        foreach (var item in e.OldItems)
-                        {
-                            Model.Specialization spec = item as Model.Specialization;
-
-                            if (spec != null)
-                            {
-                                ChairToSpecialization removedItem =
-                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Specialization == spec);
-
-                                if (removedItem != null)
-                                {
-                                    Entity.ChairToSpecializations.Remove(removedItem);
-                                }
-
-                            }
-
-                        }
-
-                        break;
-
-                    case NotifyCollectionChangedAction.Replace:
-
-                        for (int index = 0; index < e.NewItems.Count; index++)
-                        {
-                            Model.Specialization oldSpec = e.OldItems[index] as Model.Specialization;
-                            Model.Specialization newSpec = e.NewItems[index] as Model.Specialization;
-
-                            if (oldSpec != null && newSpec != null)
-                            {
-                                ChairToSpecialization replacedItem =
-                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Specialization == oldSpec);
-                                if (replacedItem != null)
-                                {
-                                    replacedItem.Specialization = newSpec;
-                                    replacedItem.SpecializationId = newSpec.Id;
-                                    replacedItem.LastModify = DateTimeOffset.Now;
-                                    replacedItem.UserModify = DataService?.UserName;
-                                }
-
-                            }
-
-                        }
-
-                        break;
-
-                    case NotifyCollectionChangedAction.Reset:
-                        Entity.ChairToSpecializations.Clear();
-                        break;
-                }
-
-            }
-
             UpdateHasChanges();
         }
 

@@ -10,13 +10,13 @@
         <EntityTypeShape EntityType="TimeTableModel.Employee" Width="1.5" PointX="1.5" PointY="13.125" />
         <EntityTypeShape EntityType="TimeTableModel.Faculty" Width="1.5" PointX="0.75" PointY="5" />
         <EntityTypeShape EntityType="TimeTableModel.HighSchool" Width="1.5" PointX="1.5" PointY="9" />
-        <EntityTypeShape EntityType="TimeTableModel.Specialization" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="TimeTableModel.Specialty" Width="1.5" PointX="0.75" PointY="1.125" />
         <AssociationConnector Association="TimeTableModel.FK_Chair_Faculty" />
         <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Chair" />
-        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Specialization" />
         <AssociationConnector Association="TimeTableModel.FK_HighSchool_Employee" />
         <AssociationConnector Association="TimeTableModel.FK_Faculty_HighSchool" />
+        <EntityTypeShape EntityType="TimeTableModel.Specialization" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="TimeTableModel.FK_ChairToSpecialization_Specialization" />
         <AssociationConnector Association="TimeTableModel.FK_Specialization_Specialty" />
       </Diagram>
     </edmx:Diagrams>
