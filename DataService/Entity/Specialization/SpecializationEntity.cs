@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -9,6 +10,7 @@ using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Impl;
 using DataService.DataService;
+using DataService.Model;
 
 namespace DataService.Entity.Specialization
 {
@@ -58,7 +60,18 @@ namespace DataService.Entity.Specialization
 
         public ObservableCollection<Model.Chair> Chairs
         {
-            get { return chairs; }
+            get
+            {
+                if (chairs == null)
+                {
+                    chairs = new ObservableCollection<Model.Chair>();
+                    chairs.CollectionChanged += Chairs_CollectionChanged;
+                    RefreshChildItems();
+                }
+
+                return chairs;
+            }
+
         }
 
         public long Position
@@ -274,7 +287,8 @@ namespace DataService.Entity.Specialization
 
         public void RefreshChildItems()
         {
-            throw new NotImplementedException();
+            Chairs.Clear();
+            Entity.ChairToSpecializations.Select(x => x.Chair).ToList().ForEach(x => Chairs.Add(x));
         }
 
         private void CreateEntity()
@@ -323,6 +337,94 @@ namespace DataService.Entity.Specialization
             UserModify = DataService?.UserName;
             Entity.LastModify = DateTimeOffset.Now;
             OnPropertyChanged(nameof(LastModify));
+            UpdateHasChanges();
+        }
+
+        private void Chairs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (DataService != null && DataService.DBContext != null &&
+                DataService.DBContext.ChairToSpecializations != null)
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+
+                        foreach (var item in e.NewItems)
+                        {
+                            Model.Chair chair = item as Model.Chair;
+
+                            if (chair != null)
+                            {
+                                ChairToSpecialization relation = DataService.DBContext.ChairToSpecializations.Create();
+                                relation.Chair = chair;
+                                relation.ChairId = chair.Id;
+                                relation.Specialization = Entity;
+                                relation.SpecializationId = Entity.Id;
+                                relation.Active = true;
+                                DateTimeOffset now = DateTimeOffset.Now;
+                                relation.Created = now;
+                                relation.LastModify = now;
+                                relation.UserModify = DataService?.UserName;
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+
+                        foreach (var item in e.OldItems)
+                        {
+                            Model.Chair chair = item as Model.Chair;
+
+                            if (chair != null)
+                            {
+                                ChairToSpecialization removedItem =
+                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Chair == chair);
+
+                                if (removedItem != null)
+                                {
+                                    Entity.ChairToSpecializations.Remove(removedItem);
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Replace:
+
+                        for (int index = 0; index < e.NewItems.Count; index++)
+                        {
+                            Model.Chair oldChair = e.OldItems[index] as Model.Chair;
+                            Model.Chair newChair = e.NewItems[index] as Model.Chair;
+
+                            if (oldChair != null && newChair != null)
+                            {
+                                ChairToSpecialization replacedItem =
+                                    Entity.ChairToSpecializations.FirstOrDefault(x => x.Chair == oldChair);
+                                if (replacedItem != null)
+                                {
+                                    replacedItem.Chair = newChair;
+                                    replacedItem.ChairId = newChair.Id;
+                                    replacedItem.LastModify = DateTimeOffset.Now;
+                                    replacedItem.UserModify = DataService?.UserName;
+                                }
+
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Reset:
+                        Entity.ChairToSpecializations.Clear();
+                        break;
+                }
+
+            }
+
             UpdateHasChanges();
         }
 

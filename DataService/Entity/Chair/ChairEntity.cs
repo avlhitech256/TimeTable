@@ -215,6 +215,7 @@ namespace DataService.Entity.Chair
 
                 return specializations;
             }
+
         }
 
         public Model.Chair Entity
