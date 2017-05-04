@@ -3,48 +3,48 @@ using System.Collections.ObjectModel;
 using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
-using Chair.SearchCriteria;
+using Specialization.SearchCriteria;
 using DataService.Constant;
-using DataService.Entity.Chair;
+using DataService.Entity.Specialization;
 using DataService.Model;
 using Domain.DomainContext;
 using Domain.Model;
 
-namespace Chair.Model
+namespace Specialization.Model
 {
-    public class ChairModel : Model<DataService.Model.Chair>, IChairModel
+    public class SpecializationModel : Model<DataService.Model.Specialization>, ISpecializationModel
     {
-        private ObservableCollection<Faculty> faculties;
-        private ObservableCollection<Faculty> facultiesForSearch;
-        private bool facultiesIsLoaded;
-        private bool facultiesForSearchIsLoaded;
+        private ObservableCollection<Specialty> specialties;
+        private ObservableCollection<Specialty> specialtiesForSearch;
+        private bool specialtiesIsLoaded;
+        private bool specialtiesForSearchIsLoaded;
 
-        public ChairModel(IDomainContext domainContext) : base(domainContext, new ChairSearchCriteria())
+        public SpecializationModel(IDomainContext domainContext) : base(domainContext, new SpecializationSearchCriteria())
         {
-            facultiesIsLoaded = false;
-            facultiesForSearchIsLoaded = false;
+            specialtiesIsLoaded = false;
+            specialtiesForSearchIsLoaded = false;
         }
 
         #region Properties
 
-        public ObservableCollection<Faculty> Faculties
+        public ObservableCollection<Specialty> Specialties
         {
             get
             {
-                if (!facultiesIsLoaded)
+                if (!specialtiesIsLoaded)
                 {
-                    facultiesIsLoaded = true;
-                    CreateFaculties();
+                    specialtiesIsLoaded = true;
+                    CreateSpecialties();
                 }
 
-                return faculties;
+                return specialties;
             }
 
             private set
             {
-                if (faculties != value)
+                if (specialties != value)
                 {
-                    faculties = value;
+                    specialties = value;
                     OnPropertyChanged();
                 }
 
@@ -52,24 +52,24 @@ namespace Chair.Model
 
         }
 
-        public ObservableCollection<Faculty> FacultiesForSearch
+        public ObservableCollection<Specialty> SpecialtiesForSearch
         {
             get
             {
-                if (!facultiesForSearchIsLoaded)
+                if (!specialtiesForSearchIsLoaded)
                 {
-                    facultiesForSearchIsLoaded = true;
-                    CreateFacultiesForSearch();
+                    specialtiesForSearchIsLoaded = true;
+                    CreateSpecialtiesForSearch();
                 }
 
-                return facultiesForSearch;
+                return specialtiesForSearch;
             }
 
             private set
             {
-                if (facultiesForSearch != value)
+                if (specialtiesForSearch != value)
                 {
-                    facultiesForSearch = value;
+                    specialtiesForSearch = value;
                     OnPropertyChanged();
                 }
 
@@ -77,7 +77,7 @@ namespace Chair.Model
 
         }
 
-        public ObservableCollection<Specialization> Specializations => ((IChairEntity) SelectedItem).Specializations;
+        public ObservableCollection<DataService.Model.Chair> Chairs => ((ISpecializationEntity)SelectedItem).Chairs;
 
         #endregion
 
@@ -85,50 +85,22 @@ namespace Chair.Model
 
         protected override void OnSelectedItemChanged()
         {
-            OnPropertyChanged(nameof(Specializations));
+            OnPropertyChanged(nameof(Chairs));
         }
-        private void CreateFaculties()
+        private void CreateSpecialties()
         {
-            Faculties = new ObservableCollection<Faculty>();
-            RefreshFacultyProperty();
+            Specialties = new ObservableCollection<Specialty>();
+            RefreshSpecialtyProperty();
         }
 
-        private void RefreshFacultyProperty()
+        private void RefreshSpecialtyProperty()
         {
-            Faculties.Clear();
+            Specialties.Clear();
 
             try
             {
-                DbContext.Faculties.OrderBy(x => x.Name).ToList().ForEach(x => Faculties.Add(x));
-                OnPropertyChanged(nameof(Faculties));
-            }
-            catch (EntityException e)
-            {
-                OnEntityException(e);
-            }
-            catch (DbEntityValidationException e)
-            {
-                OnDbEntityValidationException(e);
-            }
-            
-        }
-
-        private void CreateFacultiesForSearch()
-        {
-            FacultiesForSearch = new ObservableCollection<Faculty>();
-            RefreshFacultyForSearchProperty();
-        }
-
-        private void RefreshFacultyForSearchProperty()
-        {
-            FacultiesForSearch.Clear();
-
-            try
-            {
-                Faculty item0 = new Faculty { Id = 0, Name = DafaultConstant.DefaultFaculty };
-                FacultiesForSearch.Add(item0);
-                Faculties.ToList().ForEach(x => FacultiesForSearch.Add(x));
-                OnPropertyChanged(nameof(FacultiesForSearch));
+                DbContext.Specialties.OrderBy(x => x.Name).ToList().ForEach(x => Specialties.Add(x));
+                OnPropertyChanged(nameof(Specialties));
             }
             catch (EntityException e)
             {
@@ -141,21 +113,49 @@ namespace Chair.Model
 
         }
 
-        public void RefreshFaculties()
+        private void CreateSpecialtiesForSearch()
         {
-            RefreshFacultyProperty();
-            RefreshFacultyForSearchProperty();
+            SpecialtiesForSearch = new ObservableCollection<Specialty>();
+            RefreshSpecialtyForSearchProperty();
         }
 
-        public void RefreshSpecializations()
+        private void RefreshSpecialtyForSearchProperty()
+        {
+            SpecialtiesForSearch.Clear();
+
+            try
+            {
+                Specialty item0 = new Specialty { Id = 0, Name = DafaultConstant.DefaultSpecialty };
+                SpecialtiesForSearch.Add(item0);
+                Specialties.ToList().ForEach(x => SpecialtiesForSearch.Add(x));
+                OnPropertyChanged(nameof(SpecialtiesForSearch));
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
+
+        public void RefreshSpecialties()
+        {
+            RefreshSpecialtyProperty();
+            RefreshSpecialtyForSearchProperty();
+        }
+
+        public void RefreshChairs()
         {
             SelectedItem.RefreshChildItems();
         }
 
-        protected override List<DataService.Model.Chair> SelectEntities()
+        protected override List<DataService.Model.Specialization> SelectEntities()
         {
-            List<DataService.Model.Chair> result = base.SelectEntities();
-            ChairSearchCriteria searchCriteria = SearchCriteria as ChairSearchCriteria;
+            List<DataService.Model.Specialization> result = base.SelectEntities();
+            SpecializationSearchCriteria searchCriteria = SearchCriteria as SpecializationSearchCriteria;
 
             if (searchCriteria != null)
             {
@@ -178,7 +178,7 @@ namespace Chair.Model
                     .Where(x => string.IsNullOrWhiteSpace(searchCriteria.UserModify) ||
                                 x.UserModify.ToUpperInvariant()
                                     .Contains(searchCriteria.UserModify.ToUpperInvariant())).ToList()
-                    .Where(x => searchCriteria.FacultyId <= 0L || x.FacultyId == searchCriteria.FacultyId).ToList();
+                    .Where(x => searchCriteria.SpecialtyId <= 0L || x.SpecialtyId == searchCriteria.SpecialtyId).ToList();
             }
 
             return result;
@@ -187,5 +187,4 @@ namespace Chair.Model
         #endregion
 
     }
-
 }

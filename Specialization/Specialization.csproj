@@ -30,23 +30,121 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ISpecializationModel.cs" />
+    <Compile Include="Model\SpecializationModel.cs" />
+    <Compile Include="SearchCriteria\ISpecializationSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\SpecializationSearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ISpecializationViewModel.cs" />
+    <Compile Include="ViewModel\SpecializationViewModel.cs" />
+    <Compile Include="View\SpecializationEditButtonControl.xaml.cs">
+      <DependentUpon>SpecializationEditButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationEditControl.xaml.cs">
+      <DependentUpon>SpecializationEditControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationSearchButtonControl.xaml.cs">
+      <DependentUpon>SpecializationSearchButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationSearchControl.xaml.cs">
+      <DependentUpon>SpecializationSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationSearchCriteriaControl.xaml.cs">
+      <DependentUpon>SpecializationSearchCriteriaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationSearchDataGridControl.xaml.cs">
+      <DependentUpon>SpecializationSearchDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationSearchFieldsControl.xaml.cs">
+      <DependentUpon>SpecializationSearchFieldsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SpecializationEditFieldsControl.xaml.cs">
+      <DependentUpon>SpecializationEditFieldsControl.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Chair\Chair.csproj">
+      <Project>{6b5076e9-a097-4132-acfe-589eba03f5bb}</Project>
+      <Name>Chair</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9211ad9c-2d70-424c-96f5-dd0518985e37}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{356921DE-116D-48DB-9613-5D0395420897}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataService\DataService.csproj">
+      <Project>{190E41B3-74A8-49F6-92D4-B82A866716BE}</Project>
+      <Name>DataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8D72DF4E-D904-4353-BBC5-141F3A563C4E}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="SearchCriteria\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\SpecializationEditButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpecializationEditControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SpecializationSearchButtonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SpecializationSearchControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SpecializationSearchCriteriaControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SpecializationSearchDataGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SpecializationSearchFieldsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SpecializationEditFieldsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -93,7 +93,7 @@
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
             <DatePicker Name="SearchDateCreateFrom" 
-                        SelectedDate="{Binding Path=SearchCriteria.CteatedFrom, 
+                        SelectedDate="{Binding Path=SearchCriteria.CreatedFrom, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
                         ToolTip="Дата начала периода создания записи кафедры"
@@ -101,7 +101,7 @@
                         Grid.Column="0" 
                         Margin="3"/>
             <DatePicker Name="SearchDateCreateTo" 
-                        SelectedDate="{Binding Path=SearchCriteria.CteatedTo, 
+                        SelectedDate="{Binding Path=SearchCriteria.CreatedTo, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
                         ToolTip="Дата конца периода создания записи кафедры"

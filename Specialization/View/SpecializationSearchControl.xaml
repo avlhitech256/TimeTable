@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Specialization.View.SpecializationSearchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Specialization.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="700">
+    <Grid x:Name="MainGridControl">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="TitleResult" 
+               Content="Поиск специализации" 
+               Grid.Row="0" 
+               Margin="1" 
+               HorizontalAlignment="Stretch" 
+               Background="#FF1700A8" 
+               FontWeight="Bold" 
+               Foreground="White" 
+               HorizontalContentAlignment="Center">
+        </Label>
+        <local:SpecializationSearchCriteriaControl Grid.Row="1"></local:SpecializationSearchCriteriaControl>
+        <local:SpecializationSearchDataGridControl Grid.Row="2"></local:SpecializationSearchDataGridControl>
+    </Grid>
+</UserControl>

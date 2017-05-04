@@ -31,10 +31,10 @@ namespace Specialty.Model
                                 x.Name.ToUpperInvariant()
                                     .Contains(searchCriteria.Name.ToUpperInvariant())).ToList()
                     .Where(x => !searchCriteria.Active || x.Active).ToList()
-                    .Where(x => (!searchCriteria.CteatedFrom.HasValue ||
-                                 x.Created >= searchCriteria.CteatedFrom.Value) &&
-                                (!searchCriteria.CteatedTo.HasValue ||
-                                 x.Created < searchCriteria.CteatedTo.Value.AddDays(1))).ToList()
+                    .Where(x => (!searchCriteria.CreatedFrom.HasValue ||
+                                 x.Created >= searchCriteria.CreatedFrom.Value) &&
+                                (!searchCriteria.CreatedTo.HasValue ||
+                                 x.Created < searchCriteria.CreatedTo.Value.AddDays(1))).ToList()
                     .Where(x => (!searchCriteria.LastModifyFrom.HasValue ||
                                  x.LastModify >= searchCriteria.LastModifyFrom.Value) &&
                                 (!searchCriteria.LastModifyTo.HasValue ||

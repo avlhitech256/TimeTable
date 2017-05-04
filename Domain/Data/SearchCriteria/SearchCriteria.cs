@@ -10,8 +10,8 @@ namespace Domain.Data.SearchCriteria
         private string code;
         private string name;
         private bool active;
-        private DateTime? cteatedFrom;
-        private DateTime? cteatedTo;
+        private DateTime? createdFrom;
+        private DateTime? createdTo;
         private DateTime? lastModifyFrom;
         private DateTime? lastModifyTo;
         private string userModify;
@@ -26,8 +26,8 @@ namespace Domain.Data.SearchCriteria
             Code = string.Empty;
             Name = string.Empty;
             Active = true;
-            CteatedFrom = null;
-            CteatedTo = null;
+            CreatedFrom = null;
+            CreatedTo = null;
             LastModifyFrom = null;
             LastModifyTo = null;
             UserModify = string.Empty;
@@ -96,36 +96,36 @@ namespace Domain.Data.SearchCriteria
 
         }
 
-        public DateTime? CteatedFrom
+        public DateTime? CreatedFrom
         {
             get
             {
-                return cteatedFrom;
+                return createdFrom;
             }
 
             set
             {
-                if (cteatedFrom != value)
+                if (createdFrom != value)
                 {
-                    cteatedFrom = value;
+                    createdFrom = value;
                     OnPropertyChanged();
                     OnSearchCriteriaChanged();
                 }
             }
         }
 
-        public DateTime? CteatedTo
+        public DateTime? CreatedTo
         {
             get
             {
-                return cteatedTo;
+                return createdTo;
             }
 
             set
             {
-                if (cteatedTo != value)
+                if (createdTo != value)
                 {
-                    cteatedTo = value;
+                    createdTo = value;
                     OnPropertyChanged();
                     OnSearchCriteriaChanged();
                 }
@@ -215,8 +215,8 @@ namespace Domain.Data.SearchCriteria
             bool result = string.IsNullOrWhiteSpace(Code) &&
                           string.IsNullOrWhiteSpace(Name) &&
                           Active &&
-                          (!CteatedFrom.HasValue || CteatedFrom.Value == DateTime.MinValue) &&
-                          (!CteatedTo.HasValue || CteatedTo.Value == DateTime.MinValue) &&
+                          (!CreatedFrom.HasValue || CreatedFrom.Value == DateTime.MinValue) &&
+                          (!CreatedTo.HasValue || CreatedTo.Value == DateTime.MinValue) &&
                           (!LastModifyFrom.HasValue || LastModifyFrom.Value == DateTime.MinValue) &&
                           (!LastModifyTo.HasValue || LastModifyTo.Value == DateTime.MinValue) &&
                           string.IsNullOrWhiteSpace(UserModify);
@@ -238,8 +238,8 @@ namespace Domain.Data.SearchCriteria
             Code = string.Empty;
             Name = string.Empty;
             Active = true;
-            CteatedFrom = null;
-            CteatedTo = null;
+            CreatedFrom = null;
+            CreatedTo = null;
             LastModifyFrom = null;
             LastModifyTo = null;
             UserModify = string.Empty;
