@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -181,11 +181,11 @@ namespace DataService.Entity.Faculty
 
         }
 
-        public long HighSchoolId
+        public long? HighSchoolId
         {
             get
             {
-                return Entity?.HighSchoolId ?? 0L;
+                return Entity?.HighSchoolId ?? null;
             }
 
             set
@@ -194,17 +194,7 @@ namespace DataService.Entity.Faculty
                 {
                     if (Entity != null && Entity.HighSchoolId != value)
                     {
-                        if (value <= 0)
-                        {
-                            StringBuilder message = new StringBuilder();
-                            message.Append("Поле  [ ВУЗ ]  не может содержать значение \"");
-                            message.Append(DafaultConstant.DefaultHighSchool);
-                            message.AppendFormat("\" со значением Id = {0}.", value);
-                            message.AppendLine("Пожалуйста, выберите из списка действующих учебных заведений.");
-                            throw new BusinessLogicException(message.ToString());
-                        }
-
-                        if (DataService?.DBContext?.HighSchools?.ToList().All(x => x.Id != value) ?? true)
+                        if (value > 0 && (DataService?.DBContext?.HighSchools?.ToList().All(x => x.Id != value) ?? true))
                         {
                             StringBuilder message = new StringBuilder();
                             message.Append("Поле  [ ВУЗ ]  не может содержать ссылку на учебное заведение ");
@@ -284,6 +274,16 @@ namespace DataService.Entity.Faculty
                 return chairs;
             }
 
+            private set
+            {
+                if (chairs != value)
+                {
+                    chairs = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
         }
 
         public Model.Faculty Entity
@@ -352,8 +352,70 @@ namespace DataService.Entity.Faculty
 
         private void CreateChairs()
         {
-            chairs = new ObservableCollection<Model.Chair>();
+            Chairs = new ObservableCollection<Model.Chair>();
+            Chairs.CollectionChanged += Chairs_CollectionChanged;
             RefreshChildItems();
+        }
+
+        private void Chairs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (DataService?.DBContext?.ChairToSpecializations != null)
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+
+                        foreach (var item in e.NewItems)
+                        {
+                            Model.Chair chair = item as Model.Chair;
+
+                            if (chair != null)
+                            {
+                                Entity.Chairs.Add(chair);
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+
+                        foreach (var item in e.OldItems)
+                        {
+                            Model.Chair chair = item as Model.Chair;
+
+                            if (chair != null)
+                            {
+                                Entity.Chairs.Remove(chair);
+                            }
+
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Replace:
+
+                        for (int index = 0; index < e.NewItems.Count; index++)
+                        {
+                            Model.Chair oldChair = e.OldItems[index] as Model.Chair;
+                            Model.Chair newChair = e.NewItems[index] as Model.Chair;
+
+                            Entity.Chairs.Remove(oldChair);
+                            Entity.Chairs.Add(newChair);
+                        }
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Reset:
+                        Entity.Chairs.Clear();
+                        break;
+                }
+
+            }
+
+            SetInfoAboutModify();
+            UpdateHasChanges();
+
         }
 
         public void RefreshChildItems()

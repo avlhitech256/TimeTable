@@ -166,7 +166,7 @@ namespace DataService.Entity.Chair
         {
             get
             {
-                return Entity?.FacultyId ?? 0L;
+                return Entity?.FacultyId;
             }
 
             set
