@@ -4,6 +4,7 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Linq;
 using DataService.Constant;
+using DataService.Entity.Faculty;
 using DataService.Model;
 using Domain.DomainContext;
 using Domain.Model;
@@ -17,7 +18,6 @@ namespace Faculty.Model
 
         private ObservableCollection<HighSchool> highSchools;
         private ObservableCollection<HighSchool> highSchoolsForSearch;
-        private ObservableCollection<Chair> chairs;
 
         #endregion
 
@@ -41,6 +41,16 @@ namespace Faculty.Model
                 return highSchools;
             }
 
+            private set
+            {
+                if (highSchools != value)
+                {
+                    highSchools = value;
+                    OnPropertyChanged();
+                }
+
+            }
+
         }
 
         public ObservableCollection<HighSchool> HighSchoolsForSearch
@@ -54,12 +64,18 @@ namespace Faculty.Model
 
                 return highSchoolsForSearch;
             }
+
+            private set
+            {
+                if (highSchoolsForSearch != value)
+                {
+                    highSchoolsForSearch = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
-        public ObservableCollection<Chair> Chairs
-        {
-            get { return chairs; }
-        }
+        public ObservableCollection<Chair> Chairs => ((IFacultyEntity) SelectedItem).Chairs;
 
         #endregion
 
@@ -73,7 +89,7 @@ namespace Faculty.Model
 
         private void CreateHighSchools()
         {
-            highSchools = new ObservableCollection<HighSchool>();
+            HighSchools = new ObservableCollection<HighSchool>();
             RefreshHighSchoolsProperty();
         }
 
@@ -84,9 +100,9 @@ namespace Faculty.Model
             try
             {
                 HighSchool item0 = new HighSchool { Id = 0, Name = string.Empty };
-                highSchools.Add(item0);
-                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
-                OnPropertyChanged();
+                HighSchools.Add(item0);
+                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => HighSchools.Add(x));
+                OnPropertyChanged(nameof(HighSchools));
             }
             catch (EntityException e)
             {
@@ -101,7 +117,7 @@ namespace Faculty.Model
 
         private void CreateHighSchoolsForSearch()
         {
-            highSchools = new ObservableCollection<HighSchool>();
+            HighSchoolsForSearch = new ObservableCollection<HighSchool>();
             RefreshHighSchoolsForSearchProperty();
         }
 
@@ -112,9 +128,9 @@ namespace Faculty.Model
             try
             {
                 HighSchool item0 = new HighSchool { Id = 0, Name = DafaultConstant.DefaultHighSchool };
-                highSchools.Add(item0);
-                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
-                OnPropertyChanged();
+                HighSchoolsForSearch.Add(item0);
+                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => HighSchoolsForSearch.Add(x));
+                OnPropertyChanged(nameof(HighSchoolsForSearch));
             }
             catch (EntityException e)
             {
@@ -129,7 +145,7 @@ namespace Faculty.Model
 
         public void RefreshChairs()
         {
-            throw new System.NotImplementedException();
+            SelectedItem.RefreshChildItems();
         }
 
         protected override List<DataService.Model.Faculty> SelectEntities()
