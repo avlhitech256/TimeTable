@@ -25,6 +25,8 @@ namespace DataService.Model
         public string Name { get; set; }
         public string Position { get; set; }
         public bool Active { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
         public System.DateTimeOffset Created { get; set; }
         public System.DateTimeOffset LastModify { get; set; }
         public string UserModify { get; set; }

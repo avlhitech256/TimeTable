@@ -99,6 +99,8 @@ namespace Chair.Model
 
             try
             {
+                Faculty item0 = new Faculty { Id = 0, Name = string.Empty };
+                Faculties.Add(item0);
                 DbContext.Faculties.OrderBy(x => x.Name).ToList().ForEach(x => Faculties.Add(x));
                 OnPropertyChanged(nameof(Faculties));
             }
@@ -127,7 +129,7 @@ namespace Chair.Model
             {
                 Faculty item0 = new Faculty { Id = 0, Name = DafaultConstant.DefaultFaculty };
                 FacultiesForSearch.Add(item0);
-                Faculties.ToList().ForEach(x => FacultiesForSearch.Add(x));
+                DbContext.Faculties.OrderBy(x => x.Name).ToList().ForEach(x => FacultiesForSearch.Add(x));
                 OnPropertyChanged(nameof(FacultiesForSearch));
             }
             catch (EntityException e)

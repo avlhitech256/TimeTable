@@ -162,7 +162,7 @@ namespace DataService.Entity.Chair
 
         }
 
-        public long FacultyId
+        public long? FacultyId
         {
             get
             {
@@ -173,7 +173,7 @@ namespace DataService.Entity.Chair
             {
                 if (Entity != null && Entity.FacultyId != value)
                 {
-                    Entity.FacultyId = value;
+                    Entity.FacultyId = value > 0 ? value : null;
                     SetInfoAboutModify();
                     OnPropertyChanged();
                 }
@@ -208,12 +208,20 @@ namespace DataService.Entity.Chair
             {
                 if (specializations == null)
                 {
-                    specializations = new ObservableCollection<Model.Specialization>();
-                    specializations.CollectionChanged += Specializations_CollectionChanged;
-                    RefreshChildItems();
+                    CreateSpecializations();
                 }
 
                 return specializations;
+            }
+
+            private set
+            {
+                if (specializations != value)
+                {
+                    specializations = value;
+                    OnPropertyChanged();
+                }
+
             }
 
         }
@@ -283,6 +291,13 @@ namespace DataService.Entity.Chair
                 OnDbUpdateException(e);
             }
 
+        }
+
+        private void CreateSpecializations()
+        {
+            Specializations = new ObservableCollection<Model.Specialization>();
+            Specializations.CollectionChanged += Specializations_CollectionChanged;
+            RefreshChildItems();
         }
 
         public void RefreshChildItems()

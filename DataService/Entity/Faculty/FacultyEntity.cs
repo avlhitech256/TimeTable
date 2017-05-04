@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -21,6 +22,7 @@ namespace DataService.Entity.Faculty
 
         private long position;
         private Model.Faculty entity;
+        private ObservableCollection<Model.Chair> chairs;
         private bool hasChanges;
 
         #endregion
@@ -270,7 +272,19 @@ namespace DataService.Entity.Faculty
 
         }
 
-        public ICollection<Model.Chair> Chairs => Entity.Chairs;
+        public ObservableCollection<Model.Chair> Chairs
+        {
+            get
+            {
+                if (chairs == null)
+                {
+                    CreateChairs();
+                }
+
+                return chairs;
+            }
+
+        }
 
         public Model.Faculty Entity
         {
@@ -336,9 +350,15 @@ namespace DataService.Entity.Faculty
 
         }
 
+        private void CreateChairs()
+        {
+            chairs = new ObservableCollection<Model.Chair>();
+            RefreshChildItems();
+        }
+
         public void RefreshChildItems()
         {
-            throw new NotImplementedException();
+            Entity.Chairs.ToList().ForEach(x => Chairs.Add(x));
         }
 
         private void CreateEntity()

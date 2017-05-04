@@ -16,16 +16,14 @@ namespace Faculty.Model
         #region Members
 
         private ObservableCollection<HighSchool> highSchools;
-        private bool highSchoolsIsLoaded;
+        private ObservableCollection<HighSchool> highSchoolsForSearch;
+        private ObservableCollection<Chair> chairs;
 
         #endregion
 
         #region Constructors
 
-        public FacultyModel(IDomainContext domainContext) : base(domainContext, new FacultySearchCriteria())
-        {
-            highSchoolsIsLoaded = false;
-        }
+        public FacultyModel(IDomainContext domainContext) : base(domainContext, new FacultySearchCriteria()) { }
 
         #endregion
 
@@ -35,26 +33,9 @@ namespace Faculty.Model
         {
             get
             {
-                if (!highSchoolsIsLoaded)
+                if (highSchools == null)
                 {
-                    try
-                    {
-                        highSchools = new ObservableCollection<HighSchool>();
-                        HighSchool item0 = new HighSchool { Id = 0, Name = DafaultConstant.DefaultHighSchool };
-                        highSchools.Add(item0);
-                        DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
-                        OnPropertyChanged();
-                        highSchoolsIsLoaded = true;
-                    }
-                    catch (EntityException e)
-                    {
-                        OnEntityException(e);
-                    }
-                    catch (DbEntityValidationException e)
-                    {
-                        OnDbEntityValidationException(e);
-                    }
-
+                    CreateHighSchools();
                 }
 
                 return highSchools;
@@ -62,9 +43,94 @@ namespace Faculty.Model
 
         }
 
+        public ObservableCollection<HighSchool> HighSchoolsForSearch
+        {
+            get
+            {
+                if (highSchoolsForSearch == null)
+                {
+                    CreateHighSchoolsForSearch();
+                }
+
+                return highSchoolsForSearch;
+            }
+        }
+
+        public ObservableCollection<Chair> Chairs
+        {
+            get { return chairs; }
+        }
+
         #endregion
 
         #region Methods
+
+        public void RefreshHighSchools()
+        {
+            RefreshHighSchoolsProperty();
+            RefreshHighSchoolsForSearchProperty();
+        }
+
+        private void CreateHighSchools()
+        {
+            highSchools = new ObservableCollection<HighSchool>();
+            RefreshHighSchoolsProperty();
+        }
+
+        public void RefreshHighSchoolsProperty()
+        {
+            HighSchools.Clear();
+
+            try
+            {
+                HighSchool item0 = new HighSchool { Id = 0, Name = string.Empty };
+                highSchools.Add(item0);
+                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
+                OnPropertyChanged();
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
+
+        private void CreateHighSchoolsForSearch()
+        {
+            highSchools = new ObservableCollection<HighSchool>();
+            RefreshHighSchoolsForSearchProperty();
+        }
+
+        public void RefreshHighSchoolsForSearchProperty()
+        {
+            HighSchools.Clear();
+
+            try
+            {
+                HighSchool item0 = new HighSchool { Id = 0, Name = DafaultConstant.DefaultHighSchool };
+                highSchools.Add(item0);
+                DbContext.HighSchools.OrderBy(x => x.Name).ToList().ForEach(x => highSchools.Add(x));
+                OnPropertyChanged();
+            }
+            catch (EntityException e)
+            {
+                OnEntityException(e);
+            }
+            catch (DbEntityValidationException e)
+            {
+                OnDbEntityValidationException(e);
+            }
+
+        }
+
+        public void RefreshChairs()
+        {
+            throw new System.NotImplementedException();
+        }
 
         protected override List<DataService.Model.Faculty> SelectEntities()
         {

@@ -1,6 +1,5 @@
 ﻿using Domain.ViewModel;
 using System.Collections.ObjectModel;
-using Chair.Model;
 using Specialization.Model;
 using DataService.Model;
 using Domain.DomainContext;

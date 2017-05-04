@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chair.ViewModel;
-using DataService.Model;
 using Domain.Data.Enum;
 using Domain.DomainContext;
 using Faculty.ViewModel;

@@ -29,8 +29,8 @@ namespace DataService.Model
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<HighSchool> HighSchools { get; set; }
-        public virtual DbSet<Specialty> Specialties { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
-    
+        public virtual DbSet<Specialty> Specialties { get; set; }
     }
+
 }

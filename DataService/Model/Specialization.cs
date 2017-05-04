@@ -23,7 +23,7 @@ namespace DataService.Model
         public long Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public long SpecialtyId { get; set; }
+        public Nullable<long> SpecialtyId { get; set; }
         public bool Active { get; set; }
         public System.DateTimeOffset Created { get; set; }
         public System.DateTimeOffset LastModify { get; set; }
