@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chair", "Chair\Chair.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specialization", "Specialization\Specialization.csproj", "{4F02E31A-B9CA-43ED-8DFD-41EB1CA49106}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Employee", "Employee\Employee.csproj", "{A3477D30-7F75-46AE-97F2-6F316E310DB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{4F02E31A-B9CA-43ED-8DFD-41EB1CA49106}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F02E31A-B9CA-43ED-8DFD-41EB1CA49106}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F02E31A-B9CA-43ED-8DFD-41EB1CA49106}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3477D30-7F75-46AE-97F2-6F316E310DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3477D30-7F75-46AE-97F2-6F316E310DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3477D30-7F75-46AE-97F2-6F316E310DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3477D30-7F75-46AE-97F2-6F316E310DB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
