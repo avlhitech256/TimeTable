@@ -31,6 +31,11 @@ namespace DataService.Model
         public virtual DbSet<HighSchool> HighSchools { get; set; }
         public virtual DbSet<Specialization> Specializations { get; set; }
         public virtual DbSet<Specialty> Specialties { get; set; }
+        public virtual DbSet<Classroom> Classrooms { get; set; }
+        public virtual DbSet<ClassroomProperty> ClassroomProperties { get; set; }
+        public virtual DbSet<ClassroomToClassroomProperty> ClassroomToClassroomProperties { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<ClassroomPropertyView> ClassroomPropertyViews { get; set; }
     }
 
 }

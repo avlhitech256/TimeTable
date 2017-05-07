@@ -38,7 +38,10 @@
         </MenuItem>
         <MenuItem Header="Сервис">
             <MenuItem Header="Настройка..." IsEnabled="False"/>
-            <MenuItem Header="Параметры..." IsEnabled="False"/>
+            <MenuItem Header="Параметры...">
+                <MenuItem Header="Свойства аудиторий" IsEnabled="False"/>
+                <MenuItem Header="Единицы измерений" IsEnabled="False"/>
+            </MenuItem>
         </MenuItem>
         <MenuItem Header="Справка">
             <MenuItem Header="Просмотр справки" IsEnabled="False"/>

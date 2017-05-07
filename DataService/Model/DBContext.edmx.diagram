@@ -18,6 +18,14 @@
         <AssociationConnector Association="TimeTableModel.FK_HighSchool_Employee" />
         <AssociationConnector Association="TimeTableModel.FK_Faculty_HighSchool" />
         <AssociationConnector Association="TimeTableModel.FK_Specialization_Specialty" />
+        <EntityTypeShape EntityType="TimeTableModel.Classroom" Width="1.5" PointX="7.625" PointY="1.25" />
+        <EntityTypeShape EntityType="TimeTableModel.ClassroomProperty" Width="1.5" PointX="7.625" PointY="5" />
+        <EntityTypeShape EntityType="TimeTableModel.ClassroomToClassroomProperty" Width="1.5" PointX="9.875" PointY="5.125" />
+        <EntityTypeShape EntityType="TimeTableModel.Unit" Width="1.5" PointX="5.375" PointY="5.125" />
+        <EntityTypeShape EntityType="TimeTableModel.ClassroomPropertyView" Width="1.5" PointX="4.375" PointY="8.75" />
+        <AssociationConnector Association="TimeTableModel.FK_ClassroomToClassroomProperty_Classroom" />
+        <AssociationConnector Association="TimeTableModel.FK_ClassroomProperty_Unit" />
+        <AssociationConnector Association="TimeTableModel.FK_ClassroomToClassroomProperty_ClassroomProperty" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

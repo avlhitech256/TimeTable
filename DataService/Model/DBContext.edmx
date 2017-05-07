@@ -30,6 +30,44 @@
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Classroom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassroomProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DefaultPriority" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="bigint" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassroomToClassroomProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassroomId" Type="bigint" Nullable="false" />
+          <Property Name="ClassroomPropertyId" Type="bigint" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -96,6 +134,36 @@
           <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
           <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastModify" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="UserModify" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "TimeTable.dbo.ClassroomPropertyView" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ClassroomPropertyView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="DefaultPriority" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DefaultPriority" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="bigint" />
+          <Property Name="UnitCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="UnitShortName" Type="nvarchar" MaxLength="255" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_Chair_Faculty">
           <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
           <End Role="Chair" Type="Self.Chair" Multiplicity="*" />
@@ -129,6 +197,42 @@
             </Principal>
             <Dependent Role="ChairToSpecialization">
               <PropertyRef Name="SpecializationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassroomProperty_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="ClassroomProperty" Type="Self.ClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomProperty">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassroomToClassroomProperty_Classroom">
+          <End Role="Classroom" Type="Self.Classroom" Multiplicity="1" />
+          <End Role="ClassroomToClassroomProperty" Type="Self.ClassroomToClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classroom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomToClassroomProperty">
+              <PropertyRef Name="ClassroomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassroomToClassroomProperty_ClassroomProperty">
+          <End Role="ClassroomProperty" Type="Self.ClassroomProperty" Multiplicity="1" />
+          <End Role="ClassroomToClassroomProperty" Type="Self.ClassroomToClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassroomProperty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomToClassroomProperty">
+              <PropertyRef Name="ClassroomPropertyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -202,11 +306,27 @@
         <EntityContainer Name="Хранилище TimeTableModelContainer">
           <EntitySet Name="Chair" EntityType="Self.Chair" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChairToSpecialization" EntityType="Self.ChairToSpecialization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classroom" EntityType="Self.Classroom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassroomProperty" EntityType="Self.ClassroomProperty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassroomToClassroomProperty" EntityType="Self.ClassroomToClassroomProperty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HighSchool" EntityType="Self.HighSchool" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialization" EntityType="Self.Specialization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassroomPropertyView" EntityType="Self.ClassroomPropertyView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ClassroomPropertyView].[Id] AS [Id], 
+    [ClassroomPropertyView].[Code] AS [Code], 
+    [ClassroomPropertyView].[Name] AS [Name], 
+    [ClassroomPropertyView].[DefaultPriority] AS [DefaultPriority], 
+    [ClassroomPropertyView].[UnitId] AS [UnitId], 
+    [ClassroomPropertyView].[UnitCode] AS [UnitCode], 
+    [ClassroomPropertyView].[UnitShortName] AS [UnitShortName], 
+    [ClassroomPropertyView].[UnitName] AS [UnitName]
+    FROM [dbo].[ClassroomPropertyView] AS [ClassroomPropertyView]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Chair_Faculty" Association="Self.FK_Chair_Faculty">
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="Chair" EntitySet="Chair" />
@@ -218,6 +338,18 @@
           <AssociationSet Name="FK_ChairToSpecialization_Specialization" Association="Self.FK_ChairToSpecialization_Specialization">
             <End Role="Specialization" EntitySet="Specialization" />
             <End Role="ChairToSpecialization" EntitySet="ChairToSpecialization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassroomProperty_Unit" Association="Self.FK_ClassroomProperty_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="ClassroomProperty" EntitySet="ClassroomProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassroomToClassroomProperty_Classroom" Association="Self.FK_ClassroomToClassroomProperty_Classroom">
+            <End Role="Classroom" EntitySet="Classroom" />
+            <End Role="ClassroomToClassroomProperty" EntitySet="ClassroomToClassroomProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassroomToClassroomProperty_ClassroomProperty" Association="Self.FK_ClassroomToClassroomProperty_ClassroomProperty">
+            <End Role="ClassroomProperty" EntitySet="ClassroomProperty" />
+            <End Role="ClassroomToClassroomProperty" EntitySet="ClassroomToClassroomProperty" />
           </AssociationSet>
           <AssociationSet Name="FK_Faculty_HighSchool" Association="Self.FK_Faculty_HighSchool">
             <End Role="HighSchool" EntitySet="HighSchool" />
@@ -297,6 +429,23 @@
           <AssociationSet Name="FK_Specialization_Specialty" Association="TimeTableModel.FK_Specialization_Specialty">
             <End Role="Specialty" EntitySet="Specialties" />
             <End Role="Specialization" EntitySet="Specializations" />
+          </AssociationSet>
+          <EntitySet Name="Classrooms" EntityType="TimeTableModel.Classroom" />
+          <EntitySet Name="ClassroomProperties" EntityType="TimeTableModel.ClassroomProperty" />
+          <EntitySet Name="ClassroomToClassroomProperties" EntityType="TimeTableModel.ClassroomToClassroomProperty" />
+          <EntitySet Name="Units" EntityType="TimeTableModel.Unit" />
+          <EntitySet Name="ClassroomPropertyViews" EntityType="TimeTableModel.ClassroomPropertyView" />
+          <AssociationSet Name="FK_ClassroomToClassroomProperty_Classroom" Association="TimeTableModel.FK_ClassroomToClassroomProperty_Classroom">
+            <End Role="Classroom" EntitySet="Classrooms" />
+            <End Role="ClassroomToClassroomProperty" EntitySet="ClassroomToClassroomProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassroomProperty_Unit" Association="TimeTableModel.FK_ClassroomProperty_Unit">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="ClassroomProperty" EntitySet="ClassroomProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClassroomToClassroomProperty_ClassroomProperty" Association="TimeTableModel.FK_ClassroomToClassroomProperty_ClassroomProperty">
+            <End Role="ClassroomProperty" EntitySet="ClassroomProperties" />
+            <End Role="ClassroomToClassroomProperty" EntitySet="ClassroomToClassroomProperties" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -485,6 +634,114 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Classroom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassroomToClassroomProperties" Relationship="TimeTableModel.FK_ClassroomToClassroomProperty_Classroom" FromRole="Classroom" ToRole="ClassroomToClassroomProperty" />
+        </EntityType>
+        <EntityType Name="ClassroomProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultPriority" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int64" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Unit" Relationship="TimeTableModel.FK_ClassroomProperty_Unit" FromRole="ClassroomProperty" ToRole="Unit" />
+          <NavigationProperty Name="ClassroomToClassroomProperties" Relationship="TimeTableModel.FK_ClassroomToClassroomProperty_ClassroomProperty" FromRole="ClassroomProperty" ToRole="ClassroomToClassroomProperty" />
+        </EntityType>
+        <EntityType Name="ClassroomToClassroomProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassroomId" Type="Int64" Nullable="false" />
+          <Property Name="ClassroomPropertyId" Type="Int64" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classroom" Relationship="TimeTableModel.FK_ClassroomToClassroomProperty_Classroom" FromRole="ClassroomToClassroomProperty" ToRole="Classroom" />
+          <NavigationProperty Name="ClassroomProperty" Relationship="TimeTableModel.FK_ClassroomToClassroomProperty_ClassroomProperty" FromRole="ClassroomToClassroomProperty" ToRole="ClassroomProperty" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastModify" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="UserModify" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassroomProperties" Relationship="TimeTableModel.FK_ClassroomProperty_Unit" FromRole="Unit" ToRole="ClassroomProperty" />
+        </EntityType>
+        <EntityType Name="ClassroomPropertyView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="DefaultPriority" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultPriority" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int64" />
+          <Property Name="UnitCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UnitShortName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_ClassroomToClassroomProperty_Classroom">
+          <End Type="TimeTableModel.Classroom" Role="Classroom" Multiplicity="1" />
+          <End Type="TimeTableModel.ClassroomToClassroomProperty" Role="ClassroomToClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classroom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomToClassroomProperty">
+              <PropertyRef Name="ClassroomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassroomProperty_Unit">
+          <End Type="TimeTableModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="TimeTableModel.ClassroomProperty" Role="ClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomProperty">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClassroomToClassroomProperty_ClassroomProperty">
+          <End Type="TimeTableModel.ClassroomProperty" Role="ClassroomProperty" Multiplicity="1" />
+          <End Type="TimeTableModel.ClassroomToClassroomProperty" Role="ClassroomToClassroomProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassroomProperty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassroomToClassroomProperty">
+              <PropertyRef Name="ClassroomPropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -607,6 +864,75 @@
                 <ScalarProperty Name="LastModify" ColumnName="LastModify" />
                 <ScalarProperty Name="Created" ColumnName="Created" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classrooms">
+            <EntityTypeMapping TypeName="TimeTableModel.Classroom">
+              <MappingFragment StoreEntitySet="Classroom">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassroomProperties">
+            <EntityTypeMapping TypeName="TimeTableModel.ClassroomProperty">
+              <MappingFragment StoreEntitySet="ClassroomProperty">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="DefaultPriority" ColumnName="DefaultPriority" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassroomToClassroomProperties">
+            <EntityTypeMapping TypeName="TimeTableModel.ClassroomToClassroomProperty">
+              <MappingFragment StoreEntitySet="ClassroomToClassroomProperty">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ClassroomPropertyId" ColumnName="ClassroomPropertyId" />
+                <ScalarProperty Name="ClassroomId" ColumnName="ClassroomId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="TimeTableModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="UserModify" ColumnName="UserModify" />
+                <ScalarProperty Name="LastModify" ColumnName="LastModify" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassroomPropertyViews">
+            <EntityTypeMapping TypeName="TimeTableModel.ClassroomPropertyView">
+              <MappingFragment StoreEntitySet="ClassroomPropertyView">
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitShortName" ColumnName="UnitShortName" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="DefaultPriority" ColumnName="DefaultPriority" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
