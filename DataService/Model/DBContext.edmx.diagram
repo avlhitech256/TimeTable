@@ -6,10 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7aa7fe108274452ab558cbb2a5338edd" Name="Diagram1">
         <EntityTypeShape EntityType="TimeTableModel.Chair" Width="1.5" PointX="3" PointY="5" />
-        <EntityTypeShape EntityType="TimeTableModel.ChairToSpecialization" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="TimeTableModel.Employee" Width="1.5" PointX="3.125" PointY="12" />
+        <EntityTypeShape EntityType="TimeTableModel.ChairToSpecialization" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="TimeTableModel.Employee" Width="1.5" PointX="1.5" PointY="12.875" />
         <EntityTypeShape EntityType="TimeTableModel.Faculty" Width="1.5" PointX="0.75" PointY="5" />
-        <EntityTypeShape EntityType="TimeTableModel.HighSchool" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="TimeTableModel.HighSchool" Width="1.5" PointX="1.5" PointY="9" />
         <EntityTypeShape EntityType="TimeTableModel.Specialization" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="TimeTableModel.Specialty" Width="1.5" PointX="0.75" PointY="1.125" />
         <AssociationConnector Association="TimeTableModel.FK_Chair_Faculty" />

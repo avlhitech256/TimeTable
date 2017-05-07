@@ -228,7 +228,7 @@ namespace DataService.Entity.HighSchool
 
         }
 
-        public Model.Employee Employee
+        public Employee Employee
         {
             get
             {
@@ -352,7 +352,7 @@ namespace DataService.Entity.HighSchool
                         DataService?.DBContext?.HighSchools?.Add(newEntity);
                         Entity = newEntity;
                         Active = true;
-                        Model.Employee employee = DataService.DBContext.Employees.FirstOrDefault();
+                        Employee employee = DataService.DBContext.Employees.FirstOrDefault();
                         Rector = employee?.Id ?? 0;
                         UserModify = DataService?.UserName;
                         DateTimeOffset now = DateTimeOffset.Now;

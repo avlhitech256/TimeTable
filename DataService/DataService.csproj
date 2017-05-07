@@ -58,8 +58,6 @@
     <Compile Include="Entity\Chair\ChairEntity.cs" />
     <Compile Include="Entity\Chair\IChairEntity.cs" />
     <Compile Include="Entity\DomainEntityFactory.cs" />
-    <Compile Include="Entity\Employee\EmployeeEntity.cs" />
-    <Compile Include="Entity\Employee\IEmployeeEntity.cs" />
     <Compile Include="Entity\Faculty\FacultyEntity.cs" />
     <Compile Include="Entity\Faculty\IFacultyEntity.cs" />
     <Compile Include="Entity\HighSchool\HighSchoolEntity.cs" />
@@ -104,12 +102,6 @@
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Specialty.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DBContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\sp_helpdiagrams_Result.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

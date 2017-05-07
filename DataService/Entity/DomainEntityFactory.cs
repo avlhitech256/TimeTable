@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Common.Messenger;
 using DataService.DataService;
 using DataService.Entity.Chair;
-using DataService.Entity.Employee;
 using DataService.Entity.Faculty;
 using DataService.Entity.HighSchool;
 using DataService.Entity.Specialization;
@@ -34,8 +33,7 @@ namespace DataService.Entity
                 {typeof(Model.Faculty), (entity, position) => new FacultyEntity(dataService, messenger, entity as Model.Faculty, position)},
                 {typeof(Model.Chair), (entity, position) => new ChairEntity(dataService, messenger, entity as Model.Chair, position)},
                 {typeof(Model.Specialty), (entity, position) => new SpecialtyEntity(dataService, messenger, entity as Model.Specialty, position)},
-                {typeof(Model.Specialization), (entity, position) => new SpecializationEntity(dataService, messenger, entity as Model.Specialization, position)},
-                {typeof(Model.Employee), (entity, position) => new EmployeeEntity(dataService, messenger, entity as Model.Employee, position)}
+                {typeof(Model.Specialization), (entity, position) => new SpecializationEntity(dataService, messenger, entity as Model.Specialization, position)}
             };
 
             mapCreatorEntity = new Dictionary<Type, Func<object>>
@@ -44,8 +42,7 @@ namespace DataService.Entity
                 {typeof(Model.Faculty), () => new FacultyEntity(dataService, messenger)},
                 {typeof(Model.Chair), () => new ChairEntity(dataService, messenger)},
                 {typeof(Model.Specialty), () => new SpecialtyEntity(dataService, messenger)},
-                {typeof(Model.Specialization), () => new SpecializationEntity(dataService, messenger)},
-                {typeof(Model.Employee), () => new EmployeeEntity(dataService, messenger)}
+                {typeof(Model.Specialization), () => new SpecializationEntity(dataService, messenger)}
             };
         }
 
