@@ -1,33 +1,35 @@
-﻿using System;
+﻿#region FileInfo
+// TimeTable, DataService
+// EmployeeEntity.cs
+// Ilya Likhoshva
+// Created: 07.05.2017 12:51
+#endregion
+
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
 using Common.Data.Notifier;
-using Common.Exception;
 using Common.Messenger;
 using Common.Messenger.Impl;
-using DataService.Constant;
 using DataService.DataService;
-using DataService.Model;
 
-namespace DataService.Entity.HighSchool
+namespace DataService.Entity.Employee
 {
-    public class HighSchoolEntity : Notifier, IHighSchoolEntity
+    public class EmployeeEntity : Notifier, IEmployeeEntity
     {
         #region Members
 
         private long position;
-        private Model.HighSchool entity;
+        private Model.Employee entity;
         private bool hasChanges;
 
         #endregion
 
         #region Constructors
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger)
+        public EmployeeEntity(IDataService dataService, IMessenger messanger)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -37,10 +39,10 @@ namespace DataService.Entity.HighSchool
             UpdateHasChanges();
         }
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity) 
-            : this(dataService, messanger, entity, 0) {}
+        public EmployeeEntity(IDataService dataService, IMessenger messanger, Model.Employee entity) 
+            : this(dataService, messanger, entity, 0) { }
 
-        public HighSchoolEntity(IDataService dataService, IMessenger messanger, Model.HighSchool entity, long position)
+        public EmployeeEntity(IDataService dataService, IMessenger messanger, Model.Employee entity, long position)
         {
             DataService = dataService;
             Messenger = messanger;
@@ -76,7 +78,7 @@ namespace DataService.Entity.HighSchool
             }
 
         }
-        
+
         public long Id => Entity.Id;
 
         public string Code
@@ -179,97 +181,7 @@ namespace DataService.Entity.HighSchool
 
         }
 
-        public long Rector
-        {
-            get
-            {
-                return Entity?.Rector ?? 0L;
-            }
-
-            set
-            {
-                try
-                {
-                    if (Entity != null && Entity.Rector != value)
-                    {
-                        if (value <= 0)
-                        {
-                            StringBuilder message = new StringBuilder();
-                            message.Append("Поле  [ Ректор ]  не может содержать значение \"");
-                            message.Append(DafaultConstant.DefaultRector);
-                            message.AppendFormat("\" со значением Id = {0}.", value);
-                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
-                            throw new BusinessLogicException(message.ToString());
-                        }
-
-                        if (DataService?.DBContext?.Employees?.ToList().All(x => x.Id != value) ?? true)
-                        {
-                            StringBuilder message = new StringBuilder();
-                            message.Append("Поле  [ Ректор ]  не может содержать ссылку на сотрудника ");
-                            message.AppendFormat("со значением Id = {0}.", value);
-                            message.AppendLine("Записи сотрудника с этим Id не существует в базе данных.");
-                            message.AppendLine("Возможно, данный сотрудник уже был удален из базы данных");
-                            message.AppendLine(" с момента последнего обновления данных.");
-                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
-                            throw new BusinessLogicException(message.ToString());
-                        }
-
-                        Entity.Rector = value;
-                        SetInfoAboutModify();
-                        OnPropertyChanged();
-                    }
-                }
-                catch (BusinessLogicException e)
-                {
-                    OnBusinessLogicException(e);
-                }
-
-            }
-
-        }
-
-        public Model.Employee Employee
-        {
-            get
-            {
-                return Entity?.Employee;
-            }
-
-            set
-            {
-                try
-                {
-                    if (Entity != null && Entity.Employee != value)
-                    {
-                        if (DataService?.DBContext?.Employees?.ToList().All(x => x != value) ?? true)
-                        {
-                            StringBuilder message = new StringBuilder();
-                            message.Append("Поле  [ Ректор ]  не может содержать ссылку на сотрудника ");
-                            message.AppendFormat("со значением Id = {0}, Code = \"{1}\" и Name = \"{2}\".",
-                                value.Id, value.Code, value.Name);
-                            message.AppendLine("Записи сотрудника с этими данными не существует в базе данных.");
-                            message.AppendLine("Возможно, данный сотрудник уже был удален из базы данных");
-                            message.AppendLine(" с момента последнего обновления данных.");
-                            message.AppendLine("Пожалуйста, выберите из списка действующего сотрудника.");
-                            throw new BusinessLogicException(message.ToString());
-                        }
-
-                        Entity.Employee = value;
-                        SetInfoAboutModify();
-                        OnPropertyChanged();
-                    }
-
-                }
-                catch (BusinessLogicException e)
-                {
-                    OnBusinessLogicException(e);
-                }
-
-            }
-
-        }
-
-        public Model.HighSchool Entity
+        public Model.Employee Entity
         {
             get
             {
@@ -281,7 +193,6 @@ namespace DataService.Entity.HighSchool
                 if (entity != value)
                 {
                     entity = value;
-                    UpdateHasChanges();
                     OnPropertyChanged();
                 }
 
@@ -343,17 +254,15 @@ namespace DataService.Entity.HighSchool
             try
             {
                 if (DataService != null && DataService.DBContext != null &&
-                    DataService?.DBContext.HighSchools != null && DataService?.DBContext.Employees != null)
+                    DataService?.DBContext.Specialties != null)
                 {
-                    Model.HighSchool newEntity = DataService?.DBContext?.HighSchools?.Create();
+                    Model.Employee newEntity = DataService?.DBContext?.Employees?.Create();
 
                     if (newEntity != null)
                     {
-                        DataService?.DBContext?.HighSchools?.Add(newEntity);
+                        DataService?.DBContext?.Employees?.Add(newEntity);
                         Entity = newEntity;
                         Active = true;
-                        Model.Employee employee = DataService.DBContext.Employees.FirstOrDefault();
-                        Rector = employee?.Id ?? 0;
                         UserModify = DataService?.UserName;
                         DateTimeOffset now = DateTimeOffset.Now;
                         Entity.Created = now;
@@ -403,12 +312,6 @@ namespace DataService.Entity.HighSchool
             Messenger?.Send(CommandName.ShowDbUpdateException, e);
         }
 
-        protected void OnBusinessLogicException(BusinessLogicException e)
-        {
-            Messenger.Send(CommandName.ShowBusinessLogicException, e);
-        }
-
         #endregion
     }
-
 }

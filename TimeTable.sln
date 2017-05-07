@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTable", "TimeTable\TimeTable.csproj", "{E8896625-8588-449D-A246-0DA9E04122CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A3477D30-7F75-46AE-97F2-6F316E310DB7} = {A3477D30-7F75-46AE-97F2-6F316E310DB7}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{356921DE-116D-48DB-9613-5D0395420897}"
 EndProject
