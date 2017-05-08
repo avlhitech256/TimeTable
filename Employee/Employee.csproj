@@ -38,28 +38,109 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\EmployeeModel.cs" />
+    <Compile Include="Model\IEmployeeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchCriteria\EmployeeSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\IEmployeeSearchCriteria.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\IEmployeeViewModel.cs" />
+    <Compile Include="View\EmployeeEditButtonControl.xaml.cs">
+      <DependentUpon>EmployeeEditButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeEditControl.xaml.cs">
+      <DependentUpon>EmployeeEditControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeEditFieldsControl.xaml.cs">
+      <DependentUpon>EmployeeEditFieldsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeSearchButtonControl.xaml.cs">
+      <DependentUpon>EmployeeSearchButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeSearchControl.xaml.cs">
+      <DependentUpon>EmployeeSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeSearchCriteriaControl.xaml.cs">
+      <DependentUpon>EmployeeSearchCriteriaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeSearchDataGridControl.xaml.cs">
+      <DependentUpon>EmployeeSearchDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeSearchFieldsControl.xaml.cs">
+      <DependentUpon>EmployeeSearchFieldsControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="SearchCriteria\" />
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9211ad9c-2d70-424c-96f5-dd0518985e37}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{356921de-116d-48db-9613-5d0395420897}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataService\DataService.csproj">
+      <Project>{190e41b3-74a8-49f6-92d4-b82a866716be}</Project>
+      <Name>DataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8d72df4e-d904-4353-bbc5-141f3a563c4e}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\EmployeeEditButtonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeEditControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeEditFieldsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeSearchButtonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeSearchControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeSearchCriteriaControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeSearchDataGridControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeSearchFieldsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

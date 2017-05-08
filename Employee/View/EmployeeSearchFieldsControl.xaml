@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="Employee.View.EmployeeSearchFieldsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Employee.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Код:" 
+               ToolTip="Код работника"
+               Grid.Row="1" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Наименование:" 
+               ToolTip="Наименование работника"
+               Grid.Row="3" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата создания с:" 
+               ToolTip="Период создания записи работника"
+               Grid.Row="5" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Дата модификации с:" 
+               ToolTip="Период модификации записи работника"
+               Grid.Row="7" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <Label Content="Пользователь:" 
+               ToolTip="Пользователь, который последним внес изменения"
+               Grid.Row="9" 
+               Grid.Column="0"  
+               HorizontalAlignment="Right" 
+               Margin="10,0,5,0"/>
+        <TextBox Name="EmployeeSearchCode" 
+                 Text="{Binding Path=SearchCriteria.Code, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Код работника"
+                 Grid.Row="1" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <TextBox Name="EmployeeSearchName" 
+                 Text="{Binding Path=SearchCriteria.Name, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Наименование работника"
+                 Grid.Row="3" 
+                 Grid.Column="1" 
+                 Margin="3"/>
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="по:" 
+                   ToolTip="Дата конца периода создания записи работника"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="HighSchoolSearchDateCreateFrom" 
+                        SelectedDate="{Binding Path=SearchCriteria.CreatedFrom, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата начала периода создания записи работника"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"/>
+            <DatePicker Name="EmployeeSearchDateCreateTo" 
+                        SelectedDate="{Binding Path=SearchCriteria.CreatedTo, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата конца периода создания записи работника"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"/>
+        </Grid>
+        <Grid Grid.Row="7" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="по:" 
+                   ToolTip="Дата конца периода модификации записи работника"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <DatePicker Name="EmployeeSearchDateModifyFrom" 
+                        SelectedDate="{Binding Path=SearchCriteria.LastModifyFrom, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата начала периода модификации записи работника"
+                        Grid.Row="0" 
+                        Grid.Column="0" 
+                        Margin="3"/>
+            <DatePicker Name="EmployeeSearchDateModifyTo" 
+                        SelectedDate="{Binding Path=SearchCriteria.LastModifyTo, 
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}"
+                        ToolTip="Дата конца периода модификации записи работника"
+                        Grid.Row="0" 
+                        Grid.Column="2" 
+                        Margin="3"/>
+        </Grid>
+        <Grid Grid.Row="9" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBox Name="EmployeeSearchUser" 
+                 Text="{Binding Path=SearchCriteria.UserModify, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="Пользователь, который последним внес изменения"
+                 Grid.Row="0" 
+                 Grid.Column="0" 
+                 Margin="3"/>
+            <Label Content="Только активные:" 
+                   ToolTip="Включить в отбор только активные записи"
+                   Grid.Row="0" 
+                   Grid.Column="1"  
+                   HorizontalAlignment="Right" 
+                   Margin="20,0,5,0"/>
+            <CheckBox Name="EmployeeSearchActive" 
+                  IsChecked="{Binding Path=SearchCriteria.Active}"
+                  ToolTip="Включить в отбор только активные записи"
+                  Grid.Row="0" 
+                  Grid.Column="2" 
+                  Margin="3" 
+                  VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</UserControl>
