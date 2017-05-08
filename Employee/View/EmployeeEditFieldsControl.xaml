@@ -66,7 +66,7 @@
                Grid.Column="0"  
                HorizontalAlignment="Right" 
                Margin="10,0,5,0"/>
-        <TextBox Name="EmployeeEditCode" 
+        <TextBox Name="EditCode" 
                  Text="{Binding Path=SelectedItem.Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                  IsReadOnly="{Binding Path=ReadOnly}"
                  IsReadOnlyCaretVisible="True"
@@ -75,7 +75,7 @@
                  Grid.Column="1" 
                  Margin="3"
                  Style="{DynamicResource EnabledText}"/>
-        <TextBox Name="EmployeeEditName" 
+        <TextBox Name="EditName" 
                  Text="{Binding Path=SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                  IsReadOnly="{Binding Path=ReadOnly}"
                  IsReadOnlyCaretVisible="True"
@@ -90,7 +90,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <CheckBox Name="EmployeeEditActive" 
+            <CheckBox Name="EditActive" 
                   IsChecked="{Binding Path=SelectedItem.Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   IsEnabled="{Binding Path=Enabled}"
                   ToolTip="Активная запись"
@@ -104,7 +104,7 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <TextBox Name="EmployeeEditUser" 
+            <TextBox Name="EditUser" 
                      Text="{Binding Path=SelectedItem.UserModify, Mode=OneWay}"
                      ToolTip="Пользователь, который осуществил последнею модификацию записи работника"
                      Grid.Row="0" 
@@ -126,14 +126,14 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <DatePicker Name="EmployeeEditCreated" 
+            <DatePicker Name="EditCreated" 
                         SelectedDate="{Binding Path=SelectedItem.Created, Mode=OneWay}"
                         ToolTip="Дата создания записи работника"
                         Grid.Row="0" 
                         Grid.Column="0" 
                         Margin="3"
                         IsEnabled="False"/>
-            <DatePicker Name="EmployeeEditLastModify" 
+            <DatePicker Name="EditLastModify" 
                         SelectedDate="{Binding Path=SelectedItem.LastModify, Mode=OneWay}"
                         ToolTip="Дата последней модификации записи работника"
                         Grid.Row="0" 

@@ -74,7 +74,7 @@
                Grid.Column="0"  
                HorizontalAlignment="Right" 
                Margin="10,0,5,0"/>
-        <TextBox Name="HighSchoolEditCode" 
+        <TextBox Name="EditCode" 
                  Text="{Binding Path=SelectedItem.Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                  IsReadOnly="{Binding Path=ReadOnly}"
                  IsReadOnlyCaretVisible="True"
@@ -83,7 +83,7 @@
                  Grid.Column="1" 
                  Margin="3"
                  Style="{DynamicResource EnabledText}"/>
-        <TextBox Name="HighSchoolEditName" 
+        <TextBox Name="EditName" 
                  Text="{Binding Path=SelectedItem.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                  IsReadOnly="{Binding Path=ReadOnly}"
                  IsReadOnlyCaretVisible="True"
@@ -92,7 +92,7 @@
                  Grid.Column="1" 
                  Margin="3"
                  Style="{DynamicResource EnabledText}"/>
-        <ComboBox x:Name="HighSchoolEditRector"
+        <ComboBox x:Name="EditRector"
                   SelectedValue="{Binding Path=SelectedItem.HighSchoolId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ItemsSource="{Binding Path=HighSchools}" DisplayMemberPath="Name" SelectedValuePath="Id"
                   IsReadOnly="{Binding Path=ReadOnly}"
@@ -105,7 +105,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <CheckBox Name="HighSchoolEditActive" 
+            <CheckBox Name="EditActive" 
                   IsChecked="{Binding Path=SelectedItem.Active, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   IsEnabled="{Binding Path=Enabled}"
                   ToolTip="Активная запись"
@@ -119,7 +119,7 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <TextBox Name="HighSchoolEditUser" 
+            <TextBox Name="EditUser" 
                      Text="{Binding Path=SelectedItem.UserModify, Mode=OneWay}"
                      ToolTip="Пользователь, который осуществил последнею модификацию записи факультета"
                      Grid.Row="0" 
@@ -141,14 +141,14 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <DatePicker Name="HighSchoolEditCreated" 
+            <DatePicker Name="EditCreated" 
                         SelectedDate="{Binding Path=SelectedItem.Created, Mode=OneWay}"
                         ToolTip="Дата создания записи факультета"
                         Grid.Row="0" 
                         Grid.Column="0" 
                         Margin="3"
                         IsEnabled="False"/>
-            <DatePicker Name="HighSchoolEditLastModify" 
+            <DatePicker Name="EditLastModify" 
                         SelectedDate="{Binding Path=SelectedItem.LastModify, Mode=OneWay}"
                         ToolTip="Дата последней модификации записи факультета"
                         Grid.Row="0" 
