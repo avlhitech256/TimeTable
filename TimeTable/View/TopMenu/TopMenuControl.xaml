@@ -30,7 +30,7 @@
             <Separator></Separator>
             <MenuItem Header="Аудитории" IsEnabled="False"/>
             <Separator></Separator>
-            <MenuItem Header="Сотрудники" Command="{Binding Path=EmployeeCommand}"/>
+            <MenuItem Header="Работники" Command="{Binding Path=EmployeeCommand}"/>
             <Separator></Separator>
             <MenuItem Header="Потоки" IsEnabled="False"/>
             <MenuItem Header="Группировка групп" IsEnabled="False"/>

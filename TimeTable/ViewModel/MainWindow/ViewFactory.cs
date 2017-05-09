@@ -8,6 +8,7 @@ using HighSchool.View;
 using Domain.Data.Enum;
 using Domain.DomainContext;
 using Domain.ViewModel;
+using Employee.View;
 using Faculty.View;
 using Specialty.View;
 using Specialization.View;
@@ -39,7 +40,8 @@ namespace TimeTable.ViewModel.MainWindow
                     {MenuItemName.Faculty, () => new FacultySearchControl()},
                     {MenuItemName.Specialty, () => new SpecialtySearchControl()},
                     {MenuItemName.Chair, () => new ChairSearchControl()},
-                    {MenuItemName.Specialization, () => new SpecializationSearchControl()}
+                    {MenuItemName.Specialization, () => new SpecializationSearchControl()},
+                    {MenuItemName.Employee, () => new EmployeeSearchControl()}
                 };
 
             mapEditControlFactories =
@@ -49,7 +51,8 @@ namespace TimeTable.ViewModel.MainWindow
                     {MenuItemName.Faculty, () => new FacultyEditControl()},
                     {MenuItemName.Specialty, () => new SpecialtyEditControl()},
                     {MenuItemName.Chair, () => new ChairEditControl()},
-                     {MenuItemName.Specialization, () => new SpecializationEditControl()}
+                    {MenuItemName.Specialization, () => new SpecializationEditControl()},
+                    {MenuItemName.Employee, () => new EmployeeEditControl()}
                 };
 
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Chair.ViewModel;
 using Domain.Data.Enum;
 using Domain.DomainContext;
+using Employee.ViewModel;
 using Faculty.ViewModel;
 using HighSchool.ViewModel;
 using Specialty.ViewModel;
@@ -30,7 +31,8 @@ namespace TimeTable.ViewModel.MainWindow
                     { MenuItemName.Faculty, (x) => new FacultyViewModel(x)},
                     {MenuItemName.Specialty, (x) => new SpecialtyViewModel(x)},
                     {MenuItemName.Chair, (x) => new ChairViewModel(x)},
-                    {MenuItemName.Specialization, (x) => new SpecializationViewModel(x)}
+                    {MenuItemName.Specialization, (x) => new SpecializationViewModel(x)},
+                    { MenuItemName.Employee, (x) => new EmployeeViewModel(x) }
                 };
             this.context = context;
         }

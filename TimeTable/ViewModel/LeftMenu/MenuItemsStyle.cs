@@ -22,6 +22,7 @@ namespace TimeTable.ViewModel.LeftMenu
         private MenuItemStyle chairMenuItemStyle;
         private MenuItemStyle specialtyMenuItemStyle;
         private MenuItemStyle specializationMenuItemStyle;
+        private MenuItemStyle employeeMenuItemStyle;
 
         #endregion
 
@@ -66,6 +67,11 @@ namespace TimeTable.ViewModel.LeftMenu
                                                             notSelectedAndMouseIsOverColorString,
                                                             selectedAndMouseIsNotOverColorString,
                                                             selectedAndMouseIsOverColorString);
+            employeeMenuItemStyle = new MenuItemStyle(MenuItemName.Specialization,
+                                                            notSelectedAndMouseIsNotOverColorString,
+                                                            notSelectedAndMouseIsOverColorString,
+                                                            selectedAndMouseIsNotOverColorString,
+                                                            selectedAndMouseIsOverColorString);
 
             menuItems = new List<MenuItemStyle>();
 
@@ -74,6 +80,7 @@ namespace TimeTable.ViewModel.LeftMenu
             AddMenuItem(chairMenuItemStyle);
             AddMenuItem(specialtyMenuItemStyle);
             AddMenuItem(specializationMenuItemStyle);
+            AddMenuItem(employeeMenuItemStyle);
         }
 
         #endregion
@@ -269,8 +276,27 @@ namespace TimeTable.ViewModel.LeftMenu
 
         }
 
+        public MenuItemStyle EmployeeMenuItemStyle
+        {
+            get
+            {
+                return employeeMenuItemStyle;
+            }
+
+            set
+            {
+                if (employeeMenuItemStyle == null || !employeeMenuItemStyle.Equals(value))
+                {
+                    employeeMenuItemStyle = ReplaceMenuItem(employeeMenuItemStyle, value);
+                    OnPropertyChanged();
+                }
+
+            }
+
+        }
+
         #endregion
-        
+
         #region Methods
 
         private MenuItemStyle ReplaceMenuItem(MenuItemStyle oldMenuItem, MenuItemStyle newMenuItem)
@@ -340,6 +366,9 @@ namespace TimeTable.ViewModel.LeftMenu
                 case MenuItemName.Specialization:
                     SpecializationMenuItemStyle.IsMouseOver = args.IsMouseOver;
                     break;
+                case MenuItemName.Employee:
+                    EmployeeMenuItemStyle.IsMouseOver = args.IsMouseOver;
+                    break;
             }
 
         }
@@ -364,6 +393,9 @@ namespace TimeTable.ViewModel.LeftMenu
                     break;
                 case MenuItemName.Specialization:
                     SpecializationMenuItemStyle.Selected = true;
+                    break;
+                case MenuItemName.Employee:
+                    EmployeeMenuItemStyle.Selected = true;
                     break;
             }
 
