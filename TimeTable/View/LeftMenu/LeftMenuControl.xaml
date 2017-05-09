@@ -68,6 +68,18 @@
                    Content="Специализации">
                 </Label>
             </Border>
+            <Border x:Name="EmployeeButton"
+                    Background="{Binding Path=MenuItemsStyle.EmployeeMenuItemStyle.Background}" 
+                    Cursor="Hand"
+                    RenderTransformOrigin="0.5,0.5"
+                    MouseUp="Border_MouseUp"
+                    MouseEnter="Border_OnMouseEnter"
+                    MouseLeave="Border_OnMouseLeave">
+                <Label HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Center"
+                       Content="Работники">
+                </Label>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

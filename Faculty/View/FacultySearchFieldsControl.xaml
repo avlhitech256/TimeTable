@@ -62,22 +62,22 @@
                Grid.Column="0"  
                HorizontalAlignment="Right" 
                Margin="10,0,5,0"/>
-        <TextBox Name="HighSchoolSearchCode" 
+        <TextBox Name="SearchCode" 
                  Text="{Binding Path=SearchCriteria.Code, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Код факультета"
                  Grid.Row="1" 
                  Grid.Column="1" 
                  Margin="3"/>
-        <TextBox Name="HighSchoolSearchName" 
+        <TextBox Name="SearchName" 
                  Text="{Binding Path=SearchCriteria.Name, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Наименование факультета"
                  Grid.Row="3" 
                  Grid.Column="1" 
                  Margin="3"/>
-        <ComboBox x:Name="HighSchoolSearchRector"
-                  SelectedValue="{Binding Path=SearchCriteria.HighSchoolId}"
-                  ItemsSource="{Binding Path=HighSchools}" DisplayMemberPath="Name" SelectedValuePath="Id"
-                  Text="{Binding Path=SearchCriteria.HighSchoolName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+        <ComboBox x:Name="SearchRector"
+                  SelectedValue="{Binding Path=SearchCriteria.FacultyId}"
+                  ItemsSource="{Binding Path=Facultys}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                  Text="{Binding Path=SearchCriteria.FacultyName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                   Grid.Row="5"
                   Grid.Column="1" Margin="3"/>
         <Grid Grid.Row="7" Grid.Column="1">
@@ -92,7 +92,7 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <DatePicker Name="HighSchoolSearchDateCreateFrom" 
+            <DatePicker Name="SearchDateCreateFrom" 
                         SelectedDate="{Binding Path=SearchCriteria.CreatedFrom, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
@@ -100,7 +100,7 @@
                         Grid.Row="0" 
                         Grid.Column="0" 
                         Margin="3"/>
-            <DatePicker Name="HighSchoolSearchDateCreateTo" 
+            <DatePicker Name="SearchDateCreateTo" 
                         SelectedDate="{Binding Path=SearchCriteria.CreatedTo, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
@@ -121,7 +121,7 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <DatePicker Name="HighSchoolSearchDateModifyFrom" 
+            <DatePicker Name="SearchDateModifyFrom" 
                         SelectedDate="{Binding Path=SearchCriteria.LastModifyFrom, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
@@ -129,7 +129,7 @@
                         Grid.Row="0" 
                         Grid.Column="0" 
                         Margin="3"/>
-            <DatePicker Name="HighSchoolSearchDateModifyTo" 
+            <DatePicker Name="SearchDateModifyTo" 
                         SelectedDate="{Binding Path=SearchCriteria.LastModifyTo, 
                                                UpdateSourceTrigger=PropertyChanged,
                                                Mode=TwoWay}"
@@ -144,7 +144,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Name="HighSchoolSearchUser" 
+            <TextBox Name="SearchUser" 
                  Text="{Binding Path=SearchCriteria.UserModify, UpdateSourceTrigger=PropertyChanged}"
                  ToolTip="Пользователь, который последним внес изменения"
                  Grid.Row="0" 
@@ -156,7 +156,7 @@
                    Grid.Column="1"  
                    HorizontalAlignment="Right" 
                    Margin="20,0,5,0"/>
-            <CheckBox Name="HighSchoolSearchActive" 
+            <CheckBox Name="SearchActive" 
                   IsChecked="{Binding Path=SearchCriteria.Active}"
                   ToolTip="Включить в отбор только активные записи"
                   Grid.Row="0" 

@@ -35,7 +35,8 @@ namespace TimeTable.View.LeftMenu
                     { FacultyButton, MenuItemName.Faculty},
                     { ChairButton, MenuItemName.Chair },
                     { SpecialtyButton, MenuItemName.Specialty },
-                    { SpecializationButton, MenuItemName.Specialization }
+                    { SpecializationButton, MenuItemName.Specialization },
+                    { EmployeeButton, MenuItemName.Employee }
                 };
         }
 

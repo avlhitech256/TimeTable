@@ -34,7 +34,7 @@ namespace TimeTable.ViewModel.TopMenu
             ChairCommand = new ChairCommand(this);
             SpecialtyCommand = new SpecialtyCommand(this);
             SpecializationCommand = new SpecializationCommand(this);
-            EmployeeCommand = null;
+            EmployeeCommand = new EmployeeCommand(this);
         }
 
         public void SelectHighSchoolMenu()

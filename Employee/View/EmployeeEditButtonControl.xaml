@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Employee.View.EmployeeEditButtonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Employee.View"
+             xmlns:buttonsControl="clr-namespace:CommonControl.ButtonsControl;assembly=CommonControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="180">
+    <buttonsControl:EditButtonControl x:Name="ButtonControl" 
+                                       ToolTipAddButton="Создать новую запись работника"
+                                       ToolTipSaveButton="Сохранить изменения внесенные в текущюю запись работника"
+                                       ToolTipSaveAndNewButton="Сохранить изменения внесенные в текущюю запись работника и создать новую запись"
+                                       ToolTipDeleteButton="Удалить текущую запись работника">
+    </buttonsControl:EditButtonControl>
+</UserControl>
