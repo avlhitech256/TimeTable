@@ -236,6 +236,10 @@ namespace Domain.ViewModel
                 {
                     result = MenuItemName.Specialization;
                 }
+                else if (typeof(T) == typeof(Employee))
+                {
+                    result = MenuItemName.Employee;
+                }
 
                 return result;
             }
