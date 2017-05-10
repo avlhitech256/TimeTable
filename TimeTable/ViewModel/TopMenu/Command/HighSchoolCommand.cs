@@ -1,10 +1,10 @@
 ﻿namespace TimeTable.ViewModel.TopMenu.Command
 {
-    internal class HighSchoolComman : TopMenuCommonCommand
+    internal class HighSchoolCommand : TopMenuCommonCommand
     {
         #region Constructors
 
-        public HighSchoolComman(ITopMenuViewModel viewModel) : base(viewModel)
+        public HighSchoolCommand(ITopMenuViewModel viewModel) : base(viewModel)
         {
             CanExecuteProperty = true;
         }

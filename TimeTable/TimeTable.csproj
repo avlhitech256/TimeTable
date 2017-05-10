@@ -74,7 +74,7 @@
     <Compile Include="ViewModel\TopMenu\Command\SpecializationCommand.cs" />
     <Compile Include="ViewModel\TopMenu\Command\SpecialtyCommand.cs" />
     <Compile Include="ViewModel\TopMenu\Command\TopMenuCommonCommand.cs" />
-    <Compile Include="ViewModel\TopMenu\Command\HighSchoolComman.cs" />
+    <Compile Include="ViewModel\TopMenu\Command\HighSchoolCommand.cs" />
     <Compile Include="ViewModel\TopMenu\ITopMenuViewModel.cs" />
     <Compile Include="ViewModel\TopMenu\TopMenuViewModel.cs" />
     <Compile Include="View\TopMenu\TopMenuControl.xaml.cs">

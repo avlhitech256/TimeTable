@@ -23,101 +23,148 @@
                   IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="30"
-                                    Binding="{Binding Path=Position}">
+                                    MinWidth="28"
+                                    Width="auto"
+                                    Binding="{Binding Path=Position}" 
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="№ п/п" 
-                                       Width="28"
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                       Width="20"
+                                       TextWrapping="Wrap">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Code}">
+                                    MinWidth="65"
+                                    Width="auto"
+                                    Binding="{Binding Path=Code}"
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Код" 
-                                       Width="65"
                                        TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                       TextAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Name}">
+                                    MinWidth="250"
+                                    Width="*"
+                                    Binding="{Binding Path=Name}"
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Наименование" 
-                                       Width="250" 
                                        TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                       TextAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridCheckBoxColumn IsReadOnly="True" 
-                                        Width="Auto"
+                                        MinWidth="55"
+                                        Width="auto"
                                         Binding="{Binding Path=Active}">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Актив." 
-                                       Width="40" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                            <TextBlock Text="Актив."  
+                                       Width="35"
+                                       TextWrapping="Wrap">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
+                    <DataGridCheckBoxColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridCheckBoxColumn.HeaderStyle>
                 </DataGridCheckBoxColumn>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Created}">
+                                    MinWidth="150"
+                                    Width="auto"
+                                    Binding="{Binding Path=Created}"
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Дата создания" 
-                                       Width="150" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                            <TextBlock Text="Дата создания"  
+                                       TextWrapping="Wrap">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=LastModify}">
+                                    MinWidth="150"
+                                    Width="auto"
+                                    Binding="{Binding Path=LastModify}"
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Дата последнего изменения" 
-                                       Width="150" 
+                                       Width="100"
                                        TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                       TextAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=UserModify}">
+                                    MinWidth="150"
+                                    Width="auto"
+                                    Binding="{Binding Path=UserModify}"
+                                    >
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="Width" Value="auto"></Setter>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Пользователь, сделавший последние изменения" 
                                        Width="150" 
                                        TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                       TextAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>

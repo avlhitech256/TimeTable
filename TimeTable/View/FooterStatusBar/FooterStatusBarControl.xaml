@@ -37,7 +37,7 @@
                HorizontalContentAlignment="Center" 
                VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Серсер баз данных:" 
+        <Label Content="Сервер баз данных:" 
                Grid.Column="6" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 

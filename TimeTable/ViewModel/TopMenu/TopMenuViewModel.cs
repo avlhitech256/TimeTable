@@ -29,7 +29,7 @@ namespace TimeTable.ViewModel.TopMenu
 
         private void InitializeCommand()
         {
-            HighSchoolCommand = new HighSchoolComman(this);
+            HighSchoolCommand = new HighSchoolCommand(this);
             FacultyCommand = new FacultyCommand(this);
             ChairCommand = new ChairCommand(this);
             SpecialtyCommand = new SpecialtyCommand(this);
